@@ -1,15 +1,22 @@
 /* Socket Setup */
-const app = require('express')();
-const http = require('http').createServer(app);
-const io = require('socket.io')(http);
+const express = require('express');
+const socketio = require('socket.io');
+const http = require('http');
+const app = express();
+const server = http.createServer(app);
+const io = socketio(server);
 
-app.get('/', (req, res) => {
-  res.send('Hello there.');
-});
+const router = require('./routes/router');
+
+app.use(router);
 
 io.on('connection', (socket) => {
-  console.log('a user connected');
+  console.log('user connected');
+
+  socket.on('disconnect', () => {
+    console.log('user just disconnected');
+  });
 });
 
 const PORT = 4000;
-http.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));
+server.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));
