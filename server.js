@@ -17,14 +17,12 @@ const router = require('./routes/router');
 app.use(router);
 
 io.on('connection', (socket) => {
-  console.log('user connected');
+  socket.on('join', ({ id }) => {
+    console.log(id);
+  });
 
   socket.on('disconnect', () => {
     console.log('user just disconnected');
-  });
-
-  socket.on('join', ({ hello }) => {
-    console.log(hello);
   });
 });
 
