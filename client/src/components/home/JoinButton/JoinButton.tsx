@@ -1,21 +1,17 @@
 import React, { useState } from 'react';
-import Rodal from 'rodal';
-import 'rodal/lib/rodal.css';
+import Modal from '../../shared/Modal/Modal';
 
 const JoinButton = () => {
-  const [visible, setVisible] = useState<boolean>(false);
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
 
-  const show = () => {
-    setVisible(true);
-  };
-
-  const hide = () => {
-    setVisible(false);
-  };
   return (
     <>
-      <button onClick={show}>Join an existing list</button>
-      <Rodal visible={visible} onClose={hide}></Rodal>
+      <button onClick={() => setModalVisible(true)}>
+        Join an existing list
+      </button>
+      <Modal modalVisible={modalVisible} onClose={() => setModalVisible(false)}>
+        <h2>Join my list pls</h2>
+      </Modal>
     </>
   );
 };

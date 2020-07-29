@@ -7,14 +7,18 @@ const Paragraph = styled.p`
 `;
 
 let socket: any;
-socket = io('localhost:4000');
 
 const ListPage = ({ match }) => {
   console.log(match.params);
 
   useEffect(() => {
+    socket = io('localhost:4000');
     socket.emit('join', { id: match.params });
-  }, []);
+
+    return () => {
+      socket.emit('disconnect');
+    };
+  }, [match.params]);
 
   return (
     <div>

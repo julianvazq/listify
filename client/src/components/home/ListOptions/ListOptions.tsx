@@ -16,7 +16,6 @@ const ListOptions = () => {
   return (
     <>
       <CreateButton />
-
       <JoinButton />
     </>
   );
