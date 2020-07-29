@@ -6,6 +6,16 @@ router.get('/', (req, res) => {
   res.send(JSON.stringify('Hello there.'));
 });
 
+router.get('/list/:id', async (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+  // const newList = await pool.query(
+  //   'INSERT INTO public.lists (id) VALUES($1) RETURNING *',
+  //   [id]
+  // );
+  // console.log(newList.rows);
+});
+
 // SELECT ALL
 router.get('/query', async (req, res) => {
   const list = await pool.query('SELECT * FROM public.lists');

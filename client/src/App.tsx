@@ -27,7 +27,7 @@ const App: React.FC = () => {
     <Router>
       <ContextProvider>
         <Route path='/' exact component={Home} />
-        <Route path='/list' exact component={ListPage} />
+        <Route path='/list/:id' exact component={ListPage} />
       </ContextProvider>
     </Router>
   );
