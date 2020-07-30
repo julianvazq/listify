@@ -3,18 +3,25 @@ import React from 'react';
 type CreateFormProps = {
   userName: string;
   listName: string;
-  handleUserNameChange: (e: any) => void;
+  handleUserNameChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleListNameChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  createList: (e: React.FormEvent<HTMLFormElement>) => void;
 };
 
 const CreateForm: React.FC<CreateFormProps> = ({
-  userName: username,
+  userName,
   listName,
   handleUserNameChange,
+  handleListNameChange,
+  createList,
 }) => {
   return (
-    <form>
+    <form onSubmit={createList}>
       <label>Your name</label>
-      <input type='text' value={username} onChange={handleUserNameChange} />
+      <input type='text' value={userName} onChange={handleUserNameChange} />
+      <label>List name</label>
+      <input type='text' value={listName} onChange={handleListNameChange} />
+      <button>Create new list</button>
     </form>
   );
 };

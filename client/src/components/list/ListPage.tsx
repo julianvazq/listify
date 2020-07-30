@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import io from 'socket.io-client';
+import { RouteComponentProps } from 'react-router-dom';
+
+type TParams = { id: string };
 
 const Paragraph = styled.p`
   color: red;
@@ -8,7 +11,7 @@ const Paragraph = styled.p`
 
 let socket: any;
 
-const ListPage = ({ match }) => {
+const ListPage = ({ match }: RouteComponentProps<TParams>) => {
   console.log(match.params);
 
   useEffect(() => {
