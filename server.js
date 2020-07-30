@@ -17,8 +17,8 @@ const router = require('./routes/router');
 app.use(router);
 
 io.on('connection', (socket) => {
-  socket.on('join', ({ id }) => {
-    console.log(id);
+  socket.on('join', ({ id, name }) => {
+    console.log(id, name);
   });
 
   socket.on('disconnect', () => {

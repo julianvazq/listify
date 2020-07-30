@@ -6,7 +6,9 @@ import CreateForm from '../CreateForm/CreateForm';
 import { UserContext } from '../../../context/UserContext';
 
 const CreateButton = () => {
-  const { addUserList } = useContext(UserContext);
+  const { addUserList, setUserName: setContextUserName } = useContext(
+    UserContext
+  );
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [userName, setUserName] = useState<string>('');
   const [listName, setListName] = useState<string>('');
@@ -24,9 +26,8 @@ const CreateButton = () => {
     e.preventDefault();
 
     const RANDOM_ID = uuidV4();
-
     addUserList({ name: listName, id: RANDOM_ID });
-
+    setContextUserName(userName);
     history.push(`/list/${RANDOM_ID}`);
   };
   return (

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { UserContext } from '../../../context/UserContext';
 
 type CreateFormProps = {
   userName: string;
@@ -15,10 +16,16 @@ const CreateForm: React.FC<CreateFormProps> = ({
   handleListNameChange,
   createList,
 }) => {
+  const { userName: storedName } = useContext(UserContext);
   return (
     <form onSubmit={createList}>
       <label>Your name</label>
-      <input type='text' value={userName} onChange={handleUserNameChange} />
+      <input
+        type='text'
+        value={storedName ? storedName : userName}
+        onChange={handleUserNameChange}
+        disabled={storedName !== ''}
+      />
       <label>List name</label>
       <input type='text' value={listName} onChange={handleListNameChange} />
       <button>Create new list</button>
