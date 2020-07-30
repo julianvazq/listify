@@ -6,7 +6,7 @@ type CreateFormProps = {
   listName: string;
   handleUserNameChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleListNameChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  createList: (e: React.FormEvent<HTMLFormElement>) => void;
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 };
 
 const CreateForm: React.FC<CreateFormProps> = ({
@@ -14,11 +14,11 @@ const CreateForm: React.FC<CreateFormProps> = ({
   listName,
   handleUserNameChange,
   handleListNameChange,
-  createList,
+  onSubmit,
 }) => {
   const { userName: storedName } = useContext(UserContext);
   return (
-    <form onSubmit={createList}>
+    <form onSubmit={onSubmit}>
       <label>Your name</label>
       <input
         type='text'

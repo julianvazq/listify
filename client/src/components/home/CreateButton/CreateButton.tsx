@@ -22,13 +22,18 @@ const CreateButton = () => {
     setListName(e.target.value);
   };
 
-  const createList = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const RANDOM_ID = uuidV4();
-    addUserList({ name: listName, id: RANDOM_ID });
-    setContextUserName(userName);
-    history.push(`/list/${RANDOM_ID}`);
+
+    if (userName !== '') {
+      /* Save list and username in LocalStorage */
+      addUserList({ name: listName, id: RANDOM_ID });
+      setContextUserName(userName);
+
+      history.push(`/list/${RANDOM_ID}`);
+    }
   };
   return (
     <>
@@ -39,7 +44,7 @@ const CreateButton = () => {
           listName={listName}
           handleUserNameChange={handleUserNameChange}
           handleListNameChange={handleListNameChange}
-          createList={createList}
+          onSubmit={onSubmit}
         />
       </Modal>
     </>
