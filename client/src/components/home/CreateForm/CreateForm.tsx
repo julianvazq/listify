@@ -27,7 +27,12 @@ const CreateForm: React.FC<CreateFormProps> = ({
         disabled={storedUser.username !== ''}
       />
       <label>List name</label>
-      <input type='text' value={listName} onChange={handleListNameChange} />
+      <input
+        type='text'
+        value={listName}
+        onFocus={(e) => e.target.select()}
+        onChange={handleListNameChange}
+      />
       <button>Create new list</button>
     </form>
   );

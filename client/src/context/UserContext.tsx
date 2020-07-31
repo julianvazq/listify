@@ -55,9 +55,9 @@ const ContextProvider = ({ children }: Props) => {
   }, [userLists]);
 
   const addUserList = (list: List) => {
-    const listName = list.name !== '' ? list.name : 'Untitled List';
+    // const listName = list.name !== '' ? list.name : 'Untitled List';
 
-    setUserLists([...userLists, { id: list.id, name: listName }]);
+    setUserLists([...userLists, { id: list.id, name: list.name }]);
   };
 
   const deleteUserList = (id: string) => {

@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import io from 'socket.io-client';
-import { RouteComponentProps, useHistory } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
 import CreateButton from '../home/CreateButton/CreateButton';
 
-type MatchProps = { id: string };
+type MatchParams = { id: string };
 
 type ErrorState = { error: string } | null;
 
@@ -13,17 +13,15 @@ const Paragraph = styled.p`
   color: red;
 `;
 
-let socket: any;
+let socket;
 
-const ListPage = ({ match }: RouteComponentProps<MatchProps>) => {
+const ListPage = ({ match }: RouteComponentProps<MatchParams>) => {
   const { storedUser, userLists } = useContext(UserContext);
   const [listName, setListName] = useState<string | null>(null);
   const [error, setError] = useState<ErrorState>(null);
-  const history = useHistory();
   const { id } = match.params;
 
   useEffect(() => {
-    console.log((history.length = 0));
     /* Clear error */
     setError(null);
 
