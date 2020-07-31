@@ -6,33 +6,39 @@ import CreateForm from '../CreateForm/CreateForm';
 import { UserContext } from '../../../context/UserContext';
 
 const CreateButton = () => {
-  const { addUserList, setUserName: setContextUserName } = useContext(
-    UserContext
-  );
+  const { addUserList, storedUser, setStoredUser } = useContext(UserContext);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
-  const [userName, setUserName] = useState<string>('');
+  const [username, setUsername] = useState<string>('');
   const [listName, setListName] = useState<string>('');
   const history = useHistory();
 
-  const handleUserNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUserName(e.target.value);
+  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUsername(e.target.value);
   };
 
   const handleListNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setListName(e.target.value);
   };
 
+  const saveUsername = () => {
+    const USER_ID = uuidV4();
+
+    if (username !== '') {
+      setStoredUser({ username, id: USER_ID });
+    }
+  };
+
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const RANDOM_ID = uuidV4();
+    const LIST_ID = uuidV4();
 
-    if (userName !== '') {
+    if (storedUser.username !== '' || username !== '') {
       /* Save list and username in LocalStorage */
-      addUserList({ name: listName, id: RANDOM_ID });
-      setContextUserName(userName);
+      addUserList({ name: listName, id: LIST_ID });
+      saveUsername();
 
-      history.push(`/list/${RANDOM_ID}`);
+      history.push(`/list/${LIST_ID}`);
     }
   };
   return (
@@ -40,9 +46,9 @@ const CreateButton = () => {
       <button onClick={() => setModalVisible(true)}>Create list</button>
       <Modal modalVisible={modalVisible} onClose={() => setModalVisible(false)}>
         <CreateForm
-          userName={userName}
+          username={username}
           listName={listName}
-          handleUserNameChange={handleUserNameChange}
+          handleUsernameChange={handleUsernameChange}
           handleListNameChange={handleListNameChange}
           onSubmit={onSubmit}
         />

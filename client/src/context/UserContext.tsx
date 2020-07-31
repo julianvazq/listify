@@ -4,15 +4,28 @@ type Props = {
   children: JSX.Element[];
 };
 
+interface ContextValues {
+  storedUser: Username;
+  userLists: List[];
+  addUserList: (list: List) => void;
+  deleteUserList: (id: string) => void;
+  setStoredUser: React.Dispatch<React.SetStateAction<Username>>;
+}
+
 type List = {
   name: string;
+  id: string;
+};
+
+type Username = {
+  username: string;
   id: string;
 };
 
 const LISTS_STORAGE_KEY = 'lists';
 const USERNAME_STORAGE_KEY = 'username';
 
-export const UserContext = createContext<any>(null);
+export const UserContext = createContext({} as ContextValues);
 
 const retrieveLocalStorage = (key) => {
   const storage = localStorage.getItem(key);
@@ -21,11 +34,11 @@ const retrieveLocalStorage = (key) => {
     return JSON.parse(storage);
   }
 
-  return key === LISTS_STORAGE_KEY ? [] : '';
+  return key === LISTS_STORAGE_KEY ? [] : { username: '', id: null };
 };
 
 const ContextProvider = ({ children }: Props) => {
-  const [userName, setUserName] = useState<string>(() =>
+  const [storedUser, setStoredUser] = useState<Username>(() =>
     retrieveLocalStorage(USERNAME_STORAGE_KEY)
   );
   const [userLists, setUserLists] = useState<List[]>(() =>
@@ -34,8 +47,8 @@ const ContextProvider = ({ children }: Props) => {
 
   /* Update localStorage */
   useEffect(() => {
-    localStorage.setItem(USERNAME_STORAGE_KEY, JSON.stringify(userName));
-  }, [userName]);
+    localStorage.setItem(USERNAME_STORAGE_KEY, JSON.stringify(storedUser));
+  }, [storedUser]);
 
   useEffect(() => {
     localStorage.setItem(LISTS_STORAGE_KEY, JSON.stringify(userLists));
@@ -53,7 +66,13 @@ const ContextProvider = ({ children }: Props) => {
 
   return (
     <UserContext.Provider
-      value={{ userLists, addUserList, deleteUserList, userName, setUserName }}
+      value={{
+        userLists,
+        addUserList,
+        deleteUserList,
+        storedUser,
+        setStoredUser,
+      }}
     >
       {children}
     </UserContext.Provider>

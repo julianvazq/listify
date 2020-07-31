@@ -17,11 +17,11 @@ const router = require('./routes/router');
 app.use(router);
 
 io.on('connection', (socket) => {
-  socket.on('join', ({ listId, listName, userName }, callback) => {
+  socket.on('join', ({ listId, listName, username }, callback) => {
     console.log(
       `listID: ${listId}
        listName: ${listName}
-       userName: ${userName}`
+       username: ${username}`
     );
 
     /* Look if room exists */
@@ -42,7 +42,7 @@ io.on('connection', (socket) => {
     // callback('response to client');
   });
 
-  socket.on('input-item', ({ listId, userName, itemName }) => {
+  socket.on('input-item', ({ listId, username, itemName }) => {
     // Works for both editting and adding items
     /* Look if item exists */
     /* If not found
@@ -54,7 +54,7 @@ io.on('connection', (socket) => {
        UPDATE item
        RETURN items (all, to update clients)   
     */
-    //  WHAT TO RETURN: items ids (postgresIDs), items names,  (userNames?)
+    //  WHAT TO RETURN: items ids (postgresIDs), items names,  (usernames?)
   });
 
   socket.on('delete-item', ({ listId, itemName }) => {
@@ -72,3 +72,11 @@ io.on('connection', (socket) => {
 
 const PORT = 4000;
 server.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));
+
+/* Queries */
+
+/* --- Select all USERS in LIST --- */
+/* 
+    SELECT *
+    FROM lists INNER JOIN users ON (lists.id = users.list_id);
+ */
