@@ -5,11 +5,21 @@ import Modal from '../../shared/Modal/Modal';
 import CreateForm from '../CreateForm/CreateForm';
 import { UserContext } from '../../../context/UserContext';
 
+export type ErrorState = {
+  username: string | null;
+  listName: string | null;
+};
+
 const CreateButton = () => {
-  const { addUserList, storedUser, setStoredUser } = useContext(UserContext);
+  const { storedUser, setStoredUser } = useContext(UserContext);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [username, setUsername] = useState<string>('');
   const [listName, setListName] = useState<string>('Untitled');
+  const [error, setError] = useState<ErrorState>({
+    /* Initialized as empty string to prevent navigation prior to validation */
+    username: '',
+    listName: '',
+  });
   const history = useHistory();
 
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,12 +30,26 @@ const CreateButton = () => {
     setListName(e.target.value);
   };
 
-  const saveUsername = () => {
-    const USER_ID = uuidV4();
+  // const saveUsername = () => {
+  //   const USER_ID = uuidV4();
 
-    if (username !== '') {
-      setStoredUser({ username, id: USER_ID });
+  //   if (username !== '') {
+  //     setStoredUser({ username, id: USER_ID });
+  //   }
+  // };
+
+  const validateInputs = () => {
+    const updatedError: ErrorState = { username: null, listName: null };
+
+    if (!username && !storedUser.username) {
+      updatedError.username = 'This field is required.';
     }
+
+    if (!listName) {
+      updatedError.listName = 'This field is required.';
+    }
+
+    return updatedError;
   };
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -33,16 +57,16 @@ const CreateButton = () => {
 
     const LIST_ID = uuidV4();
 
-    if (storedUser.username !== '' || username !== '') {
-      /* Save list and username in LocalStorage */
-      addUserList({ name: listName, id: LIST_ID });
-      saveUsername();
+    const updatedError = validateInputs();
 
-      const name = listName !== '' ? listName : 'untitled';
-
-      history.push(`/list?name=${name}&id=${LIST_ID}`);
+    if (updatedError.username === null && updatedError.listName === null) {
+      setStoredUser({ ...storedUser, username });
+      history.push(`/list?name=${listName}&id=${LIST_ID}&new=true`);
+    } else {
+      setError(updatedError);
     }
   };
+
   return (
     <>
       <button onClick={() => setModalVisible(true)}>Create list</button>
@@ -53,6 +77,7 @@ const CreateButton = () => {
           handleUsernameChange={handleUsernameChange}
           handleListNameChange={handleListNameChange}
           onSubmit={onSubmit}
+          error={error}
         />
       </Modal>
     </>

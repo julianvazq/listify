@@ -20,78 +20,73 @@ const router = require('./routes/router');
 app.use(router);
 
 io.on('connection', (socket) => {
-  socket.on('join', async ({ listId, listName, user }, callback) => {
-    // console.log(
-    //   `listID: ${listId}
-    //    listName: ${listName}
-    //    username: ${user.username}`
-    // );
+  socket.on('join', async ({ isNewList, listId, listName, user }, callback) => {
+    console.log(
+      `isNewList: ${isNewList}
+      listID: ${listId}
+       listName: ${listName}
+       username: ${user.username}`
+    );
 
     try {
-      /* Check if list exists */
-      const list = await pool.query(
-        'SELECT EXISTS(SELECT 1 FROM lists WHERE list_id = $1)',
-        [listId]
-      );
-
-      console.log(list);
-
-      /* If it exists */
-      if (list.rows[0].exists) {
-        /* Check if list exists */
+      /* 1. If list exists */
+      if (!isNewList) {
+        /* 1.a. Check if user exists */
         const findUser = await pool.query(
           'SELECT EXISTS(SELECT 1 FROM users WHERE user_id = $1)',
           [user.id]
         );
-
         if (!findUser.rows[0].exists) {
           const newUser = await pool.query(
             'INSERT INTO users(user_id, name, list_id) VALUES($1, $2, $3) RETURNING *',
             [user.id, user.username, listId]
           );
         }
-
-        /* Find all list members */
+        /* 1.b. Find all list members */
         const members = await pool.query(
           'SELECT users.name FROM lists INNER JOIN users USING(list_id) WHERE (list_id = $1)',
           [listId]
         );
-
         console.log('RETURN FROM EXISTING LIST --- ', listName, members.rows);
-        /* If it doesn't exist */
+        /* 2. If list doesn't exist */
       } else {
-        /* Create new list  */
-        console.log('CREATING NEW LIST');
+        /* 2.a. Create new list  */
         const newList = await pool.query(
           'INSERT INTO lists(list_id, name) VALUES($1, $2) RETURNING *',
           [listId, listName]
         );
-
-        /* Create new user */
-        const newUser = await pool.query(
-          'INSERT INTO users(user_id, name, list_id) VALUES($1, $2, $3) RETURNING *',
-          [user.id, user.username, listId]
+        /* 2.b. Check if user exists */
+        const findUser = await pool.query(
+          'SELECT EXISTS(SELECT 1 FROM users WHERE user_id = $1)',
+          [user.id]
         );
-
+        if (!findUser.rows[0].exists) {
+          const newUser = await pool.query(
+            'INSERT INTO users(user_id, name, list_id) VALUES($1, $2, $3) RETURNING *',
+            [user.id, user.username, listId]
+          );
+        }
+        console.log(newList.rows);
         console.log('RETURN FROM NEW LIST --- ', listName, [user]);
       }
     } catch (error) {
       throw error;
     }
 
+    // SELECT  i.item_id,i.name as item_name, u.name as created_by FROM items i INNER JOIN users u ON i.user_id = u.user_id WHERE i.list_id = '2ab7da0f-d9a4-409c-bc36-e14aa90a4ab8'
+
+    // -------------------------------------------------- OLD CODE BELOW
     //   ,
     //   (err, res) => {
     //     if (err) {
     //       throw err;
     //     }
-
     //     if (res.rows !== []) {
     //       console.log('it exists');
     //       exists = true;
     //     }
     //   }
     // );
-
     // if (exists) {
     //   await pool.query(
     //     {
@@ -103,7 +98,6 @@ io.on('connection', (socket) => {
     //       if (err) {
     //         throw err;
     //       }
-
     //       if (res.rows) {
     //         listMembers = res.rows;
     //       }
@@ -120,27 +114,22 @@ io.on('connection', (socket) => {
     //       if (err) {
     //         throw err;
     //       }
-
     //       console.log('return creating: ', res.rows);
     //     }
     //   );
     // }
-
     /* Look if room exists */
-
     /*  If not found
         CREATE room
         CREATE user
         RETURN empty array 
     */
-
     /* If found
        CREATE user
        SELECT items
        SELECT users in room excluding self
        RETURN items and users
      */
-
     // callback('response to client');
   });
 

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, createContext, useReducer } from 'react';
+import { v4 as uuidV4 } from 'uuid';
 
 type Props = {
   children: JSX.Element[];
@@ -34,7 +35,7 @@ const retrieveLocalStorage = (key) => {
     return JSON.parse(storage);
   }
 
-  return key === LISTS_STORAGE_KEY ? [] : { username: '', id: null };
+  return key === LISTS_STORAGE_KEY ? [] : { username: '', id: uuidV4() };
 };
 
 const ContextProvider = ({ children }: Props) => {

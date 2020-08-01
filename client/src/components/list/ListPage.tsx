@@ -16,56 +16,46 @@ const Paragraph = styled.p`
 
 let socket;
 
-const ListPage = ({
-  match,
-  location,
-}: RouteComponentProps<LocationProps | any>) => {
-  const { storedUser, userLists } = useContext(UserContext);
+const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
+  const { storedUser, userLists, addUserList } = useContext(UserContext);
   const [listName, setListName] = useState<string | null>(null);
   const [error, setError] = useState<ErrorState>(null);
-  // const { id } = match.params;
+  const { name, id, new: isNewList } = queryString.parse(location.search);
+
+  const updateURL = () => {
+    window.history.replaceState(
+      null,
+      '',
+      `${location.pathname}?name=${name}&id=${id}`
+    );
+  };
 
   useEffect(() => {
-    const { name, id } = queryString.parse(location.search);
+    console.log(queryString.parse(location.search));
 
     // setListName(name);
     /* Clear error */
     setError(null);
 
-    /* Find if list exists */
-    // const storedListName = findListName(id);
-
-    // if (!storedListName) {
-    //   setError({ error: 'List does not exist.' });
-    //   return;
-    // }
-
     socket = io('localhost:4000');
-    socket.emit(
-      'join',
-      { listId: id, listName: name, user: storedUser }
-      // (res: any) =>
-      //   alert(res)
-    );
+    socket.emit('join', {
+      isNewList: isNewList !== undefined ? true : false,
+      listId: id,
+      listName: name,
+      user: storedUser,
+    });
+    // (res: any) =>
+    //   alert(res)
+    // );
 
     // setListName(storedListName);
 
-    return () => {
-      socket.emit('disconnect');
+    // return () => {
+    //   socket.emit('disconnect');
 
-      socket.off();
-    };
+    //   socket.off();
+    // };
   }, [location.search]);
-
-  const findListName = (id: string): string | undefined => {
-    const list = userLists.find((storedList) => storedList.id === id);
-
-    if (!list) {
-      return undefined;
-    }
-
-    return list.name;
-  };
 
   /* Check if there are any lists in LocalStorage */
   // if (userLists.length === 0) {
@@ -90,6 +80,7 @@ const ListPage = ({
   return (
     <div>
       <h1>{listName}</h1>
+      <h2>LIST PAGE</h2>
       <Paragraph>HAHAHA</Paragraph>
     </div>
   );
