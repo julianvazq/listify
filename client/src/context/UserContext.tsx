@@ -23,7 +23,7 @@ type Username = {
 };
 
 const LISTS_STORAGE_KEY = 'lists';
-const USERNAME_STORAGE_KEY = 'username';
+const USERNAME_STORAGE_KEY = 'user';
 
 export const UserContext = createContext({} as ContextValues);
 

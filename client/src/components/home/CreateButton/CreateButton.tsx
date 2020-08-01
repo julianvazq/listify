@@ -9,7 +9,7 @@ const CreateButton = () => {
   const { addUserList, storedUser, setStoredUser } = useContext(UserContext);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [username, setUsername] = useState<string>('');
-  const [listName, setListName] = useState<string>('Untitled List');
+  const [listName, setListName] = useState<string>('Untitled');
   const history = useHistory();
 
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +38,9 @@ const CreateButton = () => {
       addUserList({ name: listName, id: LIST_ID });
       saveUsername();
 
-      history.push(`/list/${LIST_ID}`);
+      const name = listName !== '' ? listName : 'untitled';
+
+      history.push(`/list?name=${name}&id=${LIST_ID}`);
     }
   };
   return (

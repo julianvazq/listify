@@ -13,16 +13,118 @@ app.use(cors());
 /* Dotenv */
 require('dotenv').config();
 
+/* Db */
+const pool = require('./db/pool');
+
 const router = require('./routes/router');
 app.use(router);
 
 io.on('connection', (socket) => {
-  socket.on('join', ({ listId, listName, username }, callback) => {
-    console.log(
-      `listID: ${listId}
-       listName: ${listName}
-       username: ${username}`
-    );
+  socket.on('join', async ({ listId, listName, user }, callback) => {
+    // console.log(
+    //   `listID: ${listId}
+    //    listName: ${listName}
+    //    username: ${user.username}`
+    // );
+
+    try {
+      /* Check if list exists */
+      const list = await pool.query(
+        'SELECT EXISTS(SELECT 1 FROM lists WHERE list_id = $1)',
+        [listId]
+      );
+
+      console.log(list);
+
+      /* If it exists */
+      if (list.rows[0].exists) {
+        /* Check if list exists */
+        const findUser = await pool.query(
+          'SELECT EXISTS(SELECT 1 FROM users WHERE user_id = $1)',
+          [user.id]
+        );
+
+        if (!findUser.rows[0].exists) {
+          const newUser = await pool.query(
+            'INSERT INTO users(user_id, name, list_id) VALUES($1, $2, $3) RETURNING *',
+            [user.id, user.username, listId]
+          );
+        }
+
+        /* Find all list members */
+        const members = await pool.query(
+          'SELECT users.name FROM lists INNER JOIN users USING(list_id) WHERE (list_id = $1)',
+          [listId]
+        );
+
+        console.log('RETURN FROM EXISTING LIST --- ', listName, members.rows);
+        /* If it doesn't exist */
+      } else {
+        /* Create new list  */
+        console.log('CREATING NEW LIST');
+        const newList = await pool.query(
+          'INSERT INTO lists(list_id, name) VALUES($1, $2) RETURNING *',
+          [listId, listName]
+        );
+
+        /* Create new user */
+        const newUser = await pool.query(
+          'INSERT INTO users(user_id, name, list_id) VALUES($1, $2, $3) RETURNING *',
+          [user.id, user.username, listId]
+        );
+
+        console.log('RETURN FROM NEW LIST --- ', listName, [user]);
+      }
+    } catch (error) {
+      throw error;
+    }
+
+    //   ,
+    //   (err, res) => {
+    //     if (err) {
+    //       throw err;
+    //     }
+
+    //     if (res.rows !== []) {
+    //       console.log('it exists');
+    //       exists = true;
+    //     }
+    //   }
+    // );
+
+    // if (exists) {
+    //   await pool.query(
+    //     {
+    //       text:
+    //         'SELECT * FROM lists INNER JOIN users ON (lists.list_id = users.list_id);',
+    //       values: [listId],
+    //     },
+    //     (err, res) => {
+    //       if (err) {
+    //         throw err;
+    //       }
+
+    //       if (res.rows) {
+    //         listMembers = res.rows;
+    //       }
+    //     }
+    //   );
+    // } else {
+    //   await pool.query(
+    //     {
+    //       text:
+    //         'INSERT INTO public.lists(list_id, name) VALUES($1, $2) RETURNING *',
+    //       values: [listId, listName],
+    //     },
+    //     (err, res) => {
+    //       if (err) {
+    //         throw err;
+    //       }
+
+    //       console.log('return creating: ', res.rows);
+    //     }
+    //   );
+    // }
 
     /* Look if room exists */
 
@@ -78,5 +180,5 @@ server.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));
 /* --- Select all USERS in LIST --- */
 /* 
     SELECT *
-    FROM lists INNER JOIN users ON (lists.id = users.list_id);
+    FROM lists INNER JOIN users ON (lists.list_id = users.list_id);
  */
