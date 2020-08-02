@@ -5,6 +5,8 @@ import io from 'socket.io-client';
 import { RouteComponentProps } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
 import CreateButton from '../home/CreateButton/CreateButton';
+import Modal from '../shared/Modal/Modal';
+import UserForm from './UserForm/UserForm';
 
 type LocationProps = { search: string };
 
@@ -23,13 +25,13 @@ type Member = {
 let socket;
 
 const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
-  const { storedUser, userLists, addUserList } = useContext(UserContext);
+  const { storedUser, setStoredUser, addUserList } = useContext(UserContext);
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [listName, setListName] = useState<string | null>(null);
   const [items, setItems] = useState<Item[]>([]);
   const [members, setMembers] = useState<Member[]>([]);
   const [error, setError] = useState<ErrorState>(null);
   const [loading, setLoading] = useState<boolean>(true);
-
   const { name, id, new: isNewList } = queryString.parse(location.search);
 
   const updateURL = () => {
@@ -39,6 +41,12 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
       `${location.pathname}?name=${name}&id=${id}`
     );
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (!storedUser.username) setModalVisible(true);
+    }, 2000);
+  }, []);
 
   useEffect(() => {
     /* Clear error */
@@ -69,6 +77,8 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
         setListName(res.listName);
         setItems(res.items);
         setMembers(res.members);
+
+        addUserList({ id, name: res.listName });
       }
     );
 
@@ -110,14 +120,23 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
       <h1>{listName}</h1>
       <h2>LIST PAGE</h2>
       Members:{' '}
-      {members.map((member) => (
-        <span key={member.name}>{member.name}</span>
+      {members.map((member, index) => (
+        <span key={index}>{member.name}</span>
       ))}
       <ul>
         {items.map((item) => (
           <li key={item.item_id}>{item.item_name}</li>
         ))}
       </ul>
+      <Modal
+        modalVisible={modalVisible}
+        onClose={() => {
+          setStoredUser({ ...storedUser, username: 'Anonymous' });
+          setModalVisible(false);
+        }}
+      >
+        <UserForm setModalVisible={setModalVisible} />
+      </Modal>
     </div>
   );
 };

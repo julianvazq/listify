@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom';
 import Modal from '../../shared/Modal/Modal';
 import CreateForm from '../CreateForm/CreateForm';
 import { UserContext } from '../../../context/UserContext';
-import useSaveUser from '../../../hooks/useSaveUser';
 
 export type ErrorState = {
   username: string | null;
