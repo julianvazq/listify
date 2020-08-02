@@ -10,16 +10,26 @@ type LocationProps = { search: string };
 
 type ErrorState = { error: string } | null;
 
-const Paragraph = styled.p`
-  color: red;
-`;
+type Item = {
+  item_id: string;
+  item_name: string;
+  created_by: string;
+};
+
+type Member = {
+  name: string;
+};
 
 let socket;
 
 const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
   const { storedUser, userLists, addUserList } = useContext(UserContext);
   const [listName, setListName] = useState<string | null>(null);
+  const [items, setItems] = useState<Item[]>([]);
+  const [members, setMembers] = useState<Member[]>([]);
   const [error, setError] = useState<ErrorState>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+
   const { name, id, new: isNewList } = queryString.parse(location.search);
 
   const updateURL = () => {
@@ -31,22 +41,36 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
   };
 
   useEffect(() => {
-    console.log(queryString.parse(location.search));
-
-    // setListName(name);
     /* Clear error */
     setError(null);
+    setLoading(true);
 
     socket = io('localhost:4000');
-    socket.emit('join', {
-      isNewList: isNewList !== undefined ? true : false,
-      listId: id,
-      listName: name,
-      user: storedUser,
-    });
-    // (res: any) =>
-    //   alert(res)
-    // );
+    socket.emit(
+      'join',
+      {
+        isNewList: isNewList !== undefined ? true : false,
+        listId: id,
+        listName: name,
+        user: storedUser,
+      },
+      (res: any) => {
+        console.log(res);
+        if (res.error) {
+          setError(res);
+          setLoading(false);
+        }
+
+        if (isNewList !== undefined) {
+          updateURL();
+        }
+
+        setLoading(false);
+        setListName(res.listName);
+        setItems(res.items);
+        setMembers(res.members);
+      }
+    );
 
     // setListName(storedListName);
 
@@ -57,21 +81,25 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
     // };
   }, [location.search]);
 
-  /* Check if there are any lists in LocalStorage */
-  // if (userLists.length === 0) {
-  //   return (
-  //     <>
-  //       <h1>You have no saved lists.</h1>
-  //       <CreateButton />
-  //     </>
-  //   );
-  // }
+  if (loading) {
+    return <h1>Loading...</h1>;
+  }
 
-  /* Display error if list is not in LocalStorage */
-  if (error) {
+  if (!loading && error) {
     return (
       <>
         <h1>{error.error}</h1>
+        <CreateButton />
+      </>
+    );
+  }
+
+  /* If list name is not set after coming 
+  back from server then it doesn't exist */
+  if (!loading && !listName) {
+    return (
+      <>
+        <h1>This list does not seem to exist.</h1>
         <CreateButton />
       </>
     );
@@ -81,7 +109,15 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
     <div>
       <h1>{listName}</h1>
       <h2>LIST PAGE</h2>
-      <Paragraph>HAHAHA</Paragraph>
+      Members:{' '}
+      {members.map((member) => (
+        <span key={member.name}>{member.name}</span>
+      ))}
+      <ul>
+        {items.map((item) => (
+          <li key={item.item_id}>{item.item_name}</li>
+        ))}
+      </ul>
     </div>
   );
 };

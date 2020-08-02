@@ -28,6 +28,13 @@ io.on('connection', (socket) => {
        username: ${user.username}`
     );
 
+    /* Final values will be set along the way based on query results */
+    const res = {
+      items: [],
+      members: [{ name: user.username }],
+      listName,
+    };
+
     try {
       /* 1. If list exists */
       if (!isNewList) {
@@ -47,7 +54,14 @@ io.on('connection', (socket) => {
           'SELECT users.name FROM lists INNER JOIN users USING(list_id) WHERE (list_id = $1)',
           [listId]
         );
-        console.log('RETURN FROM EXISTING LIST --- ', listName, members.rows);
+        res.members = members.rows;
+
+        const items = await pool.query(
+          'SELECT  i.item_id,i.name as item_name, u.name as created_by FROM items i INNER JOIN users u ON i.user_id = u.user_id WHERE i.list_id = $1',
+          [listId]
+        );
+        res.items = items.rows;
+
         /* 2. If list doesn't exist */
       } else {
         /* 2.a. Create new list  */
@@ -55,23 +69,32 @@ io.on('connection', (socket) => {
           'INSERT INTO lists(list_id, name) VALUES($1, $2) RETURNING *',
           [listId, listName]
         );
+        res.items = [];
+
         /* 2.b. Check if user exists */
         const findUser = await pool.query(
           'SELECT EXISTS(SELECT 1 FROM users WHERE user_id = $1)',
           [user.id]
         );
+
         if (!findUser.rows[0].exists) {
           const newUser = await pool.query(
             'INSERT INTO users(user_id, name, list_id) VALUES($1, $2, $3) RETURNING *',
             [user.id, user.username, listId]
           );
+          res.members = [{ name: newUser.rows[0].name }];
         }
-        console.log(newList.rows);
-        console.log('RETURN FROM NEW LIST --- ', listName, [user]);
       }
     } catch (error) {
-      throw error;
+      let errorMessage = 'Something went wrong...';
+
+      if (error.routine === 'string_to_uuid') {
+        errorMessage = "List doesn't exist.";
+      }
+      callback({ error: errorMessage });
     }
+
+    callback(res);
 
     // SELECT  i.item_id,i.name as item_name, u.name as created_by FROM items i INNER JOIN users u ON i.user_id = u.user_id WHERE i.list_id = '2ab7da0f-d9a4-409c-bc36-e14aa90a4ab8'
 

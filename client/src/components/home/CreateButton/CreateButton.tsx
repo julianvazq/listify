@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import Modal from '../../shared/Modal/Modal';
 import CreateForm from '../CreateForm/CreateForm';
 import { UserContext } from '../../../context/UserContext';
+import useSaveUser from '../../../hooks/useSaveUser';
 
 export type ErrorState = {
   username: string | null;
@@ -52,6 +53,12 @@ const CreateButton = () => {
     return updatedError;
   };
 
+  const saveUser = () => {
+    if (!storedUser.username) {
+      setStoredUser({ ...storedUser, username });
+    }
+  };
+
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -60,7 +67,7 @@ const CreateButton = () => {
     const updatedError = validateInputs();
 
     if (updatedError.username === null && updatedError.listName === null) {
-      setStoredUser({ ...storedUser, username });
+      saveUser();
       history.push(`/list?name=${listName}&id=${LIST_ID}&new=true`);
     } else {
       setError(updatedError);
