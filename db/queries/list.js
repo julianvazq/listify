@@ -1,7 +1,7 @@
 const pool = require('../pool');
 
 /* @DESC: Create new list 
-   @RETURNS: { list_id: string, name: string, creation_date: date }
+   @RETURNS: List metadata object
    @EXAMPLE RESPONSE: {
                         list_id: '40466407-4e26-4286-b51c-d57316fbc9c8',
                         name: 'Untitled',

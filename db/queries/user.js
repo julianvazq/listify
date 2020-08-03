@@ -1,6 +1,7 @@
 const pool = require('../pool');
 
-/* @DESC: Check if user exists
+/* @TYPE: EXISTS
+   @DESC: Check if user exists
    @RETURNS: boolean
    @EXAMPLE RESPONSE: true
 */
@@ -20,8 +21,9 @@ const CHECK_USER = async (userId) => {
   }
 };
 
-/* @DESC: Create new user 
-   @RETURNS: { user_id: string, name: string }
+/* @TYPE: INSERT 
+   @DESC: Create new user 
+   @RETURNS: User object
    @EXAMPLE RESPONSE: {user_id: 'ea45c7a4-bb92-458c-bd7b-a4722c6243a5', name: 'John' }
 */
 const CREATE_USER = async (user) => {
