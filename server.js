@@ -5,9 +5,10 @@ const http = require('http');
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
+exports.io = io;
 
 /* Socket Actions */
-const { createList, getList } = require('./sockets/actions');
+const { createList, getList, createUser } = require('./sockets/events');
 
 /* CORS */
 const cors = require('cors');
@@ -23,9 +24,11 @@ const router = require('./routes/router');
 app.use(router);
 
 io.on('connection', (socket) => {
-  socket.on('CREATE-LIST', createList);
+  socket.on('CREATE_LIST', createList);
 
-  socket.on('GET-LIST', getList);
+  socket.on('GET_LIST', getList);
+
+  socket.on('CREATE_USER', createUser);
 
   socket.on('join', async ({ isNewList, listId, listName, user }, callback) => {
     console.log(

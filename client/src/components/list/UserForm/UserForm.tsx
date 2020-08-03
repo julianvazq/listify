@@ -2,6 +2,12 @@ import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { UserContext } from '../../../context/UserContext';
 
+type UserFormProps = {
+  setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  socket: any;
+  listId: any;
+};
+
 const Form = styled.form``;
 
 const Label = styled.label`
@@ -12,15 +18,28 @@ const Input = styled.input`
   width: 100%;
 `;
 
-const UserForm = ({ setModalVisible }) => {
-  const { storedUser } = useContext(UserContext);
-  const [username, setUsername] = useState();
+const UserForm: React.FC<UserFormProps> = ({
+  setModalVisible,
+  socket,
+  listId,
+}) => {
+  const { storedUser, setStoredUser } = useContext(UserContext);
+  const [username, setUsername] = useState<string>('');
 
-  const handleUsernameChange = (e) => {
+  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
   };
 
-  const onSubmit = () => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    socket.emit(
+      'CREATE_USER',
+      { user: { ...storedUser, username }, listId },
+      (res: any) => {
+        setStoredUser({ ...storedUser, username });
+      }
+    );
+
     setModalVisible(false);
   };
 
@@ -31,9 +50,8 @@ const UserForm = ({ setModalVisible }) => {
         type='text'
         value={storedUser.username ? storedUser.username : username}
         onChange={handleUsernameChange}
-        disabled={storedUser.username !== ''}
       />
-      <button>Ready</button>
+      <button>Save name</button>
     </Form>
   );
 };

@@ -1,6 +1,7 @@
 const pool = require('../pool');
 
-/* @DESC: Create new list 
+/* @TYPE: INSERT
+   @DESC: Create new list 
    @RETURNS: List metadata object
    @EXAMPLE RESPONSE: {
                         list_id: '40466407-4e26-4286-b51c-d57316fbc9c8',
@@ -14,6 +15,8 @@ const CREATE_LIST = async (listId, listName) => {
       'INSERT INTO lists(list_id, name) VALUES($1, $2) RETURNING *',
       [listId, listName]
     );
+
+    // CREATE NEW MEMBERSHIP TO LIST
 
     return newList.rows[0];
   } catch (error) {

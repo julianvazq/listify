@@ -16,6 +16,7 @@ const GET_ITEMS = async (listId) => {
     return items.rows;
   } catch (error) {
     console.log(error);
+    return { message: 'There was a problem [ITEM].', error: true };
   }
 };
 

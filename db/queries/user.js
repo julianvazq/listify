@@ -33,7 +33,8 @@ const CREATE_USER = async (user) => {
       [user.id, user.username]
     );
 
-    console.log(newUser);
+    // CREATE NEW MEMBERSHIP TO LIST
+
     return newUser.rows[0];
   } catch (error) {
     console.log(error);

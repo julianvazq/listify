@@ -23,6 +23,7 @@ type Member = {
 };
 
 let socket;
+socket = io('localhost:4000');
 
 const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
   const { storedUser, setStoredUser, addUserList } = useContext(UserContext);
@@ -43,6 +44,12 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
   };
 
   useEffect(() => {
+    if (!loading) {
+      updateURL();
+    }
+  }, [loading]);
+
+  useEffect(() => {
     setTimeout(() => {
       if (!storedUser.username) setModalVisible(true);
     }, 2000);
@@ -53,66 +60,64 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
     setError(null);
     setLoading(true);
 
-    socket = io('localhost:4000');
-
     /* If URL does not have 'new' flag */
     if (createList === undefined) {
-      socket.emit('GET-LIST', {
-        listId: id,
-        user: storedUser,
-      });
-    } else {
       socket.emit(
-        'CREATE-LIST',
+        'GET_LIST',
         {
           listId: id,
           listName: name,
           user: storedUser,
         },
         (res: any) => {
-          console.log('CREATE-LIST CALLBACK');
+          console.log('GET_LIST CALLBACK');
+          if (res.error) {
+            setError(res);
+          }
+
+          if (!storedUser.username) {
+            setModalVisible(true);
+          }
+
+          setListName(res.listName);
+          setItems(res.items);
+          setMembers(res.members);
+          setLoading(false);
+        }
+      );
+    } else {
+      socket.emit(
+        'CREATE_LIST',
+        {
+          listId: id,
+          listName: name,
+          user: storedUser,
+        },
+        (res: any) => {
+          console.log('CREATE_LIST CALLBACK');
           if (res.error) {
             setError(res);
           }
 
           setListName(res.listName);
+          setMembers(res.members);
           setLoading(false);
         }
       );
     }
-    // socket.emit(
-    //   'join',
-    //   {
-    //     isNewList: isNewList !== undefined ? true : false,
-    //     listId: id,
-    //     listName: name,
-    //     user: storedUser,
-    //   },
-    //   (res: any) => {
-    //     console.log(res);
-    //     if (res.error) {
-    //       setError(res);
-    //       setLoading(false);
-    //     }
 
-    //     if (isNewList !== undefined) {
-    //       updateURL();
-    //     }
-
-    //     setLoading(false);
-    //     setListName(res.listName);
-    //     setItems(res.items);
-    //     setMembers(res.members);
-
-    //     addUserList({ id, name: res.listName });
-    //   }
-    // );
+    socket.on('NEW_MEMBER', (members: any) => {
+      setMembers(members);
+    });
 
     return () => {
       socket.emit('disconnect');
 
       socket.off();
     };
+
+    /* Runs when URL changes and when new user saves their name */
+    // }, [location.search, storedUser.username]);
   }, [location.search]);
 
   if (loading) {
@@ -159,7 +164,11 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
           setModalVisible(false);
         }}
       >
-        <UserForm setModalVisible={setModalVisible} />
+        <UserForm
+          setModalVisible={setModalVisible}
+          socket={socket}
+          listId={id}
+        />
       </Modal>
     </div>
   );
