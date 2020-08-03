@@ -6,6 +6,9 @@ const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
+/* Socket Actions */
+const { createList, getList } = require('./sockets/actions');
+
 /* CORS */
 const cors = require('cors');
 app.use(cors());
@@ -20,6 +23,10 @@ const router = require('./routes/router');
 app.use(router);
 
 io.on('connection', (socket) => {
+  socket.on('CREATE-LIST', createList);
+
+  socket.on('GET-LIST', getList);
+
   socket.on('join', async ({ isNewList, listId, listName, user }, callback) => {
     console.log(
       `isNewList: ${isNewList}
@@ -45,8 +52,8 @@ io.on('connection', (socket) => {
         );
         if (!findUser.rows[0].exists) {
           const newUser = await pool.query(
-            'INSERT INTO users(user_id, name, list_id) VALUES($1, $2, $3) RETURNING *',
-            [user.id, user.username, listId]
+            'INSERT INTO users(user_id, name) VALUES($1, $2, $3) RETURNING *',
+            [user.id, user.username]
           );
         }
         /* 1.b. Find all list members */
@@ -79,8 +86,8 @@ io.on('connection', (socket) => {
 
         if (!findUser.rows[0].exists) {
           const newUser = await pool.query(
-            'INSERT INTO users(user_id, name, list_id) VALUES($1, $2, $3) RETURNING *',
-            [user.id, user.username, listId]
+            'INSERT INTO users(user_id, name) VALUES($1, $2, $3) RETURNING *',
+            [user.id, user.username]
           );
           res.members = [{ name: newUser.rows[0].name }];
         }

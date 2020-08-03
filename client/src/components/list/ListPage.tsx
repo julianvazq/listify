@@ -32,7 +32,7 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
   const [members, setMembers] = useState<Member[]>([]);
   const [error, setError] = useState<ErrorState>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const { name, id, new: isNewList } = queryString.parse(location.search);
+  const { name, id, new: createList } = queryString.parse(location.search);
 
   const updateURL = () => {
     window.history.replaceState(
@@ -54,41 +54,65 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
     setLoading(true);
 
     socket = io('localhost:4000');
-    socket.emit(
-      'join',
-      {
-        isNewList: isNewList !== undefined ? true : false,
+
+    /* If URL does not have 'new' flag */
+    if (createList === undefined) {
+      socket.emit('GET-LIST', {
         listId: id,
-        listName: name,
         user: storedUser,
-      },
-      (res: any) => {
-        console.log(res);
-        if (res.error) {
-          setError(res);
+      });
+    } else {
+      socket.emit(
+        'CREATE-LIST',
+        {
+          listId: id,
+          listName: name,
+          user: storedUser,
+        },
+        (res: any) => {
+          console.log('CREATE-LIST CALLBACK');
+          if (res.error) {
+            setError(res);
+          }
+
+          setListName(res.listName);
           setLoading(false);
         }
+      );
+    }
+    // socket.emit(
+    //   'join',
+    //   {
+    //     isNewList: isNewList !== undefined ? true : false,
+    //     listId: id,
+    //     listName: name,
+    //     user: storedUser,
+    //   },
+    //   (res: any) => {
+    //     console.log(res);
+    //     if (res.error) {
+    //       setError(res);
+    //       setLoading(false);
+    //     }
 
-        if (isNewList !== undefined) {
-          updateURL();
-        }
+    //     if (isNewList !== undefined) {
+    //       updateURL();
+    //     }
 
-        setLoading(false);
-        setListName(res.listName);
-        setItems(res.items);
-        setMembers(res.members);
+    //     setLoading(false);
+    //     setListName(res.listName);
+    //     setItems(res.items);
+    //     setMembers(res.members);
 
-        addUserList({ id, name: res.listName });
-      }
-    );
+    //     addUserList({ id, name: res.listName });
+    //   }
+    // );
 
-    // setListName(storedListName);
+    return () => {
+      socket.emit('disconnect');
 
-    // return () => {
-    //   socket.emit('disconnect');
-
-    //   socket.off();
-    // };
+      socket.off();
+    };
   }, [location.search]);
 
   if (loading) {

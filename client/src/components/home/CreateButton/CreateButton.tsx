@@ -67,7 +67,7 @@ const CreateButton = () => {
 
     if (updatedError.username === null && updatedError.listName === null) {
       saveUser();
-      history.push(`/list?name=${listName}&id=${LIST_ID}&new=true`);
+      history.push(`/list?name=${listName}&id=${LIST_ID}&new`);
     } else {
       setError(updatedError);
     }
