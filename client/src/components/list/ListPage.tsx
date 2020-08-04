@@ -22,6 +22,21 @@ type Member = {
   name: string;
 };
 
+/* Not used but show accurate return values 
+--------------------------------------------*/
+type ErrorResponse = {
+  error: string;
+};
+
+type SuccessResponse = {
+  items: Item[];
+  members: Member[];
+  listName: string;
+};
+
+type Response = SuccessResponse | ErrorResponse;
+/* ------------------------------------------*/
+
 let socket;
 socket = io('localhost:4000');
 
@@ -83,6 +98,8 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
           setItems(res.items);
           setMembers(res.members);
           setLoading(false);
+
+          addUserList({ id, name: res.listName });
         }
       );
     } else {
@@ -102,6 +119,8 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
           setListName(res.listName);
           setMembers(res.members);
           setLoading(false);
+
+          addUserList({ id, name: res.listName });
         }
       );
     }

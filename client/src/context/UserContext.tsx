@@ -1,4 +1,5 @@
-import React, { useState, useEffect, createContext, useReducer } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
+import io from 'socket.io-client';
 import { v4 as uuidV4 } from 'uuid';
 
 type Props = {

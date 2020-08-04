@@ -32,15 +32,9 @@ const UserForm: React.FC<UserFormProps> = ({
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setStoredUser({ ...storedUser, username });
-    socket.emit(
-      'CREATE_USER',
-      { user: { ...storedUser, username }, listId }
-      // (res: any) => {
-      //   setStoredUser({ ...storedUser, username });
-      // }
-    );
+    socket.emit('CREATE_USER', { user: { ...storedUser, username }, listId });
 
+    setStoredUser({ ...storedUser, username });
     setModalVisible(false);
   };
 
