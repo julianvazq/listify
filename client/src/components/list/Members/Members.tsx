@@ -21,7 +21,7 @@ const Members: React.FC<MembersProps> = ({ members }) => {
 
     if (longMembersList) {
       finalOutput =
-        membersOutput.join('') + ` + ${members.length - 3} other(s).`;
+        membersOutput.join('') + ` + ${members.length - 3} other(s)`;
     }
 
     return finalOutput;

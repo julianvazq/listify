@@ -1,22 +1,24 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import queryString from 'query-string';
-import io from 'socket.io-client';
 import { RouteComponentProps } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
 import CreateButton from '../home/CreateButton/CreateButton';
 import Modal from '../shared/Modal/Modal';
 import UserForm from './UserForm/UserForm';
 import Members from './Members/Members';
+import List from './List/List';
 
 type LocationProps = { search: string };
 
 type ErrorState = { error: string } | null;
 
-type Item = {
+export type Item = {
+  completed: boolean;
   item_id: string;
   item_name: string;
-  created_by: string;
+  last_edit: string;
+  list_id: string;
 };
 
 export type Member = {
@@ -37,9 +39,6 @@ type SuccessResponse = {
 
 type Response = SuccessResponse | ErrorResponse;
 /* ------------------------------------------*/
-
-// let socket;
-// socket = io('localhost:4000');
 
 const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
   const { socket, storedUser, setStoredUser, addUserList } = useContext(
@@ -135,6 +134,12 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
       setMembers(newMembers);
     });
 
+    socket.on('UPDATE_ITEMS', (updatedItems: any) => {
+      console.log('UPDATE_ITEM HANDLER');
+      console.log(updatedItems);
+      setItems(updatedItems);
+    });
+
     return () => {
       socket.emit('disconnect');
     };
@@ -172,17 +177,7 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
       <h1>{listName}</h1>
       <h2>LIST PAGE</h2>
       <Members members={members} />
-      {/* Members:{' '}
-      {members.map((member, index) => (
-        <p key={index}>
-          {index}. {member.name}
-        </p>
-      ))} */}
-      <ul>
-        {items.map((item) => (
-          <li key={item.item_id}>{item.item_name}</li>
-        ))}
-      </ul>
+      <List items={items} />
       <Modal
         modalVisible={modalVisible}
         onClose={() => {

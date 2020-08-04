@@ -24,6 +24,7 @@ app.use(router);
 const getListHandler = require('./sockets/getListHandler');
 const createListHandler = require('./sockets/createListHandler');
 const createUserHandler = require('./sockets/createUserHandler');
+const updateItemHandler = require('./sockets/updateItemHandler');
 
 io.on('connection', (socket) => {
   createListHandler('CREATE_LIST', socket);
@@ -31,6 +32,8 @@ io.on('connection', (socket) => {
   getListHandler('GET_LIST', socket);
 
   createUserHandler('CREATE_USER', socket);
+
+  updateItemHandler('UPDATE_ITEM', socket);
 
   socket.on('message', () => {
     console.log('message received!');
