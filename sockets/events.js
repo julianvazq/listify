@@ -33,6 +33,8 @@ const createList = async ({ listId, listName, user }, callback) => {
 const getList = async ({ listId, listName, user }, callback) => {
   console.log('GET LIST ACTION');
 
+  // console.log(socket);
+
   const items = await GET_ITEMS(listId);
 
   // if (user.username !== '') {

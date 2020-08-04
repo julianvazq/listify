@@ -106,8 +106,10 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
       );
     }
 
-    socket.on('NEW_MEMBER', (members: any) => {
-      setMembers(members);
+    socket.on('NEW_MEMBER', (newMembers: any) => {
+      console.log('NEW_MEMBER ALL');
+      console.log({ newMembers });
+      setMembers(newMembers);
     });
 
     return () => {
@@ -118,7 +120,7 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
 
     /* Runs when URL changes and when new user saves their name */
     // }, [location.search, storedUser.username]);
-  }, [location.search]);
+  }, [location.search, storedUser.username]);
 
   if (loading) {
     return <h1>Loading...</h1>;
@@ -150,7 +152,9 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
       <h2>LIST PAGE</h2>
       Members:{' '}
       {members.map((member, index) => (
-        <span key={index}>{member.name}</span>
+        <p key={index}>
+          {index}. {member.name}
+        </p>
       ))}
       <ul>
         {items.map((item) => (

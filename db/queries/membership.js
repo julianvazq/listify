@@ -2,6 +2,27 @@ const pool = require('../pool');
 
 /* MEMBERSHIPS acts as a join table betewen LISTS and USERS */
 
+/* @TYPE: EXISTS
+   @DESC: Check if membership exists
+   @RETURNS: boolean
+   @EXAMPLE RESPONSE: true
+*/
+const CHECK_MEMBERSHIP = async (listId, userId) => {
+  try {
+    const membership = await pool.query(
+      'SELECT EXISTS(SELECT m.user_id FROM memberships m INNER JOIN lists l ON (m.list_id = l.list_id) WHERE (m.list_id = $1) AND (m.user_id = $2))',
+      [listId, userId]
+    );
+
+    if (!membership.rows[0].exists) {
+      return false;
+    }
+    return true;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 /* @TYPE: INSERT 
    @DESC: Create new membership 
    @RETURNS: void
@@ -32,4 +53,4 @@ const GET_MEMBERS = async (listId) => {
   }
 };
 
-module.exports = { CREATE_MEMBERSHIP, GET_MEMBERS };
+module.exports = { CHECK_MEMBERSHIP, CREATE_MEMBERSHIP, GET_MEMBERS };

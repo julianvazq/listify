@@ -23,12 +23,19 @@ const pool = require('./db/pool');
 const router = require('./routes/router');
 app.use(router);
 
+const getListHandler = require('./sockets/getListHandler');
+const createListHandler = require('./sockets/createListHandler');
+const createUserHandler = require('./sockets/createUserHandler');
+
 io.on('connection', (socket) => {
-  socket.on('CREATE_LIST', createList);
+  // socket.on('CREATE_LIST', createList);
+  createListHandler('CREATE_LIST', socket);
 
-  socket.on('GET_LIST', getList);
+  // socket.on('GET_LIST', getList);
+  getListHandler('GET_LIST', socket);
 
-  socket.on('CREATE_USER', createUser);
+  // socket.on('CREATE_USER', createUser);
+  createUserHandler('CREATE_USER', socket);
 
   socket.on('join', async ({ isNewList, listId, listName, user }, callback) => {
     console.log(
@@ -190,7 +197,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => {
-    console.log('user just disconnected');
+    console.log(`DISCONNECT: A user just disconnected.`);
   });
 });
 
