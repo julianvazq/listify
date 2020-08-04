@@ -1,10 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import { UserContext } from '../../../context/UserContext';
 
 type UserFormProps = {
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  socket: any;
   listId: any;
 };
 
@@ -18,12 +17,8 @@ const Input = styled.input`
   width: 100%;
 `;
 
-const UserForm: React.FC<UserFormProps> = ({
-  setModalVisible,
-  socket,
-  listId,
-}) => {
-  const { storedUser, setStoredUser } = useContext(UserContext);
+const UserForm: React.FC<UserFormProps> = ({ setModalVisible, listId }) => {
+  const { socket, storedUser, setStoredUser } = useContext(UserContext);
   const [username, setUsername] = useState<string>('');
 
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {

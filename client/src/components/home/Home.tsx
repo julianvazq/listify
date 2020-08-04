@@ -4,7 +4,9 @@ import ListOptions from './ListOptions/ListOptions';
 import { v4 as uuidV4 } from 'uuid';
 
 export const Home = () => {
-  const { userLists, addUserList, deleteUserList } = useContext(UserContext);
+  const { socket, userLists, addUserList, deleteUserList } = useContext(
+    UserContext
+  );
 
   return (
     <div>

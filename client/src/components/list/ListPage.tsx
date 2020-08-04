@@ -7,6 +7,7 @@ import { UserContext } from '../../context/UserContext';
 import CreateButton from '../home/CreateButton/CreateButton';
 import Modal from '../shared/Modal/Modal';
 import UserForm from './UserForm/UserForm';
+import Members from './Members/Members';
 
 type LocationProps = { search: string };
 
@@ -18,7 +19,7 @@ type Item = {
   created_by: string;
 };
 
-type Member = {
+export type Member = {
   name: string;
 };
 
@@ -37,11 +38,13 @@ type SuccessResponse = {
 type Response = SuccessResponse | ErrorResponse;
 /* ------------------------------------------*/
 
-let socket;
-socket = io('localhost:4000');
+// let socket;
+// socket = io('localhost:4000');
 
 const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
-  const { storedUser, setStoredUser, addUserList } = useContext(UserContext);
+  const { socket, storedUser, setStoredUser, addUserList } = useContext(
+    UserContext
+  );
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [listName, setListName] = useState<string | null>(null);
   const [items, setItems] = useState<Item[]>([]);
@@ -99,6 +102,8 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
           setMembers(res.members);
           setLoading(false);
 
+          console.log('FINISHED GETTING LIST');
+
           addUserList({ id, name: res.listName });
         }
       );
@@ -126,22 +131,19 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
     }
 
     socket.on('NEW_MEMBER', (newMembers: any) => {
-      console.log('NEW_MEMBER ALL');
-      console.log({ newMembers });
+      console.log('NEW_MEMBER HANDLER');
       setMembers(newMembers);
     });
 
     return () => {
       socket.emit('disconnect');
-
-      socket.off();
     };
 
     /* Runs when URL changes and when new user saves their name */
     // }, [location.search, storedUser.username]);
   }, [location.search, storedUser.username]);
 
-  if (loading) {
+  if (loading && !error) {
     return <h1>Loading...</h1>;
   }
 
@@ -169,12 +171,13 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
     <div>
       <h1>{listName}</h1>
       <h2>LIST PAGE</h2>
-      Members:{' '}
+      <Members members={members} />
+      {/* Members:{' '}
       {members.map((member, index) => (
         <p key={index}>
           {index}. {member.name}
         </p>
-      ))}
+      ))} */}
       <ul>
         {items.map((item) => (
           <li key={item.item_id}>{item.item_name}</li>
@@ -187,11 +190,7 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
           setModalVisible(false);
         }}
       >
-        <UserForm
-          setModalVisible={setModalVisible}
-          socket={socket}
-          listId={id}
-        />
+        <UserForm setModalVisible={setModalVisible} listId={id} />
       </Modal>
     </div>
   );

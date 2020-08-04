@@ -12,6 +12,7 @@ interface ContextValues {
   addUserList: (list: List) => void;
   deleteUserList: (id: string) => void;
   setStoredUser: React.Dispatch<React.SetStateAction<Username>>;
+  socket: SocketIOClient.Socket;
 }
 
 type List = {
@@ -26,6 +27,8 @@ type Username = {
 
 const LISTS_STORAGE_KEY = 'lists';
 const USERNAME_STORAGE_KEY = 'user';
+
+const socket = io('localhost:4000');
 
 export const UserContext = createContext({} as ContextValues);
 
@@ -71,6 +74,7 @@ const ContextProvider = ({ children }: Props) => {
   return (
     <UserContext.Provider
       value={{
+        socket,
         userLists,
         addUserList,
         deleteUserList,

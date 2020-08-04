@@ -33,7 +33,9 @@ const CREATE_MEMBERSHIP = async (listId, userId) => {
       'INSERT INTO memberships(list_id, user_id) VALUES($1, $2) RETURNING *',
       [listId, userId]
     );
-    console.log('Successful membership created.');
+    console.log(
+      `Successful membership created: listId: ${listId} AND userId: ${userId}`
+    );
   } catch (error) {
     console.log(error);
   }
