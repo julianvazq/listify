@@ -24,6 +24,16 @@ const ListItem: React.FC<ListItemProps> = ({ item }) => {
     setItemName(item_name);
   }, [item_name]);
 
+  const handleItemNameChange = (e) => {
+    setItemName(e.target.value);
+
+    socket.emit('EDITING', {
+      listId: list_id,
+      item: { id: item_id, name: e.target.value },
+      editing: { active: true, by: storedUser.username },
+    });
+  };
+
   const handleCheck = () => {
     setChecked(!checked);
     socket.emit('UPDATE_ITEM', {
@@ -39,9 +49,8 @@ const ListItem: React.FC<ListItemProps> = ({ item }) => {
 
     socket.emit('EDITING', {
       listId: list_id,
-      itemId: item_id,
-      user: storedUser,
-      editing: true,
+      item: { id: item_id, name: itemName },
+      editing: { active: true, by: storedUser.username },
     });
   };
 
@@ -59,15 +68,14 @@ const ListItem: React.FC<ListItemProps> = ({ item }) => {
     //   });
   };
 
-  const rejectNameChange = () => {
+  const rejectNameChange = (e) => {
     setItemName(item_name);
     setEditMode(false);
 
     socket.emit('EDITING', {
       listId: list_id,
-      itemId: item_id,
-      user: storedUser,
-      editing: false,
+      item: { id: item_id, name: item_name },
+      editing: { active: false, by: storedUser.username },
     });
   };
 
@@ -90,11 +98,11 @@ const ListItem: React.FC<ListItemProps> = ({ item }) => {
           autoFocus
           type='text'
           value={itemName}
-          onChange={(e) => setItemName(e.target.value)}
+          onChange={handleItemNameChange}
           onBlur={rejectNameChange}
         />
         <button onClick={rejectNameChange}>No</button>
-        <button onClick={confirmNameChange}>Yes</button>
+        <button onMouseDown={confirmNameChange}>Yes</button>
       </li>
     );
   }

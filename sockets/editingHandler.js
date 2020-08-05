@@ -1,17 +1,18 @@
 const { GET_ITEMS } = require('../db/queries/item');
 
 module.exports = (event, socket) => {
-  socket.on(event, async ({ listId, itemId, user, editing }, callback) => {
+  socket.on(event, async ({ listId, item, editing }, callback) => {
     const items = await GET_ITEMS(listId);
 
-    const itemsWithEditMode = items.map((item) => {
-      if (item.item_id === itemId) {
+    const itemsWithEditMode = items.map((dbItem) => {
+      if (dbItem.item_id === item.id) {
         return {
           ...item,
-          editing: { active: editing, by: user.username },
+          item_name: item.name,
+          editing,
         };
       }
-      return item;
+      return dbItem;
     });
 
     socket.to(listId).emit('EDITING', itemsWithEditMode);
