@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Item, EditMode } from '../ListPage';
+import { Item } from '../ListPage';
 import { UserContext } from '../../../context/UserContext';
 
 type ListItemProps = {
@@ -10,10 +10,9 @@ const COMPLETED = 'completed';
 const ITEM_NAME = 'item_name';
 
 const ListItem: React.FC<ListItemProps> = ({ item }) => {
-  const { item_id, item_name, last_edit, completed, list_id, edit_mode } = item;
+  const { item_id, item_name, last_edit, completed, list_id, editing } = item;
   const { socket, storedUser } = useContext(UserContext);
   const [checked, setChecked] = useState(false);
-  //   const [editMode, setEditMode] = useState<EditMode>();
   const [editItem, setEditItem] = useState<boolean>(false);
   const [itemName, setItemName] = useState<string>('');
 
@@ -24,12 +23,6 @@ const ListItem: React.FC<ListItemProps> = ({ item }) => {
   useEffect(() => {
     setItemName(item_name);
   }, [item_name]);
-
-  //   useEffect(() => {
-  //     if (edit_mode !== undefined) {
-  //       setEditMode(edit_mode);
-  //     }
-  //   }, [edit_mode]);
 
   const handleCheck = () => {
     setChecked(!checked);
@@ -44,27 +37,37 @@ const ListItem: React.FC<ListItemProps> = ({ item }) => {
   const toggleEditModeOn = () => {
     setEditItem(true);
 
-    socket.emit('EDIT_MODE', {
+    socket.emit('EDITING', {
       listId: list_id,
       itemId: item_id,
       user: storedUser,
-      editMode: true,
+      editing: true,
     });
   };
 
   const confirmNameChange = () => {
     setEditItem(false);
+
+    // Fix onBlur triggering rejectNameChange when this is clicked
+
+    // UPDATE_ITEM goes here
+    // socket.emit('UPDATE_ITEM', {
+    //     listId: list_id,
+    //     itemId: item_id,
+    //     property: ITEM_NAME,
+    //     value: itemName,
+    //   });
   };
 
   const rejectNameChange = () => {
     setItemName(item_name);
     setEditItem(false);
 
-    socket.emit('EDIT_MODE', {
+    socket.emit('EDITING', {
       listId: list_id,
       itemId: item_id,
       user: storedUser,
-      editMode: false,
+      editing: false,
     });
   };
 
@@ -73,10 +76,10 @@ const ListItem: React.FC<ListItemProps> = ({ item }) => {
       <li>
         <input type='checkbox' checked={checked} onChange={handleCheck} />
         {itemName}
-        <button onClick={toggleEditModeOn} disabled={edit_mode?.editting}>
+        <button onClick={toggleEditModeOn} disabled={editing?.active}>
           Edit
         </button>
-        Edit mode: {edit_mode?.editting ? `yes by ${edit_mode.by}` : 'no'}
+        Edit mode: {editing?.active ? `yes by ${editing.by}` : 'no'}
       </li>
     );
   } else {
