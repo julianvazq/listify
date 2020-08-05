@@ -7,8 +7,11 @@ type ListItemProps = {
   deleteItem: (itemId: string) => void;
 };
 
-const COMPLETED = 'completed';
-const ITEM_NAME = 'item_name';
+const COMPLETED_PROPERTY = 'completed';
+const ITEM_NAME_PROPERTY = 'item_name';
+
+const EDITING_ITEM_EVENT = 'EDITING_ITEM';
+const UPDATE_ITEM_EVENT = 'UPDATE_ITEM';
 
 const ListItem: React.FC<ListItemProps> = ({ item, deleteItem }) => {
   const { item_id, item_name, last_edit, completed, list_id, editing } = item;
@@ -33,7 +36,7 @@ const ListItem: React.FC<ListItemProps> = ({ item, deleteItem }) => {
   const handleItemNameChange = (e) => {
     setItemName(e.target.value);
 
-    socket.emit('EDITING', {
+    socket.emit(EDITING_ITEM_EVENT, {
       listId: list_id,
       item: { id: item_id, name: e.target.value },
       editing: { active: true, by: storedUser.username },
@@ -42,10 +45,10 @@ const ListItem: React.FC<ListItemProps> = ({ item, deleteItem }) => {
 
   const handleCheck = () => {
     setChecked(!checked);
-    socket.emit('UPDATE_ITEM', {
+    socket.emit(UPDATE_ITEM_EVENT, {
       listId: list_id,
       itemId: item_id,
-      property: COMPLETED,
+      property: COMPLETED_PROPERTY,
       value: !checked,
     });
   };
@@ -53,7 +56,7 @@ const ListItem: React.FC<ListItemProps> = ({ item, deleteItem }) => {
   const toggleEditModeOn = () => {
     setEditMode(true);
 
-    socket.emit('EDITING', {
+    socket.emit(EDITING_ITEM_EVENT, {
       listId: list_id,
       item: { id: item_id, name: itemName },
       editing: { active: true, by: storedUser.username },
@@ -64,11 +67,11 @@ const ListItem: React.FC<ListItemProps> = ({ item, deleteItem }) => {
     setEditMode(false);
 
     socket.emit(
-      'UPDATE_ITEM',
+      UPDATE_ITEM_EVENT,
       {
         listId: list_id,
         itemId: item_id,
-        property: ITEM_NAME,
+        property: ITEM_NAME_PROPERTY,
         value: itemName,
         user: storedUser,
       },
@@ -82,7 +85,7 @@ const ListItem: React.FC<ListItemProps> = ({ item, deleteItem }) => {
     setItemName(item_name);
     setEditMode(false);
 
-    socket.emit('EDITING', {
+    socket.emit(EDITING_ITEM_EVENT, {
       listId: list_id,
       item: { id: item_id, name: item_name },
       editing: { active: false, by: storedUser.username },

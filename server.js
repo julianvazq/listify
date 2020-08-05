@@ -30,43 +30,11 @@ const deleteItemHandler = require('./sockets/deleteItemHandler');
 
 io.on('connection', (socket) => {
   createListHandler('CREATE_LIST', socket);
-
   getListHandler('GET_LIST', socket);
-
   createUserHandler('CREATE_USER', socket);
-
-  editingHandler('EDITING', socket);
-
+  editingHandler('EDITING_ITEM', socket);
   updateItemHandler('UPDATE_ITEM', socket);
-
   deleteItemHandler('DELETE_ITEM', socket);
-
-  socket.on('message', () => {
-    console.log('message received!');
-  });
-
-  socket.on('input-item', ({ listId, username, itemName }) => {
-    // Works for both editting and adding items
-    /* Look if item exists */
-    /* If not found
-       CREATE item
-       SELECT items
-       RETURN items (all, to update clients)
-    */
-    /* If found
-       UPDATE item
-       RETURN items (all, to update clients)   
-    */
-    //  WHAT TO RETURN: items ids (postgresIDs), items names,  (usernames?)
-  });
-
-  socket.on('delete-item', ({ listId, itemName }) => {
-    /* 
-       DELETE item
-       SELECT items
-       RETURN items (all, to update clients)
-    */
-  });
 
   socket.on('disconnect', () => {
     console.log(`DISCONNECT: A user just disconnected.`);
