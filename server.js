@@ -27,6 +27,7 @@ const createUserHandler = require('./sockets/createUserHandler');
 const updateItemHandler = require('./sockets/updateItemHandler');
 const editingHandler = require('./sockets/editingHandler');
 const deleteItemHandler = require('./sockets/deleteItemHandler');
+const addItemHandler = require('./sockets/addItemHandler');
 
 io.on('connection', (socket) => {
   createListHandler('CREATE_LIST', socket);
@@ -35,6 +36,7 @@ io.on('connection', (socket) => {
   editingHandler('EDITING_ITEM', socket);
   updateItemHandler('UPDATE_ITEM', socket);
   deleteItemHandler('DELETE_ITEM', socket);
+  addItemHandler('ADD_ITEM', socket);
 
   socket.on('disconnect', () => {
     console.log(`DISCONNECT: A user just disconnected.`);

@@ -63,6 +63,20 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
     });
   };
 
+  const addItem = (itemName: string) => {
+    socket.emit(
+      'ADD_ITEM',
+      {
+        listId: id,
+        itemName: itemName,
+        user: storedUser,
+      },
+      (updatedItems: any) => {
+        setItems(updatedItems);
+      }
+    );
+  };
+
   const updateURL = () => {
     window.history.replaceState(
       null,
@@ -147,13 +161,11 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
 
     socket.on('UPDATE_ITEMS', (updatedItems: any) => {
       console.log('UPDATE_ITEM HANDLER');
-      console.log(updatedItems);
       setItems(updatedItems);
     });
 
     socket.on('EDITING', (updatedItems: any) => {
       console.log('EDITING HANDLER');
-      console.log(updatedItems);
       setItems(updatedItems);
     });
 
@@ -194,7 +206,7 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
       <h1>{listName}</h1>
       <h2>LIST PAGE</h2>
       <Members members={members} />
-      <List items={items} deleteItem={deleteItem} />
+      <List items={items} deleteItem={deleteItem} addItem={addItem} />
       <Modal
         modalVisible={modalVisible}
         onClose={() => {

@@ -16,8 +16,6 @@ const CREATE_LIST = async (listId, listName) => {
       [listId, listName]
     );
 
-    // CREATE NEW MEMBERSHIP TO LIST
-
     return newList.rows[0];
   } catch (error) {
     console.log(error);

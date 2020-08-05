@@ -74,9 +74,29 @@ const DELETE_ITEM = async (itemId) => {
   }
 };
 
+/* @TYPE: ADD
+   @DESC: Add item
+   @RETURNS: New item
+   @EXAMPLE RESPONSE: { item_id: 5, item_name: 'Cheese', last_edit: 'Aang' }
+*/
+const ADD_ITEM = async (itemName, listId, userId) => {
+  try {
+    const newItem = await pool.query(
+      'INSERT INTO items(item_name, list_id, last_user_edit) VALUES($1, $2, $3) RETURNING *',
+      [itemName, listId, userId]
+    );
+
+    return newItem.rows[0];
+  } catch (error) {
+    console.log(error);
+    return { message: 'There was a problem [ITEM-UPDATE].', error: true };
+  }
+};
+
 module.exports = {
   GET_ITEMS,
   UPDATE_ITEM_GENERIC,
   UPDATE_ITEM_NAME,
   DELETE_ITEM,
+  ADD_ITEM,
 };

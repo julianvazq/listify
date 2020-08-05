@@ -100,7 +100,9 @@ const ListItem: React.FC<ListItemProps> = ({ item, deleteItem }) => {
         <button onClick={toggleEditModeOn} disabled={editing?.active}>
           Edit
         </button>
-        <button onClick={() => deleteItem(item_id)}>Delete</button>
+        <button onClick={() => deleteItem(item_id)} disabled={editing?.active}>
+          Delete
+        </button>
         Edit mode: {editing?.active ? `yes by ${editing.by}` : 'no'}
         Last edit: {lastEdit}
       </li>
