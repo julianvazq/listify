@@ -25,6 +25,7 @@ const getListHandler = require('./sockets/getListHandler');
 const createListHandler = require('./sockets/createListHandler');
 const createUserHandler = require('./sockets/createUserHandler');
 const updateItemHandler = require('./sockets/updateItemHandler');
+const editModeHandler = require('./sockets/editModeHandler');
 
 io.on('connection', (socket) => {
   createListHandler('CREATE_LIST', socket);
@@ -32,6 +33,8 @@ io.on('connection', (socket) => {
   getListHandler('GET_LIST', socket);
 
   createUserHandler('CREATE_USER', socket);
+
+  editModeHandler('EDIT_MODE', socket);
 
   updateItemHandler('UPDATE_ITEM', socket);
 

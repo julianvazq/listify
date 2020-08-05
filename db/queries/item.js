@@ -23,12 +23,12 @@ const GET_ITEMS = async (listId) => {
 /* @TYPE: UPDATE
    @DESC: Update 'completed' column
    @RETURNS: Updated item
-   @EXAMPLE RESPONSE: { item_id: 5, item_name: 'Cheese', last_edit: 'Aang' }
+   @EXAMPLE RESPONSE: { item_id: 5, item_name: 'Cheese', last_edit: 'Aang', edit_mode: false }
 */
-const UPDATE_ITEM_COMPLETED = async (value, itemId) => {
+const UPDATE_ITEM = async (property, value, itemId) => {
   try {
     const updatedItem = await pool.query(
-      'UPDATE items SET completed = $1 WHERE item_id = $2 RETURNING *',
+      `UPDATE items SET ${property} = $1 WHERE item_id = $2 RETURNING *`,
       [value, itemId]
     );
 
@@ -39,4 +39,4 @@ const UPDATE_ITEM_COMPLETED = async (value, itemId) => {
   }
 };
 
-module.exports = { GET_ITEMS, UPDATE_ITEM_COMPLETED };
+module.exports = { GET_ITEMS, UPDATE_ITEM };

@@ -13,8 +13,11 @@ type LocationProps = { search: string };
 
 type ErrorState = { error: string } | null;
 
+export type EditMode = { editting: boolean; by: string };
+
 export type Item = {
   completed: boolean;
+  edit_mode?: EditMode;
   item_id: string;
   item_name: string;
   last_edit: string;
@@ -136,6 +139,12 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
 
     socket.on('UPDATE_ITEMS', (updatedItems: any) => {
       console.log('UPDATE_ITEM HANDLER');
+      console.log(updatedItems);
+      setItems(updatedItems);
+    });
+
+    socket.on('EDIT_MODE', (updatedItems: any) => {
+      console.log('EDIT_MODE HANDLER');
       console.log(updatedItems);
       setItems(updatedItems);
     });
