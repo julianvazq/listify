@@ -13,7 +13,7 @@ const ListItem: React.FC<ListItemProps> = ({ item }) => {
   const { item_id, item_name, last_edit, completed, list_id, editing } = item;
   const { socket, storedUser } = useContext(UserContext);
   const [checked, setChecked] = useState(false);
-  const [editItem, setEditItem] = useState<boolean>(false);
+  const [editMode, setEditMode] = useState<boolean>(false);
   const [itemName, setItemName] = useState<string>('');
 
   useEffect(() => {
@@ -35,7 +35,7 @@ const ListItem: React.FC<ListItemProps> = ({ item }) => {
   };
 
   const toggleEditModeOn = () => {
-    setEditItem(true);
+    setEditMode(true);
 
     socket.emit('EDITING', {
       listId: list_id,
@@ -46,7 +46,7 @@ const ListItem: React.FC<ListItemProps> = ({ item }) => {
   };
 
   const confirmNameChange = () => {
-    setEditItem(false);
+    setEditMode(false);
 
     // Fix onBlur triggering rejectNameChange when this is clicked
 
@@ -61,7 +61,7 @@ const ListItem: React.FC<ListItemProps> = ({ item }) => {
 
   const rejectNameChange = () => {
     setItemName(item_name);
-    setEditItem(false);
+    setEditMode(false);
 
     socket.emit('EDITING', {
       listId: list_id,
@@ -71,7 +71,7 @@ const ListItem: React.FC<ListItemProps> = ({ item }) => {
     });
   };
 
-  if (!editItem) {
+  if (!editMode) {
     return (
       <li>
         <input type='checkbox' checked={checked} onChange={handleCheck} />
