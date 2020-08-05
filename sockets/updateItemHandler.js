@@ -4,7 +4,7 @@ const {
   GET_ITEMS,
 } = require('../db/queries/item');
 
-module.exports = (event, socket) => {
+module.exports = (event, socket, io) => {
   socket.on(
     event,
     async ({ listId, itemId, property, value, user }, callback) => {
@@ -16,9 +16,6 @@ module.exports = (event, socket) => {
           break;
         case 'item_name':
           await UPDATE_ITEM_NAME(property, value, itemId, user.id);
-          /* Callback updates item for user that triggered the update event.
-             This is necessary because socket.emit only updates other users. */
-          callback();
           break;
         default:
           break;
@@ -26,7 +23,7 @@ module.exports = (event, socket) => {
 
       const items = await GET_ITEMS(listId);
 
-      socket.to(listId).emit('UPDATE_ITEMS', items);
+      io.in(listId).emit('UPDATE_ITEMS', items);
     }
   );
 };

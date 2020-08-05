@@ -1,13 +1,13 @@
 const { GET_ITEMS, ADD_ITEM } = require('../db/queries/item');
 
-module.exports = (event, socket) => {
+module.exports = (event, socket, io) => {
   socket.on(event, async ({ listId, itemName, user }, callback) => {
     await ADD_ITEM(itemName, listId, user.id);
 
+    console.log(io);
+
     const items = await GET_ITEMS(listId);
 
-    socket.to(listId).emit('UPDATE_ITEMS', items);
-
-    callback(items);
+    io.in(listId).emit('UPDATE_ITEMS', items);
   });
 };
