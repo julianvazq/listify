@@ -7,7 +7,7 @@ module.exports = (event, socket) => {
     switch (property) {
       case 'completed':
         await UPDATE_ITEM(property, value, itemId);
-      case 'edit_mode':
+      case 'item_name':
         await UPDATE_ITEM(property, value, itemId);
       default:
         break;

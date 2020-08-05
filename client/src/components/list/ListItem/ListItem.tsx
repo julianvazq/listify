@@ -57,15 +57,12 @@ const ListItem: React.FC<ListItemProps> = ({ item }) => {
   const confirmNameChange = () => {
     setEditMode(false);
 
-    // Fix onBlur triggering rejectNameChange when this is clicked
-
-    // UPDATE_ITEM goes here
-    // socket.emit('UPDATE_ITEM', {
-    //     listId: list_id,
-    //     itemId: item_id,
-    //     property: ITEM_NAME,
-    //     value: itemName,
-    //   });
+    socket.emit('UPDATE_ITEM', {
+      listId: list_id,
+      itemId: item_id,
+      property: ITEM_NAME,
+      value: itemName,
+    });
   };
 
   const rejectNameChange = (e) => {
