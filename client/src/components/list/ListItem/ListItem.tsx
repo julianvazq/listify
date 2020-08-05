@@ -13,6 +13,7 @@ const ListItem: React.FC<ListItemProps> = ({ item }) => {
   const { item_id, item_name, last_edit, completed, list_id, editing } = item;
   const { socket, storedUser } = useContext(UserContext);
   const [checked, setChecked] = useState(false);
+  const [lastEdit, setLastEdit] = useState<string>('');
   const [editMode, setEditMode] = useState<boolean>(false);
   const [itemName, setItemName] = useState<string>('');
 
@@ -23,6 +24,10 @@ const ListItem: React.FC<ListItemProps> = ({ item }) => {
   useEffect(() => {
     setItemName(item_name);
   }, [item_name]);
+
+  useEffect(() => {
+    setLastEdit(last_edit);
+  }, [last_edit]);
 
   const handleItemNameChange = (e) => {
     setItemName(e.target.value);
@@ -57,12 +62,19 @@ const ListItem: React.FC<ListItemProps> = ({ item }) => {
   const confirmNameChange = () => {
     setEditMode(false);
 
-    socket.emit('UPDATE_ITEM', {
-      listId: list_id,
-      itemId: item_id,
-      property: ITEM_NAME,
-      value: itemName,
-    });
+    socket.emit(
+      'UPDATE_ITEM',
+      {
+        listId: list_id,
+        itemId: item_id,
+        property: ITEM_NAME,
+        value: itemName,
+        user: storedUser,
+      },
+      () => {
+        setLastEdit(storedUser.username);
+      }
+    );
   };
 
   const rejectNameChange = (e) => {
@@ -85,6 +97,7 @@ const ListItem: React.FC<ListItemProps> = ({ item }) => {
           Edit
         </button>
         Edit mode: {editing?.active ? `yes by ${editing.by}` : 'no'}
+        Last edit: {lastEdit}
       </li>
     );
   } else {

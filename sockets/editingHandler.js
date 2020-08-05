@@ -7,7 +7,7 @@ module.exports = (event, socket) => {
     const itemsWithEditMode = items.map((dbItem) => {
       if (dbItem.item_id === item.id) {
         return {
-          ...item,
+          ...dbItem,
           item_name: item.name,
           editing,
         };

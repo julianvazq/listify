@@ -23,9 +23,9 @@ const GET_ITEMS = async (listId) => {
 /* @TYPE: UPDATE
    @DESC: Update 'completed' column
    @RETURNS: Updated item
-   @EXAMPLE RESPONSE: { item_id: 5, item_name: 'Cheese', last_edit: 'Aang', edit_mode: false }
+   @EXAMPLE RESPONSE: { item_id: 5, item_name: 'Cheese', last_edit: 'Aang' }
 */
-const UPDATE_ITEM = async (property, value, itemId) => {
+const UPDATE_ITEM_GENERIC = async (property, value, itemId) => {
   try {
     const updatedItem = await pool.query(
       `UPDATE items SET ${property} = $1 WHERE item_id = $2 RETURNING *`,
@@ -39,4 +39,23 @@ const UPDATE_ITEM = async (property, value, itemId) => {
   }
 };
 
-module.exports = { GET_ITEMS, UPDATE_ITEM };
+/* @TYPE: UPDATE
+   @DESC: Update 'last_edit' column
+   @RETURNS: Updated item
+   @EXAMPLE RESPONSE: { item_id: 5, item_name: 'Cheese', last_edit: 'Aang' }
+*/
+const UPDATE_ITEM_NAME = async (property, value, itemId, userId) => {
+  try {
+    const updatedItem = await pool.query(
+      `UPDATE items SET ${property} = $1, last_user_edit = $2 WHERE item_id = $3 RETURNING *`,
+      [value, userId, itemId]
+    );
+
+    return updatedItem.rows[0];
+  } catch (error) {
+    console.log(error);
+    return { message: 'There was a problem [ITEM-UPDATE].', error: true };
+  }
+};
+
+module.exports = { GET_ITEMS, UPDATE_ITEM_GENERIC, UPDATE_ITEM_NAME };
