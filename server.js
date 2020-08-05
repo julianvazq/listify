@@ -26,6 +26,7 @@ const createListHandler = require('./sockets/createListHandler');
 const createUserHandler = require('./sockets/createUserHandler');
 const updateItemHandler = require('./sockets/updateItemHandler');
 const editingHandler = require('./sockets/editingHandler');
+const deleteItemHandler = require('./sockets/deleteItemHandler');
 
 io.on('connection', (socket) => {
   createListHandler('CREATE_LIST', socket);
@@ -37,6 +38,8 @@ io.on('connection', (socket) => {
   editingHandler('EDITING', socket);
 
   updateItemHandler('UPDATE_ITEM', socket);
+
+  deleteItemHandler('DELETE_ITEM', socket);
 
   socket.on('message', () => {
     console.log('message received!');

@@ -4,12 +4,13 @@ import { UserContext } from '../../../context/UserContext';
 
 type ListItemProps = {
   item: Item;
+  deleteItem: (itemId: string) => void;
 };
 
 const COMPLETED = 'completed';
 const ITEM_NAME = 'item_name';
 
-const ListItem: React.FC<ListItemProps> = ({ item }) => {
+const ListItem: React.FC<ListItemProps> = ({ item, deleteItem }) => {
   const { item_id, item_name, last_edit, completed, list_id, editing } = item;
   const { socket, storedUser } = useContext(UserContext);
   const [checked, setChecked] = useState(false);
@@ -96,6 +97,7 @@ const ListItem: React.FC<ListItemProps> = ({ item }) => {
         <button onClick={toggleEditModeOn} disabled={editing?.active}>
           Edit
         </button>
+        <button onClick={() => deleteItem(item_id)}>Delete</button>
         Edit mode: {editing?.active ? `yes by ${editing.by}` : 'no'}
         Last edit: {lastEdit}
       </li>

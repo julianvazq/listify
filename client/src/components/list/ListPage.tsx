@@ -28,7 +28,7 @@ export type Member = {
   name: string;
 };
 
-/* Not used but show accurate return values 
+/* Not used but show accurate return values from socket events
 --------------------------------------------*/
 type ErrorResponse = {
   error: string;
@@ -39,8 +39,6 @@ type SuccessResponse = {
   members: Member[];
   listName: string;
 };
-
-type Response = SuccessResponse | ErrorResponse;
 /* ------------------------------------------*/
 
 const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
@@ -54,6 +52,16 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
   const [error, setError] = useState<ErrorState>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const { name, id, new: createList } = queryString.parse(location.search);
+
+  const deleteItem = (itemId: string) => {
+    const updatedItems = items.filter((item) => item.item_id !== itemId);
+    setItems(updatedItems);
+
+    socket.emit('DELETE_ITEM', {
+      listId: id,
+      itemId,
+    });
+  };
 
   const updateURL = () => {
     window.history.replaceState(
@@ -186,7 +194,7 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
       <h1>{listName}</h1>
       <h2>LIST PAGE</h2>
       <Members members={members} />
-      <List items={items} />
+      <List items={items} deleteItem={deleteItem} />
       <Modal
         modalVisible={modalVisible}
         onClose={() => {

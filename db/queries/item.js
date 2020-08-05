@@ -2,7 +2,7 @@ const pool = require('../pool');
 
 /* @TYPE: SELECT
    @DESC: Get all items from list
-   @RETURNS: Array of items
+   @RETURNS: Array of items sorted by creation date/time
    @EXAMPLE RESPONSE: [ { item_id: 3, item_name: 'Milk', last_edit: 'Maggie', completed: false,
                           list_id: '97205509-b1e5-4f6d-8522-554fbd856167' }, ... ]
 */
@@ -58,4 +58,25 @@ const UPDATE_ITEM_NAME = async (property, value, itemId, userId) => {
   }
 };
 
-module.exports = { GET_ITEMS, UPDATE_ITEM_GENERIC, UPDATE_ITEM_NAME };
+/* @TYPE: DELETE
+   @DESC: Delete item
+   @RETURNS: void
+*/
+const DELETE_ITEM = async (itemId) => {
+  try {
+    const deleteItem = await pool.query(
+      `DELETE FROM items WHERE item_id = $1`,
+      [itemId]
+    );
+  } catch (error) {
+    console.log(error);
+    return { message: 'There was a problem [ITEM-UPDATE].', error: true };
+  }
+};
+
+module.exports = {
+  GET_ITEMS,
+  UPDATE_ITEM_GENERIC,
+  UPDATE_ITEM_NAME,
+  DELETE_ITEM,
+};

@@ -4,9 +4,10 @@ import ListItem from '../ListItem/ListItem';
 
 type ListProps = {
   items: Item[];
+  deleteItem: (itemId: string) => void;
 };
 
-const List = ({ items }) => {
+const List: React.FC<ListProps> = ({ items, deleteItem }) => {
   const formatListLength = (items) => {
     if (items.length === 0) {
       return 'No items';
@@ -22,7 +23,7 @@ const List = ({ items }) => {
       <p>{formatListLength(items)}</p>
       <ul>
         {items.map((item) => (
-          <ListItem key={item.item_id} item={item} />
+          <ListItem key={item.item_id} item={item} deleteItem={deleteItem} />
         ))}
       </ul>
     </div>
