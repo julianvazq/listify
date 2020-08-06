@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Item } from '../ListPage';
 import { UserContext } from '../../../context/UserContext';
+import ListItemIdle from './ListItemIdle';
+import ListItemEditing from './ListItemEditing';
 
 type ListItemProps = {
   item: Item;
@@ -101,41 +103,27 @@ const ListItem: React.FC<ListItemProps> = ({ item, deleteItem }) => {
 
   if (!editMode) {
     return (
-      <li>
-        <input type='checkbox' checked={checked} onChange={handleCheck} />
-        {itemName}
-        <button onClick={toggleEditModeOn} disabled={editing?.active}>
-          Edit
-        </button>
-        <button onClick={() => deleteItem(item_id)} disabled={editing?.active}>
-          Delete
-        </button>
-        {/* When a item is added, items that are being edited maintain their 
-        'editing' state. For that reason, we need this to avoid showing 
-        'USER is editing...' where USER was the one editing */}
-        {editing?.active &&
-          editing?.userId !== storedUser.id &&
-          `${editing.by} is editing...`}
-        Last edit:{' '}
-        {lastEdit?.id === storedUser.id
-          ? `Last edit by ${lastEdit.name} (You)`
-          : `Last edit by ${lastEdit?.name}`}
-      </li>
+      <ListItemIdle
+        checked={checked}
+        handleCheck={handleCheck}
+        item={item}
+        itemName={itemName}
+        toggleEditModeOn={toggleEditModeOn}
+        deleteItem={deleteItem}
+        lastEdit={lastEdit}
+        storedUser={storedUser}
+      />
     );
   } else {
     return (
-      <li>
-        <input type='checkbox' checked={checked} onChange={handleCheck} />
-        <input
-          autoFocus
-          type='text'
-          value={itemName}
-          onChange={handleItemNameChange}
-          // onBlur={rejectNameChange}
-        />
-        <button onClick={rejectNameChange}>No</button>
-        <button onMouseDown={confirmNameChange}>Yes</button>
-      </li>
+      <ListItemEditing
+        checked={checked}
+        handleCheck={handleCheck}
+        itemName={itemName}
+        handleItemNameChange={handleItemNameChange}
+        confirmNameChange={confirmNameChange}
+        rejectNameChange={rejectNameChange}
+      />
     );
   }
 };
