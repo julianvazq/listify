@@ -9,7 +9,7 @@ const pool = require('../pool');
 const GET_ITEMS = async (listId) => {
   try {
     const items = await pool.query(
-      'SELECT  i.item_id, i.item_name, u.name as last_edit, i.completed, i.list_id FROM items i INNER JOIN users u ON i.last_user_edit = u.user_id WHERE i.list_id = $1 ORDER BY i.creation_date ASC',
+      'SELECT  i.item_id, i.item_name, u.name as last_edit_name, u.user_id as last_edit_id, i.completed, i.list_id FROM items i INNER JOIN users u ON i.last_user_edit = u.user_id WHERE i.list_id = $1 ORDER BY i.creation_date ASC',
       [listId]
     );
 

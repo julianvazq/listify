@@ -20,7 +20,8 @@ export type Item = {
   editing?: Editing;
   item_id: string;
   item_name: string;
-  last_edit: string;
+  last_edit_name: string;
+  last_edit_id: string;
   list_id: string;
 };
 

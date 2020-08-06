@@ -4,8 +4,6 @@ module.exports = (event, socket, io) => {
   socket.on(event, async ({ listId, itemName, user }, callback) => {
     await ADD_ITEM(itemName, listId, user.id);
 
-    console.log(io);
-
     const items = await GET_ITEMS(listId);
 
     io.in(listId).emit('UPDATE_ITEMS', items);
