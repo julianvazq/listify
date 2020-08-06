@@ -101,6 +101,29 @@ const ListItem: React.FC<ListItemProps> = ({ item, deleteItem }) => {
     });
   };
 
+  const getLastEdit = () => {
+    /* If another user is currently editing */
+    if (editing?.active) {
+      return { text: `${editing.by} is editing...`, italic: true };
+    }
+
+    /* If another user is not currently editing */
+    if (lastEdit?.id === storedUser.id) {
+      return { text: `Last edit by ${lastEdit?.name} (You)`, italic: false };
+    } else {
+      return { text: `Last edit by ${lastEdit?.name}`, italic: false };
+    }
+
+    /* Previous working logic */
+    // {editing?.active &&
+    //   editing?.userId !== storedUser.id &&
+    //   `${editing.by} is editing...`}
+    // Last edit:{' '}
+    // {lastEdit?.id === storedUser.id
+    //   ? `Last edit by ${lastEdit?.name} (You)`
+    //   : `Last edit by ${lastEdit?.name}`}
+  };
+
   if (!editMode) {
     return (
       <ListItemIdle
@@ -110,8 +133,7 @@ const ListItem: React.FC<ListItemProps> = ({ item, deleteItem }) => {
         itemName={itemName}
         toggleEditModeOn={toggleEditModeOn}
         deleteItem={deleteItem}
-        lastEdit={lastEdit}
-        storedUser={storedUser}
+        lastEdit={getLastEdit()}
       />
     );
   } else {
@@ -120,6 +142,7 @@ const ListItem: React.FC<ListItemProps> = ({ item, deleteItem }) => {
         checked={checked}
         handleCheck={handleCheck}
         itemName={itemName}
+        lastEdit={getLastEdit()}
         handleItemNameChange={handleItemNameChange}
         confirmNameChange={confirmNameChange}
         rejectNameChange={rejectNameChange}

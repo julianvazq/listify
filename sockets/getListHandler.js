@@ -13,9 +13,23 @@ module.exports = (event, socket) => {
 
     const items = await GET_ITEMS(listId);
 
+    if (items.error) {
+      if (items.type === 'string_to_uuid') {
+        callback({ error: 'This list does not exist.' });
+      } else {
+        callback({ error: 'Something went wrong...' });
+      }
+      return;
+    }
+
     const membershipExists = await CHECK_MEMBERSHIP(listId, user.id);
 
     let members = await GET_MEMBERS(listId);
+
+    if (members.error) {
+      callback({ error: 'Something went wrong...' });
+      return;
+    }
 
     if (!membershipExists && user.username !== '') {
       await CREATE_MEMBERSHIP(listId, user.id);
@@ -25,15 +39,11 @@ module.exports = (event, socket) => {
       members = [...members, { name: user.username }];
     }
 
-    let res = {
+    const res = {
       items,
       members,
       listName,
     };
-
-    if (items.error) {
-      res = { error: 'Something went wrong...' };
-    }
 
     callback(res);
   });

@@ -42,6 +42,24 @@ type SuccessResponse = {
 };
 /* ------------------------------------------*/
 
+const PageContainer = styled.div`
+  max-width: 700px;
+  margin: 4rem 1rem;
+
+  @media (min-width: 700px) {
+    margin: 4rem auto;
+  }
+`;
+
+const ListTitle = styled.h1`
+  font-size: 2.5rem;
+  color: var(--blue);
+  display: inline-block;
+  border-bottom: 3px solid var(--blue);
+  padding-bottom: 0.5rem;
+  margin-bottom: 2rem;
+`;
+
 const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
   const { socket, storedUser, setStoredUser, addUserList } = useContext(
     UserContext
@@ -118,8 +136,8 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
           }
 
           setListName(res.listName);
-          setItems(res.items);
-          setMembers(res.members);
+          setItems(res.items || []);
+          setMembers(res.members || []);
           setLoading(false);
 
           console.log('FINISHED GETTING LIST');
@@ -188,20 +206,19 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
 
   /* If list name is not set after coming 
   back from server then it doesn't exist */
-  if (!loading && !listName) {
-    return (
-      <>
-        <h1>This list does not seem to exist.</h1>
-        <CreateButton />
-      </>
-    );
-  }
+  // if (!loading && !listName) {
+  //   return (
+  //     <>
+  //       <h1>This list does not seem to exist.</h1>
+  //       <CreateButton />
+  //     </>
+  //   );
+  // }
 
   return (
-    <div>
-      <h1>{listName}</h1>
-      <h2>LIST PAGE</h2>
-      <Members members={members} />
+    <PageContainer>
+      <ListTitle>{listName}</ListTitle>
+      {/* <Members members={members} /> */}
       <List items={items} deleteItem={deleteItem} addItem={addItem} />
       <Modal
         modalVisible={modalVisible}
@@ -212,7 +229,7 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
       >
         <UserForm setModalVisible={setModalVisible} listId={id} />
       </Modal>
-    </div>
+    </PageContainer>
   );
 };
 

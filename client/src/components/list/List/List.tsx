@@ -1,12 +1,24 @@
 import React, { useState } from 'react';
 import { Item } from '../ListPage';
 import ListItem from '../ListItem/ListItem';
+import styled from 'styled-components';
 
 type ListProps = {
   items: Item[];
   deleteItem: (itemId: string) => void;
   addItem: (itemName: string) => void;
 };
+
+const ListContainer = styled.div`
+  ul {
+    list-style: none;
+  }
+`;
+
+const ItemCount = styled.p`
+  color: var(--gray);
+  margin-bottom: 2rem;
+`;
 
 const List: React.FC<ListProps> = ({ items, deleteItem, addItem }) => {
   const [newItemName, setNewItemName] = useState<string>('');
@@ -22,8 +34,8 @@ const List: React.FC<ListProps> = ({ items, deleteItem, addItem }) => {
   };
 
   return (
-    <div>
-      <p>{formatListLength(items)}</p>
+    <ListContainer>
+      <ItemCount>{formatListLength(items)}</ItemCount>
       <ul>
         {items.map((item) => (
           <ListItem key={item.item_id} item={item} deleteItem={deleteItem} />
@@ -37,7 +49,7 @@ const List: React.FC<ListProps> = ({ items, deleteItem, addItem }) => {
           <button onClick={() => addItem(newItemName)}>Add</button>
         </li>
       </ul>
-    </div>
+    </ListContainer>
   );
 };
 

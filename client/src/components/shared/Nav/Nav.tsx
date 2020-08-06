@@ -3,13 +3,18 @@ import styled from 'styled-components';
 import { UserContext } from '../../../context/UserContext';
 
 const Container = styled.div`
-  background: pink;
+  background: var(--blue);
 `;
 
 const InnerContainer = styled.div`
-  max-width: 1100px;
+  max-width: 1000px;
   height: 50px;
-  margin: auto;
+  margin: 0 1rem;
+  color: var(--light);
+
+  @media (min-width: 1100px) {
+    margin: auto;
+  }
 `;
 
 const Nav = () => {

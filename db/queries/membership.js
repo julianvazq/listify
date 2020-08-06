@@ -51,7 +51,8 @@ const GET_MEMBERS = async (listId) => {
 
     return members.rows;
   } catch (error) {
-    console.log(error);
+    console.log('GET_MEMBERS: ', error);
+    return { message: 'There was a problem [MEMEBERS-SELECT].', error: true };
   }
 };
 
