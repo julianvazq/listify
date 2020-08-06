@@ -22,7 +22,6 @@ module.exports = (event, socket, io) => {
       }
 
       const items = await GET_ITEMS(listId);
-      console.log(items);
 
       io.in(listId).emit('UPDATE_ITEMS', items);
     }

@@ -88,7 +88,7 @@ const ListItem: React.FC<ListItemProps> = ({ item, deleteItem }) => {
     });
   };
 
-  const rejectNameChange = (e) => {
+  const rejectNameChange = () => {
     setItemName(item_name);
     setEditMode(false);
 
@@ -110,7 +110,12 @@ const ListItem: React.FC<ListItemProps> = ({ item, deleteItem }) => {
         <button onClick={() => deleteItem(item_id)} disabled={editing?.active}>
           Delete
         </button>
-        {editing?.active && `${editing.by} is typing...`}
+        {/* When a item is added, items that are being edited maintain their 
+        'editing' state. For that reason, we need this to avoid showing 
+        'USER is editing...' where USER was the one editing */}
+        {editing?.active &&
+          editing?.userId !== storedUser.id &&
+          `${editing.by} is editing...`}
         Last edit:{' '}
         {lastEdit?.id === storedUser.id
           ? `Last edit by ${lastEdit.name} (You)`
@@ -126,7 +131,7 @@ const ListItem: React.FC<ListItemProps> = ({ item, deleteItem }) => {
           type='text'
           value={itemName}
           onChange={handleItemNameChange}
-          onBlur={rejectNameChange}
+          // onBlur={rejectNameChange}
         />
         <button onClick={rejectNameChange}>No</button>
         <button onMouseDown={confirmNameChange}>Yes</button>

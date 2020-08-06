@@ -13,7 +13,7 @@ type LocationProps = { search: string };
 
 type ErrorState = { error: string } | null;
 
-export type Editing = { active: boolean; by: string };
+export type Editing = { active: boolean; by: string; userId: string };
 
 export type Item = {
   completed: boolean;
@@ -65,17 +65,12 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
   };
 
   const addItem = (itemName: string) => {
-    socket.emit(
-      'ADD_ITEM',
-      {
-        listId: id,
-        itemName: itemName,
-        user: storedUser,
-      },
-      (updatedItems: any) => {
-        setItems(updatedItems);
-      }
-    );
+    socket.emit('ADD_ITEM', {
+      listId: id,
+      itemName: itemName,
+      user: storedUser,
+      items,
+    });
   };
 
   const updateURL = () => {
