@@ -5,6 +5,7 @@ import {
   MdCheckBox,
   MdCheckBoxOutlineBlank,
   MdCheck,
+  MdDelete,
 } from 'react-icons/md';
 import { RiArrowGoBackLine } from 'react-icons/ri';
 
@@ -94,46 +95,38 @@ export const LastEdit = styled.p<{ italic: boolean }>`
 
 const IconStyling = css`
   cursor: pointer;
+  font-size: 2rem;
 `;
 
-export const DeleteButton = styled(MdClose)<GrayedOut>`
+export const DeleteButton = styled(MdDelete)<GrayedOut>`
   ${IconStyling}
-  height: 35px;
-  width: 35px;
   color: ${(props) => (props.grayedOut ? '#9c9c9c' : '#ae0000')};
 `;
 
-export const RevertChangesButton = styled(RiArrowGoBackLine)`
+export const RevertChangesButton = styled(MdClose)`
   ${IconStyling}
-  height: 30px;
-  width: 30px;
 `;
 
 export const EditButton = styled(MdEdit)<GrayedOut>`
   ${IconStyling}
-  height: 30px;
-  width: 30px;
   color: ${(props) => props.grayedOut && '#9c9c9c'};
 
   @media (min-width: 500px) {
-    margin-left: 0.5rem;
+    margin-left: 1rem;
   }
 `;
 
 export const SubmitButton = styled(MdCheck)<GrayedOut>`
   ${IconStyling}
-  height: 35px;
-  width: 35px;
   color: ${(props) => (props.grayedOut ? '#9c9c9c' : '#060')};
 
   @media (min-width: 500px) {
-    margin-left: 0.5rem;
+    margin-left: 1rem;
   }
 `;
 
 export const CheckboxStyles = css`
-  height: 35px;
-  width: 35px;
+  ${IconStyling}
 `;
 
 export const Checkbox = styled(MdCheckBox)<GrayedOut>`
