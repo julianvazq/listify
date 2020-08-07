@@ -33,7 +33,7 @@ const ListItemEditing = ({
       <ContentContainer>
         <Input
           autoFocus
-          type='text'
+          //   type='text'
           value={itemName}
           onChange={handleItemNameChange}
           //   onBlur={rejectNameChange}

@@ -60,7 +60,6 @@ const ListItem: React.FC<ListItemProps> = ({ item, deleteItem }) => {
 
   const handleCheck = (checkState) => {
     if (!editing?.active) {
-      setChecked(checkState);
       socket.emit(UPDATE_ITEM_EVENT, {
         listId: list_id,
         itemId: item_id,

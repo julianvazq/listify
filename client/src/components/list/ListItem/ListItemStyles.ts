@@ -5,14 +5,18 @@ import {
   MdCheckBox,
   MdCheckBoxOutlineBlank,
 } from 'react-icons/md';
-import { FaEdit, FaCheckDouble } from 'react-icons/fa';
+import { FaCheckDouble } from 'react-icons/fa';
 
 export const Item = styled.li`
   display: grid;
-  grid-template-columns: 50px auto 80px;
+  grid-template-columns: 30px auto 50px;
   padding-bottom: 1rem;
   margin-bottom: 1.5rem;
   border-bottom: 1px solid var(--gray);
+
+  @media (min-width: 500px) {
+    grid-template-columns: 30px auto 80px;
+  }
 
   button {
     background: transparent;
@@ -43,11 +47,19 @@ export const CheckboxContainer = styled.div``;
 
 export const ContentContainer = styled.div`
   padding-top: 0.25rem;
+  padding-left: 1rem;
+  padding-right: 0.5rem;
+  overflow: scroll;
 `;
 
 export const ActionsContainer = styled.div`
   display: flex;
   align-items: flex-start;
+  flex-direction: column;
+
+  @media (min-width: 500px) {
+    flex-direction: row;
+  }
 `;
 
 export const ItemName = styled.p`
@@ -55,16 +67,20 @@ export const ItemName = styled.p`
   margin-bottom: 0.5rem;
   font-size: 1.125rem;
   font-weight: 500;
+  max-width: 100%;
+  word-wrap: break-word;
 `;
 
-export const Input = styled.input`
+export const Input = styled.textarea`
   border: none;
+  font-family: 'Ubuntu', sans-serif;
   color: var(--dark);
   margin-bottom: 0.5rem;
   font-size: 1.125rem;
   font-weight: 500;
-  max-width: auto;
   border: 1px solid black;
+  width: 165px;
+  resize: none;
 `;
 
 export const LastEdit = styled.p<{ italic: boolean }>`
