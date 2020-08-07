@@ -58,24 +58,32 @@ const ListItem: React.FC<ListItemProps> = ({ item, deleteItem }) => {
     });
   };
 
-  const handleCheck = () => {
-    setChecked(!checked);
-    socket.emit(UPDATE_ITEM_EVENT, {
-      listId: list_id,
-      itemId: item_id,
-      property: COMPLETED_PROPERTY,
-      value: !checked,
-    });
+  const handleCheck = (checkState) => {
+    if (!editing?.active) {
+      setChecked(checkState);
+      socket.emit(UPDATE_ITEM_EVENT, {
+        listId: list_id,
+        itemId: item_id,
+        property: COMPLETED_PROPERTY,
+        value: checkState,
+      });
+    }
   };
 
   const toggleEditModeOn = () => {
-    setEditMode(true);
+    if (!editing?.active) {
+      setEditMode(true);
 
-    socket.emit(EDITING_ITEM_EVENT, {
-      listId: list_id,
-      item: { id: item_id, name: itemName },
-      editing: { active: true, by: storedUser.username, userId: storedUser.id },
-    });
+      socket.emit(EDITING_ITEM_EVENT, {
+        listId: list_id,
+        item: { id: item_id, name: itemName },
+        editing: {
+          active: true,
+          by: storedUser.username,
+          userId: storedUser.id,
+        },
+      });
+    }
   };
 
   const confirmNameChange = () => {

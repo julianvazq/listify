@@ -1,20 +1,13 @@
-const { GET_ITEMS } = require('../db/queries/item');
-
 module.exports = (event, socket) => {
   socket.on(event, async ({ listId, item, editing }, callback) => {
-    const items = await GET_ITEMS(listId);
-
-    const itemsWithEditMode = items.map((dbItem) => {
-      if (dbItem.item_id === item.id) {
-        return {
-          ...dbItem,
-          item_name: item.name,
-          editing,
-        };
+    /* Item being passed to all sockets looks like this 
+      { 
+        id: item_id, name: e.target.value,
+        editing: { active: true, 
+                   by: storedUser.username, 
+                   id: storedUser.id } 
       }
-      return dbItem;
-    });
-
-    socket.to(listId).emit('EDITING', itemsWithEditMode);
+    */
+    socket.to(listId).emit('EDITING', { ...item, editing });
   });
 };

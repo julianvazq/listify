@@ -178,9 +178,21 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
       setItems(updatedItems);
     });
 
-    socket.on('EDITING', (updatedItems: any) => {
-      console.log('EDITING HANDLER');
-      setItems(updatedItems);
+    socket.on('EDITING', (editingItem: any) => {
+      console.log('EDITING HANDLER', editingItem);
+      /* Find the item being edited and replace it with new edits */
+      setItems((prevItems) =>
+        prevItems.map((item) => {
+          if (item.item_id === editingItem.id) {
+            return {
+              ...item,
+              item_name: editingItem.name,
+              editing: editingItem.editing,
+            };
+          }
+          return item;
+        })
+      );
     });
 
     return () => {

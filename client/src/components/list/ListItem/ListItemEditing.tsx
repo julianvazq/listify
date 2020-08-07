@@ -5,6 +5,11 @@ import {
   ContentContainer,
   ActionsContainer,
   LastEdit,
+  Input,
+  Checkbox,
+  CheckboxOutline,
+  DeleteButton,
+  SubmitButton,
 } from './ListItemStyles';
 
 const ListItemEditing = ({
@@ -19,21 +24,29 @@ const ListItemEditing = ({
   return (
     <Item>
       <CheckboxContainer>
-        <input type='checkbox' checked={checked} onChange={handleCheck} />
+        {checked ? (
+          <Checkbox onClick={() => handleCheck(false)} />
+        ) : (
+          <CheckboxOutline onClick={() => handleCheck(true)} />
+        )}
       </CheckboxContainer>
       <ContentContainer>
-        <input
+        <Input
           autoFocus
           type='text'
           value={itemName}
           onChange={handleItemNameChange}
-          onBlur={rejectNameChange}
+          //   onBlur={rejectNameChange}
         />
         <LastEdit italic={lastEdit.italic}>{lastEdit.text}</LastEdit>
       </ContentContainer>
       <ActionsContainer>
-        <button onClick={rejectNameChange}>No</button>
-        <button onMouseDown={confirmNameChange}>Yes</button>
+        <button onClick={rejectNameChange}>
+          <DeleteButton />
+        </button>
+        <button onMouseDown={confirmNameChange}>
+          <SubmitButton />
+        </button>
       </ActionsContainer>
     </Item>
   );

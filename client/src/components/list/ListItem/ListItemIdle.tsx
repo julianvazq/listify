@@ -6,6 +6,10 @@ import {
   ActionsContainer,
   ItemName,
   LastEdit,
+  EditButton,
+  DeleteButton,
+  Checkbox,
+  CheckboxOutline,
 } from './ListItemStyles';
 
 const ListItemIdle = ({
@@ -21,18 +25,22 @@ const ListItemIdle = ({
   return (
     <Item>
       <CheckboxContainer>
-        <input type='checkbox' checked={checked} onChange={handleCheck} />
+        {checked ? (
+          <Checkbox onClick={() => handleCheck(false)} />
+        ) : (
+          <CheckboxOutline onClick={() => handleCheck(true)} />
+        )}
       </CheckboxContainer>
-      <ContentContainer>
+      <ContentContainer onClick={toggleEditModeOn}>
         <ItemName>{itemName}</ItemName>
         <LastEdit italic={lastEdit.italic}>{lastEdit.text}</LastEdit>
       </ContentContainer>
       <ActionsContainer>
-        <button onClick={toggleEditModeOn} disabled={editing?.active}>
-          Edit
-        </button>
         <button onClick={() => deleteItem(item_id)} disabled={editing?.active}>
-          Delete
+          <DeleteButton />
+        </button>
+        <button onClick={toggleEditModeOn} disabled={editing?.active}>
+          <EditButton />
         </button>
       </ActionsContainer>
     </Item>

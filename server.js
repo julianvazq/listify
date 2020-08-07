@@ -45,11 +45,3 @@ io.on('connection', (socket) => {
 
 const PORT = 4000;
 server.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));
-
-/* Queries */
-
-/* --- Select all USERS in LIST --- */
-/* 
-    SELECT *
-    FROM lists INNER JOIN users ON (lists.list_id = users.list_id);
- */
