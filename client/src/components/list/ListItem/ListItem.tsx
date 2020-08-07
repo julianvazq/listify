@@ -111,7 +111,7 @@ const ListItem: React.FC<ListItemProps> = ({ item, deleteItem }) => {
 
   const getLastEdit = () => {
     /* If another user is currently editing */
-    if (editing?.active) {
+    if (editing?.active && editing?.userId !== storedUser.id) {
       return { text: `${editing.by} is editing...`, italic: true };
     }
 

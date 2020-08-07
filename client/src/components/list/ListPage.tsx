@@ -175,7 +175,19 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
 
     socket.on('UPDATE_ITEMS', (updatedItems: any) => {
       console.log('UPDATE_ITEM HANDLER');
-      setItems(updatedItems);
+      /* Turn edit state off for items the client itself is currently editing */
+      const itemsFinal = updatedItems.map((item) => {
+        if (item.editing && item.editing.userId === storedUser.id) {
+          return {
+            ...item,
+            editing: {
+              active: false,
+            },
+          };
+        }
+        return item;
+      });
+      setItems(itemsFinal);
     });
 
     socket.on('EDITING', (editingItem: any) => {
