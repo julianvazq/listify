@@ -177,7 +177,8 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
       console.log('UPDATE_ITEM HANDLER');
       /* Turn edit state off for items the client itself is currently editing */
       const itemsFinal = updatedItems.map((item) => {
-        if (item.editing && item.editing.userId === storedUser.id) {
+        console.log(item);
+        if (item.editing && item.editing.id === storedUser.id) {
           return {
             ...item,
             editing: {
