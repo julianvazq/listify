@@ -86,15 +86,17 @@ const ListItem: React.FC<ListItemProps> = ({ item, deleteItem }) => {
   };
 
   const confirmNameChange = () => {
-    setEditMode(false);
+    if (itemName !== '') {
+      setEditMode(false);
 
-    socket.emit(UPDATE_ITEM_EVENT, {
-      listId: list_id,
-      itemId: item_id,
-      property: ITEM_NAME_PROPERTY,
-      value: itemName,
-      user: storedUser,
-    });
+      socket.emit(UPDATE_ITEM_EVENT, {
+        listId: list_id,
+        itemId: item_id,
+        property: ITEM_NAME_PROPERTY,
+        value: itemName,
+        user: storedUser,
+      });
+    }
   };
 
   const rejectNameChange = () => {

@@ -8,7 +8,6 @@ import {
   Input,
   Checkbox,
   CheckboxOutline,
-  DeleteButton,
   RevertChangesButton,
   SubmitButton,
 } from './ListItemStyles';
@@ -49,17 +48,16 @@ const ListItemEditing = ({
           onFocus={handleTextAreaHeight}
           value={itemName}
           onChange={handleTextArea}
-          //   onBlur={rejectNameChange}
+          // onBlur={rejectNameChange}
         />
         <LastEdit italic={lastEdit.italic}>{lastEdit.text}</LastEdit>
       </ContentContainer>
       <ActionsContainer>
         <button onClick={rejectNameChange}>
-          {/* <DeleteButton /> */}
           <RevertChangesButton />
         </button>
         <button onMouseDown={confirmNameChange}>
-          <SubmitButton />
+          <SubmitButton grayedOut={itemName === ''} />
         </button>
       </ActionsContainer>
     </Item>
