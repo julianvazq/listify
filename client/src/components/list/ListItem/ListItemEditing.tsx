@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Item,
   CheckboxContainer,
@@ -9,6 +9,7 @@ import {
   Checkbox,
   CheckboxOutline,
   DeleteButton,
+  RevertChangesButton,
   SubmitButton,
 } from './ListItemStyles';
 
@@ -21,6 +22,17 @@ const ListItemEditing = ({
   confirmNameChange,
   rejectNameChange,
 }: any) => {
+  const [textAreaHeight, setTextAreaHeight] = useState<number>(20.8);
+
+  const handleTextAreaHeight = (e) => {
+    setTextAreaHeight(e.target.scrollHeight);
+  };
+
+  const handleTextArea = (e) => {
+    handleItemNameChange(e);
+    handleTextAreaHeight(e);
+  };
+
   return (
     <Item>
       <CheckboxContainer>
@@ -32,17 +44,19 @@ const ListItemEditing = ({
       </CheckboxContainer>
       <ContentContainer>
         <Input
+          height={textAreaHeight}
           autoFocus
-          //   type='text'
+          onFocus={handleTextAreaHeight}
           value={itemName}
-          onChange={handleItemNameChange}
+          onChange={handleTextArea}
           //   onBlur={rejectNameChange}
         />
         <LastEdit italic={lastEdit.italic}>{lastEdit.text}</LastEdit>
       </ContentContainer>
       <ActionsContainer>
         <button onClick={rejectNameChange}>
-          <DeleteButton />
+          {/* <DeleteButton /> */}
+          <RevertChangesButton />
         </button>
         <button onMouseDown={confirmNameChange}>
           <SubmitButton />

@@ -21,7 +21,9 @@ export const Home = () => {
       </button>
       Home Page
       {userLists.map((list) => (
-        <p onClick={() => deleteUserList(list.id)}>
+        <p
+        // onClick={() => deleteUserList(list.id)}
+        >
           {list.name} {list.id}
         </p>
       ))}

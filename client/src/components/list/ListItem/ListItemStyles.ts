@@ -4,14 +4,15 @@ import {
   MdEdit,
   MdCheckBox,
   MdCheckBoxOutlineBlank,
+  MdCheck,
 } from 'react-icons/md';
-import { FaCheckDouble } from 'react-icons/fa';
+import { RiArrowGoBackLine } from 'react-icons/ri';
 
 export const Item = styled.li`
   display: grid;
   grid-template-columns: 30px auto 50px;
-  padding-bottom: 1rem;
   margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
   border-bottom: 1px solid var(--gray);
 
   @media (min-width: 500px) {
@@ -49,7 +50,7 @@ export const ContentContainer = styled.div`
   padding-top: 0.25rem;
   padding-left: 1rem;
   padding-right: 0.5rem;
-  overflow: scroll;
+  overflow: hidden;
 `;
 
 export const ActionsContainer = styled.div`
@@ -67,19 +68,19 @@ export const ItemName = styled.p`
   margin-bottom: 0.5rem;
   font-size: 1.125rem;
   font-weight: 500;
-  max-width: 100%;
   word-wrap: break-word;
 `;
 
-export const Input = styled.textarea`
+export const Input = styled.textarea<{ height: number }>`
   border: none;
   font-family: 'Ubuntu', sans-serif;
   color: var(--dark);
   margin-bottom: 0.5rem;
   font-size: 1.125rem;
   font-weight: 500;
+  width: 100%;
   border: 1px solid black;
-  width: 165px;
+  height: ${(props) => props.height + 'px'};
   resize: none;
 `;
 
@@ -97,20 +98,35 @@ export const DeleteButton = styled(MdClose)`
   ${IconStyling}
   height: 35px;
   width: 35px;
+  color: #ae0000;
+`;
+
+export const RevertChangesButton = styled(RiArrowGoBackLine)`
+  ${IconStyling}
+  height: 30px;
+  width: 30px;
+  color: #636363;
 `;
 
 export const EditButton = styled(MdEdit)`
   ${IconStyling}
   height: 30px;
   width: 30px;
-  margin-left: 0.5rem;
+
+  @media (min-width: 500px) {
+    margin-left: 0.5rem;
+  }
 `;
 
-export const SubmitButton = styled(FaCheckDouble)`
+export const SubmitButton = styled(MdCheck)`
   ${IconStyling}
-  height: 30px;
-  width: 30px;
-  margin-left: 0.5rem;
+  height: 35px;
+  width: 35px;
+  color: #060;
+
+  @media (min-width: 500px) {
+    margin-left: 0.5rem;
+  }
 `;
 
 export const CheckboxStyles = css`
