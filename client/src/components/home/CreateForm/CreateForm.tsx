@@ -2,7 +2,12 @@ import React, { useContext } from 'react';
 import { UserContext } from '../../../context/UserContext';
 import { ErrorState } from '../CreateButton/CreateButton';
 import styled from 'styled-components';
-import { InputError } from '../../../styles/shared-styles';
+import {
+  InputError,
+  Button,
+  Label,
+  FormInput,
+} from '../../../styles/shared-styles';
 
 type CreateFormProps = {
   username: string;
@@ -14,14 +19,6 @@ type CreateFormProps = {
 };
 
 const Form = styled.form``;
-
-const Label = styled.label`
-  width: 100%;
-`;
-
-const Input = styled.input`
-  width: 100%;
-`;
 
 const CreateForm: React.FC<CreateFormProps> = ({
   username,
@@ -35,7 +32,7 @@ const CreateForm: React.FC<CreateFormProps> = ({
   return (
     <Form onSubmit={onSubmit}>
       <Label>Your name</Label>
-      <Input
+      <FormInput
         type='text'
         value={storedUser.username ? storedUser.username : username}
         onChange={handleUsernameChange}
@@ -43,14 +40,14 @@ const CreateForm: React.FC<CreateFormProps> = ({
       />
       <InputError>{error.username}</InputError>
       <Label>List name</Label>
-      <Input
+      <FormInput
         type='text'
         value={listName}
         onFocus={(e) => e.target.select()}
         onChange={handleListNameChange}
       />
       <InputError>{error.listName}</InputError>
-      <button>Create new list</button>
+      <Button>Create new list</Button>
     </Form>
   );
 };

@@ -11,6 +11,7 @@ interface ContextValues {
   userLists: List[];
   addUserList: (list: List) => void;
   deleteUserList: (id: string) => void;
+  updateUsername: (newUsername: string) => void;
   setStoredUser: React.Dispatch<React.SetStateAction<Username>>;
   socket: SocketIOClient.Socket;
 }
@@ -71,6 +72,18 @@ const ContextProvider = ({ children }: Props) => {
     setUserLists(userLists.filter((list) => list.id !== id));
   };
 
+  const updateUsername = (newUsername: string) => {
+    socket.emit(
+      'UPDATE_USER',
+      {
+        user: storedUser,
+      },
+      () => {
+        setStoredUser((prevUser) => ({ ...prevUser, username: newUsername }));
+      }
+    );
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -80,6 +93,7 @@ const ContextProvider = ({ children }: Props) => {
         deleteUserList,
         storedUser,
         setStoredUser,
+        updateUsername,
       }}
     >
       {children}

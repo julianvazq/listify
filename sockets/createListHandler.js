@@ -8,7 +8,7 @@ module.exports = (event, socket) => {
 
     socket.join(listId);
 
-    const newList = await CREATE_LIST(listId, listName);
+    const newList = await CREATE_LIST(listId, listName.trim());
 
     const userExists = await CHECK_USER(user.id);
 

@@ -177,7 +177,6 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
       console.log('UPDATE_ITEM HANDLER');
       /* Turn edit state off for items the client itself is currently editing */
       const itemsFinal = updatedItems.map((item) => {
-        console.log(item);
         if (item.editing && item.editing.id === storedUser.id) {
           return {
             ...item,
@@ -243,7 +242,7 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
   return (
     <PageContainer>
       <ListTitle>{listName}</ListTitle>
-      {/* <Members members={members} /> */}
+      <Members members={members} />
       <List items={items} deleteItem={deleteItem} addItem={addItem} />
       <Modal
         modalVisible={modalVisible}

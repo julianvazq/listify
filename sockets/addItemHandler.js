@@ -2,7 +2,7 @@ const { GET_ITEMS, ADD_ITEM } = require('../db/queries/item');
 
 module.exports = (event, socket, io) => {
   socket.on(event, async ({ listId, itemName, user, items }, callback) => {
-    await ADD_ITEM(itemName, listId, user.id);
+    await ADD_ITEM(itemName.trim(), listId, user.id);
 
     const updatedItems = await GET_ITEMS(listId);
 

@@ -10,6 +10,7 @@ import {
   DeleteButton,
   Checkbox,
   CheckboxOutline,
+  IconContainer,
 } from './ListItemStyles';
 
 const ListItemIdle = ({
@@ -26,15 +27,13 @@ const ListItemIdle = ({
     <Item>
       <CheckboxContainer>
         {checked ? (
-          <Checkbox
-            onClick={() => handleCheck(false)}
-            grayedOut={editing?.active}
-          />
+          <button onClick={() => handleCheck(false)}>
+            <Checkbox grayedOut={editing?.active} />
+          </button>
         ) : (
-          <CheckboxOutline
-            onClick={() => handleCheck(true)}
-            grayedOut={editing?.active}
-          />
+          <button onClick={() => handleCheck(true)}>
+            <CheckboxOutline grayedOut={editing?.active} />
+          </button>
         )}
       </CheckboxContainer>
       <ContentContainer onClick={toggleEditModeOn}>
@@ -46,7 +45,9 @@ const ListItemIdle = ({
           <DeleteButton grayedOut={editing?.active} />
         </button>
         <button onClick={toggleEditModeOn} disabled={editing?.active}>
-          <EditButton grayedOut={editing?.active} />
+          <IconContainer grayedOut={editing?.active}>
+            <EditButton />
+          </IconContainer>
         </button>
       </ActionsContainer>
     </Item>

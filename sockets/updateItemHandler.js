@@ -15,7 +15,7 @@ module.exports = (event, socket, io) => {
           await UPDATE_ITEM_GENERIC(property, value, itemId);
           break;
         case 'item_name':
-          await UPDATE_ITEM_NAME(property, value, itemId, user.id);
+          await UPDATE_ITEM_NAME(property, value.trim(), itemId, user.id);
           break;
         default:
           break;

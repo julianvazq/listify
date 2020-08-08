@@ -7,9 +7,8 @@ import {
   MdCheck,
   MdDelete,
 } from 'react-icons/md';
-import { RiArrowGoBackLine } from 'react-icons/ri';
 
-type GrayedOut = {
+export type GrayedOut = {
   grayedOut?: boolean;
 };
 
@@ -18,34 +17,10 @@ export const Item = styled.li`
   grid-template-columns: 30px auto 50px;
   margin-bottom: 1.5rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid var(--gray);
+  border-bottom: 1px solid #dadada;
 
   @media (min-width: 500px) {
     grid-template-columns: 30px auto 80px;
-  }
-
-  button {
-    background: transparent;
-    box-shadow: 0px 0px 0px transparent;
-    border: 0px solid transparent;
-    text-shadow: 0px 0px 0px transparent;
-  }
-
-  button:hover {
-    background: transparent;
-    box-shadow: 0px 0px 0px transparent;
-    border: 0px solid transparent;
-    text-shadow: 0px 0px 0px transparent;
-  }
-
-  button:active {
-    outline: none;
-    border: none;
-  }
-
-  button:focus {
-    outline: 0;
-    transform: scale(1.1);
   }
 `;
 
@@ -60,7 +35,7 @@ export const ContentContainer = styled.div`
 
 export const ActionsContainer = styled.div`
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   flex-direction: column;
 
   @media (min-width: 500px) {
@@ -76,7 +51,7 @@ export const ItemName = styled.p`
   word-wrap: break-word;
 `;
 
-export const Input = styled.textarea<{ height: number }>`
+export const TextArea = styled.textarea<{ height: number }>`
   border: none;
   font-family: 'Ubuntu', sans-serif;
   color: var(--dark);
@@ -85,6 +60,7 @@ export const Input = styled.textarea<{ height: number }>`
   width: 100%;
   height: ${(props) => props.height + 'px'};
   resize: none;
+  outline: none;
 `;
 
 export const LastEdit = styled.p<{ italic: boolean }>`
@@ -96,6 +72,22 @@ export const LastEdit = styled.p<{ italic: boolean }>`
 const IconStyling = css`
   cursor: pointer;
   font-size: 2rem;
+  color: var(--blue);
+`;
+
+export const IconContainer = styled.div<GrayedOut>`
+  width: 28px;
+  height: 28px;
+  border-radius: 0.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background: ${(props) => (props.grayedOut ? '#9c9c9c' : 'var(--blue)')};
+
+  @media (min-width: 500px) {
+    margin-left: 1rem;
+  }
 `;
 
 export const DeleteButton = styled(MdDelete)<GrayedOut>`
@@ -105,23 +97,22 @@ export const DeleteButton = styled(MdDelete)<GrayedOut>`
 
 export const RevertChangesButton = styled(MdClose)`
   ${IconStyling}
+  color: #ae0000;
 `;
 
-export const EditButton = styled(MdEdit)<GrayedOut>`
+export const EditButton = styled(MdEdit)`
   ${IconStyling}
-  color: ${(props) => props.grayedOut && '#9c9c9c'};
-
-  @media (min-width: 500px) {
-    margin-left: 1rem;
-  }
+  font-size: 1.25rem;
+  color: var(--light);
 `;
 
-export const SubmitButton = styled(MdCheck)<GrayedOut>`
+export const SubmitButton = styled(MdCheck)`
   ${IconStyling}
-  color: ${(props) => (props.grayedOut ? '#9c9c9c' : '#060')};
+  color: green;
+  font-size: 2rem;
 
   @media (min-width: 500px) {
-    margin-left: 1rem;
+    margin-left: 0.8rem;
   }
 `;
 

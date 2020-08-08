@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Item } from '../ListPage';
 import ListItem from '../ListItem/ListItem';
 import styled from 'styled-components';
+import NewItemInput from '../NewItemInput/NewItemInput';
 
 type ListProps = {
   items: Item[];
@@ -18,10 +19,18 @@ const ListContainer = styled.div`
 const ItemCount = styled.p`
   color: var(--gray);
   margin-bottom: 2rem;
+  font-weight: 500;
 `;
 
 const List: React.FC<ListProps> = ({ items, deleteItem, addItem }) => {
   const [newItemName, setNewItemName] = useState<string>('');
+
+  const handleAddItem = () => {
+    if (newItemName !== '') {
+      addItem(newItemName);
+      setNewItemName('');
+    }
+  };
 
   const formatListLength = (items) => {
     if (items.length === 0) {
@@ -40,14 +49,11 @@ const List: React.FC<ListProps> = ({ items, deleteItem, addItem }) => {
         {items.map((item) => (
           <ListItem key={item.item_id} item={item} deleteItem={deleteItem} />
         ))}
-        <li>
-          <input
-            type='text'
-            value={newItemName}
-            onChange={(e) => setNewItemName(e.target.value)}
-          />
-          <button onClick={() => addItem(newItemName)}>Add</button>
-        </li>
+        <NewItemInput
+          newItemName={newItemName}
+          setNewItemName={setNewItemName}
+          handleAddItem={handleAddItem}
+        />
       </ul>
     </ListContainer>
   );

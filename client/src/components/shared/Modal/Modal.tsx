@@ -10,7 +10,7 @@ type ModalProps = {
 
 const Modal: React.FC<ModalProps> = ({ children, modalVisible, onClose }) => {
   return (
-    <Rodal visible={modalVisible} onClose={onClose}>
+    <Rodal visible={modalVisible} onClose={onClose} width={350}>
       {children}
     </Rodal>
   );
