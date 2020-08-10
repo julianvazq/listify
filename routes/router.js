@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const pool = require('../db/pool');
+const { json } = require('express');
 
 router.get('/', (req, res) => {
   res.send(JSON.stringify('Hello there.'));
@@ -8,12 +9,11 @@ router.get('/', (req, res) => {
 
 router.get('/list/:id', async (req, res) => {
   const { id } = req.params;
-  console.log(id);
-  // const newList = await pool.query(
-  //   'INSERT INTO public.lists (id) VALUES($1) RETURNING *',
-  //   [id]
-  // );
-  // console.log(newList.rows);
+  const newList = await pool.query(
+    'SELECT item_name FROM items i INNER JOIN lists l ON (i.list_id = l.list_id) WHERE (l.list_id = $1)',
+    [id]
+  );
+  res.send(newList.rows).status(200);
 });
 
 // SELECT ALL

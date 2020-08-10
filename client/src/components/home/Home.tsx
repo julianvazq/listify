@@ -13,11 +13,6 @@ export const Home = () => {
     <>
       <Hero />
       <SavedListsSection />
-      {userLists.map((list) => (
-        <p>
-          {list.name} {list.id}
-        </p>
-      ))}
     </>
   );
 };
