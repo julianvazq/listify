@@ -223,7 +223,7 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
     return (
       <>
         <h1>{error.error}</h1>
-        <CreateButton />
+        <CreateButton>Create new list</CreateButton>
       </>
     );
   }

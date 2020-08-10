@@ -33,13 +33,30 @@ const CREATE_USER = async (user) => {
       [user.id, user.username]
     );
 
-    // CREATE NEW MEMBERSHIP TO LIST
-
     return newUser.rows[0];
   } catch (error) {
     console.log(error);
-    return { message: 'There was a problem [USER].', error: true };
+    return { message: 'There was a problem [USER-CREATE].', error: true };
   }
 };
 
-module.exports = { CHECK_USER, CREATE_USER };
+/* @TYPE: UPDATE 
+   @DESC: Update user name 
+   @RETURNS: Updated user
+   @EXAMPLE RESPONSE: {user_id: 'ea45c7a4-bb92-458c-bd7b-a4722c6243a5', name: 'John' }
+*/
+const UPDATE_USER_NAME = async (user) => {
+  try {
+    const updatedUser = await pool.query(
+      'UPDATE users SET name = $1 WHERE user_id = $2 RETURNING *',
+      [user.username, user.id]
+    );
+
+    return updatedUser.rows[0];
+  } catch (error) {
+    console.log(error);
+    return { message: 'There was a problem [USER-UPDATE].', error: true };
+  }
+};
+
+module.exports = { CHECK_USER, CREATE_USER, UPDATE_USER_NAME };

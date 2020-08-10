@@ -1,9 +1,12 @@
 import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
+import queryString from 'query-string';
 import { UserContext } from '../../../context/UserContext';
 import { MdPerson } from 'react-icons/md';
 import Modal from '../Modal/Modal';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { Label, FormInput, Button } from '../../../styles/shared-styles';
+import CreateButton from '../../home/CreateButton/CreateButton';
 
 const Container = styled.div`
   background: var(--blue);
@@ -20,7 +23,7 @@ const InnerContainer = styled.nav`
   justify-content: space-between;
   align-items: center;
 
-  @media (min-width: 1100px) {
+  @media (min-width: 1000px) {
     margin: auto;
   }
 `;
@@ -79,8 +82,9 @@ const InnerMenu = styled.div`
   margin: auto;
 `;
 
-const MenuAction = styled.p`
+const MenuAction = styled.div`
   margin-bottom: 1rem;
+
   button {
     font-weight: 500;
     font-size: 1rem;
@@ -89,7 +93,21 @@ const MenuAction = styled.p`
 
 const Nav = () => {
   const { storedUser, updateUsername, addUserList } = useContext(UserContext);
+  const [newUsername, setNewUsername] = useState<string>(storedUser.username);
   const [navOpen, setNavOpen] = useState<boolean>(false);
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
+
+  const onUsernameChange = (e) => {
+    setNewUsername(e.target.value);
+  };
+
+  const handleChangeSubmit = () => {
+    updateUsername(newUsername, id);
+    setModalVisible(false);
+  };
+
+  const location = useLocation();
+  const { id } = queryString.parse(location.search);
 
   return (
     <Container>
@@ -111,15 +129,25 @@ const Nav = () => {
       <Menu navOpen={navOpen}>
         <InnerMenu>
           <MenuAction>
-            <button>Change name</button>
+            <button onClick={() => setModalVisible(true)}>Change name</button>
           </MenuAction>
           <MenuAction>
-            <button>Create new list</button>
+            <CreateButton>
+              <button>Create new list</button>
+            </CreateButton>
           </MenuAction>
         </InnerMenu>
       </Menu>
-      {/* <Modal>
-      </Modal> */}
+      <Modal modalVisible={modalVisible} onClose={() => setModalVisible(false)}>
+        <Label>Name</Label>
+        <FormInput
+          autoFocus
+          type='text'
+          value={newUsername}
+          onChange={onUsernameChange}
+        />
+        <Button onClick={handleChangeSubmit}>Update name</Button>
+      </Modal>
     </Container>
   );
 };

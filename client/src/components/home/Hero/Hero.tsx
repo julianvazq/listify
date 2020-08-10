@@ -10,6 +10,8 @@ import {
   SecondaryButton,
   Divider,
 } from './HeroStyles';
+import CreateButton from '../CreateButton/CreateButton';
+import JoinButton from '../JoinButton/JoinButton';
 
 const Hero = () => {
   return (
@@ -24,9 +26,13 @@ const Hero = () => {
           <SubHeading>Now easier than ever.</SubHeading>
         </HeadingContainer>
         <ButtonContainer>
-          <PrimaryButton>Create a list</PrimaryButton>
+          <CreateButton>
+            <PrimaryButton>Create a list</PrimaryButton>
+          </CreateButton>
           <Divider>or</Divider>
-          <SecondaryButton>Join a list</SecondaryButton>
+          <JoinButton>
+            <SecondaryButton>Join a list</SecondaryButton>
+          </JoinButton>
         </ButtonContainer>
       </InnerContainer>
     </HeroContainer>

@@ -10,7 +10,7 @@ export type ErrorState = {
   listName: string | null;
 };
 
-const CreateButton = () => {
+const CreateButton = ({ children }) => {
   const { storedUser, setStoredUser } = useContext(UserContext);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [username, setUsername] = useState<string>('');
@@ -75,7 +75,7 @@ const CreateButton = () => {
 
   return (
     <>
-      <button onClick={() => setModalVisible(true)}>Create list</button>
+      {React.cloneElement(children, { onClick: () => setModalVisible(true) })}
       <Modal modalVisible={modalVisible} onClose={() => setModalVisible(false)}>
         <CreateForm
           username={username}
