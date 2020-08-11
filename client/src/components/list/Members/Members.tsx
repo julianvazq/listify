@@ -1,36 +1,73 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Member } from '../ListPage';
+import { MembersContainer, Heading, Action } from './MembersStyles';
 
 type MembersProps = {
   members: Member[];
 };
 
 const Members: React.FC<MembersProps> = ({ members }) => {
-  const formatAndReturnMembers = (members) => {
-    const longMembersList = members.length > 3;
+  const [membersDisplayed, setMembersDisplayed] = useState<string[]>([]);
+  const [showAllMembers, setShowAllMembers] = useState<boolean>(false);
 
-    const membersDisplayed = longMembersList ? members.slice(0, 3) : members;
-    let membersOutput = membersDisplayed.map((member, index) => {
-      if (index === membersDisplayed.length - 1) {
+  useEffect(() => {
+    if (members.length < 3) {
+      const membersToDisplay = members.map((member, index) => {
+        if (index === membersDisplayed.length - 1) {
+          return member.name;
+        }
+        return `${member.name}, `;
+      });
+
+      setMembersDisplayed(membersToDisplay);
+      return;
+    }
+
+    if (showAllMembers) {
+      setMembersDisplayed(getAllMembers(members));
+    } else {
+      setMembersDisplayed(getPartialMembers(members));
+    }
+  }, [showAllMembers]);
+
+  const getPartialMembers = (members) => {
+    let slicedMembers = members.slice(0, 3);
+
+    let membersOutput = slicedMembers.map((member, index) => {
+      if (index === slicedMembers.length - 1) {
         return member.name;
       }
       return `${member.name}, `;
     });
 
-    let finalOutput = membersOutput;
+    membersOutput =
+      membersOutput.join('') + ` + ${members.length - 3} other(s)`;
 
-    if (longMembersList) {
-      finalOutput =
-        membersOutput.join('') + ` + ${members.length - 3} other(s)`;
-    }
+    return membersOutput;
+  };
 
-    return finalOutput;
+  const getAllMembers = (members) => {
+    let membersOutput = members.map((member, index) => {
+      if (index === members.length - 1) {
+        return member.name;
+      }
+      return `${member.name}, `;
+    });
+
+    return membersOutput;
   };
 
   return (
-    <div>
-      <p>Members: {formatAndReturnMembers(members)}</p>
-    </div>
+    <MembersContainer>
+      <p>
+        <Heading>Members:</Heading> {membersDisplayed}{' '}
+        {showAllMembers ? (
+          <Action onClick={() => setShowAllMembers(false)}>[Hide]</Action>
+        ) : (
+          <Action onClick={() => setShowAllMembers(true)}>[Show]</Action>
+        )}
+      </p>
+    </MembersContainer>
   );
 };
 
