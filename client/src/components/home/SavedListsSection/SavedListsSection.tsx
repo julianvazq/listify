@@ -15,16 +15,17 @@ const Container = styled.section`
 const SectionHeading = styled.h2`
   font-size: 1.5rem;
   margin-bottom: 2rem;
+  color: hsl(228, 29%, 56%);
 `;
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 315px));
   grid-gap: 2rem;
 `;
 
 const SavedListsSection = () => {
-  const { userLists, deleteUserList } = useContext(UserContext);
+  const { userLists } = useContext(UserContext);
   return (
     <Container>
       <SectionHeading>Saved Lists</SectionHeading>

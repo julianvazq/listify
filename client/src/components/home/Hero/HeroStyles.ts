@@ -56,7 +56,7 @@ const ButtonStyles = css`
   display: inline-block;
   padding: 0.5rem 1rem;
   border-radius: 0.3rem;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
 `;
 
 export const PrimaryButton = styled.button`

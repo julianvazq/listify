@@ -44,7 +44,7 @@ export const ActionsContainer = styled.div`
 `;
 
 export const ItemName = styled.p`
-  color: var(--dark);
+  color: var(--text);
   margin-bottom: 0.5rem;
   font-size: 1.125rem;
   font-weight: 500;
@@ -54,7 +54,7 @@ export const ItemName = styled.p`
 export const TextArea = styled.textarea<{ height: number }>`
   border: none;
   font-family: 'Ubuntu', sans-serif;
-  color: var(--dark);
+  color: var(--text);
   margin-bottom: 0.5rem;
   font-size: 1.125rem;
   width: 100%;
@@ -116,16 +116,12 @@ export const SubmitButton = styled(MdCheck)`
   }
 `;
 
-export const CheckboxStyles = css`
-  ${IconStyling}
-`;
-
 export const Checkbox = styled(MdCheckBox)<GrayedOut>`
-  ${CheckboxStyles}
+  ${IconStyling}
   color: ${(props) => props.grayedOut && '#9c9c9c'};
 `;
 
 export const CheckboxOutline = styled(MdCheckBoxOutlineBlank)<GrayedOut>`
-  ${CheckboxStyles}
+  ${IconStyling}
   color: ${(props) => props.grayedOut && '#9c9c9c'};
 `;
