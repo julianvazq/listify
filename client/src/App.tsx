@@ -6,6 +6,7 @@ import { Home } from './components/home/Home';
 import ListPage from './components/list/ListPage';
 import ContextProvider from './context/UserContext';
 import Nav from './components/shared/Nav/Nav';
+import Footer from './components/shared/Footer/Footer';
 
 const App: React.FC = () => {
   return (
@@ -14,6 +15,7 @@ const App: React.FC = () => {
         <Nav />
         <Route path='/' exact component={Home} />
         <Route path='/list' exact component={ListPage} />
+        <Footer />
       </ContextProvider>
     </Router>
   );

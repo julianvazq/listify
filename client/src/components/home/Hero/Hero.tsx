@@ -13,7 +13,7 @@ import {
 } from './HeroStyles';
 import CreateButton from '../CreateButton/CreateButton';
 import JoinButton from '../JoinButton/JoinButton';
-import IllustrationSVG from '../../../assets/remote-team.svg';
+import TeamIllustration from '../../../assets/remote-team.svg';
 
 const Hero = () => {
   return (
@@ -37,7 +37,7 @@ const Hero = () => {
           </JoinButton>
         </ButtonContainer>
       </InnerContainer>
-      <Illustration src={IllustrationSVG} />
+      <Illustration src={TeamIllustration} alt='Collaborative lists.' />
     </HeroContainer>
   );
 };

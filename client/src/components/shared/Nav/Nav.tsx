@@ -73,8 +73,7 @@ const Menu = styled.div<{ navOpen: boolean }>`
   bottom: -0px;
   width: 100%;
   height: 100px;
-  background: #f2f2f2;
-  color: var(--blue);
+  background: var(--blue);
   z-index: ${(props) => (props.navOpen ? '1' : '-1')};
   transform: ${(props) =>
     props.navOpen ? 'translateY(100%)' : 'translateY(0)'};
@@ -93,6 +92,7 @@ const MenuAction = styled.div`
   margin-bottom: 1rem;
 
   button {
+    color: var(--light);
     font-weight: 600;
     font-size: 1rem;
   }

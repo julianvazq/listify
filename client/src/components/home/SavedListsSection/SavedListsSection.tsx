@@ -2,18 +2,19 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { UserContext } from '../../../context/UserContext';
 import ListPreview from '../ListPreview/ListPreview';
+import EmptyState from '../EmptyState/EmptyState';
 
 const Container = styled.section`
   background: var(--blue);
-  padding: 2rem 0;
+  padding: 4rem 0;
 `;
 
 const InnerContainer = styled.div`
   max-width: 1000px;
-  margin: 4rem 2rem;
+  margin: 0 2rem;
 
   @media (min-width: 1000px) {
-    margin: 4rem auto;
+    margin: 0 auto;
   }
 `;
 
@@ -38,11 +39,15 @@ const SavedListsSection = () => {
     <Container>
       <InnerContainer>
         <SectionHeading>Saved Lists</SectionHeading>
-        <Grid>
-          {userLists.map((list) => (
-            <ListPreview key={list.id} {...list} />
-          ))}
-        </Grid>
+        {userLists.length ? (
+          <Grid>
+            {userLists.map((list) => (
+              <ListPreview key={list.id} {...list} />
+            ))}
+          </Grid>
+        ) : (
+          <EmptyState />
+        )}
       </InnerContainer>
     </Container>
   );

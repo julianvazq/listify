@@ -28,7 +28,7 @@ export const PrimaryAction = styled.button`
   font-size: 0.85rem;
   padding: 0.5rem 1rem;
   border-radius: 0.3rem;
-  background: hsl(228, 26%, 55%);
+  background: hsl(228, 26%, 50%);
   color: var(--light);
   text-transform: uppercase;
   letter-spacing: 1px;
