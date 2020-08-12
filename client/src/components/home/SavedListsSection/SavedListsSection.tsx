@@ -28,8 +28,9 @@ const SectionHeading = styled.h2`
 `;
 
 const Grid = styled.div`
+  margin-bottom: 2rem;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 315px));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   grid-gap: 2rem;
 `;
 

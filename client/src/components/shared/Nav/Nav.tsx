@@ -112,8 +112,9 @@ const Nav = () => {
   };
 
   const handleChangeSubmit = () => {
-    updateUsername(newUsername, id);
+    updateUsername(newUsername, id, location.pathname === '/');
     setModalVisible(false);
+    setNavOpen(false);
   };
 
   useEffect(() => {
@@ -149,7 +150,11 @@ const Nav = () => {
           </MenuAction>
         </InnerMenu>
       </Menu>
-      <Modal modalVisible={modalVisible} onClose={() => setModalVisible(false)}>
+      <Modal
+        modalVisible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        height={160}
+      >
         <Label>Name</Label>
         <FormInput
           autoFocus

@@ -5,6 +5,7 @@ import {
   FlexContainer,
   AddButton,
 } from './NewItemInputStyles';
+import { CheckboxOutline } from '../ListItem/ListItemStyles';
 
 const NewItemInput = ({ newItemName, setNewItemName, handleAddItem }) => {
   const [textAreaHeight, setTextAreaHeight] = useState<number>(20.8);
@@ -20,6 +21,7 @@ const NewItemInput = ({ newItemName, setNewItemName, handleAddItem }) => {
 
   return (
     <FlexContainer>
+      <CheckboxOutline />
       <Input
         height={textAreaHeight}
         value={newItemName}

@@ -64,8 +64,8 @@ const ListPreview = ({ name, id }) => {
         {error && <ListItem>'Could not fetch list.'</ListItem>}
         {!loading && !items.length
           ? 'No items added yet.'
-          : items.slice(0, 3).map((item) => (
-              <ListItem key={item.item_id} onClick={navigateToList}>
+          : items.slice(0, 3).map((item, index) => (
+              <ListItem key={index} onClick={navigateToList}>
                 {getCheckbox(item.completed)} {item.item_name}
               </ListItem>
             ))}

@@ -8,6 +8,7 @@ import Modal from '../shared/Modal/Modal';
 import UserForm from './UserForm/UserForm';
 import Members from './Members/Members';
 import List from './List/List';
+import LoadingState from './LoadingState/LoadingState';
 
 type LocationProps = { search: string };
 
@@ -160,6 +161,7 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
           }
 
           setListName(res.listName);
+          setItems(res.items);
           setMembers(res.members);
           setLoading(false);
 
@@ -216,7 +218,7 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
   }, [location.search, storedUser.username]);
 
   if (loading && !error) {
-    return <h1>Loading...</h1>;
+    return <LoadingState />;
   }
 
   if (!loading && error) {
