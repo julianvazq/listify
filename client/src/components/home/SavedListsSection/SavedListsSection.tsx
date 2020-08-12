@@ -4,8 +4,13 @@ import { UserContext } from '../../../context/UserContext';
 import ListPreview from '../ListPreview/ListPreview';
 
 const Container = styled.section`
+  background: var(--blue);
+  padding: 2rem 0;
+`;
+
+const InnerContainer = styled.div`
   max-width: 1000px;
-  margin: 4rem 1rem;
+  margin: 4rem 2rem;
 
   @media (min-width: 1000px) {
     margin: 4rem auto;
@@ -14,8 +19,11 @@ const Container = styled.section`
 
 const SectionHeading = styled.h2`
   font-size: 1.5rem;
+  font-weight: 600;
   margin-bottom: 2rem;
-  color: hsl(228, 29%, 56%);
+  color: var(--light);
+  text-transform: uppercase;
+  letter-spacing: 1px;
 `;
 
 const Grid = styled.div`
@@ -28,12 +36,14 @@ const SavedListsSection = () => {
   const { userLists } = useContext(UserContext);
   return (
     <Container>
-      <SectionHeading>Saved Lists</SectionHeading>
-      <Grid>
-        {userLists.map((list) => (
-          <ListPreview key={list.id} {...list} />
-        ))}
-      </Grid>
+      <InnerContainer>
+        <SectionHeading>Saved Lists</SectionHeading>
+        <Grid>
+          {userLists.map((list) => (
+            <ListPreview key={list.id} {...list} />
+          ))}
+        </Grid>
+      </InnerContainer>
     </Container>
   );
 };

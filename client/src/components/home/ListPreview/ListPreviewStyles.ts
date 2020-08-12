@@ -4,7 +4,7 @@ import { MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md';
 export const PreviewContainer = styled.article`
   width: 100%;
   padding: 2rem;
-  background: hsl(228, 30%, 90%);
+  background: var(--light);
   border-radius: 0.3rem;
   display: flex;
   flex-direction: column;
@@ -52,8 +52,8 @@ export const SecondaryAction = styled.button`
 
 export const DeleteAction = styled(SecondaryAction)`
   border: none;
-  background: var(--light);
-  color: hsl(0, 0%, 45%);
+  background: hsl(228, 30%, 90%);
+  color: hsl(0, 0%, 35%);
   width: 100%;
 `;
 

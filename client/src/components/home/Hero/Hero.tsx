@@ -9,9 +9,11 @@ import {
   PrimaryButton,
   SecondaryButton,
   Divider,
+  Illustration,
 } from './HeroStyles';
 import CreateButton from '../CreateButton/CreateButton';
 import JoinButton from '../JoinButton/JoinButton';
+import IllustrationSVG from '../../../assets/remote-team.svg';
 
 const Hero = () => {
   return (
@@ -23,7 +25,7 @@ const Hero = () => {
             <br />
             collaborative lists{' '}
           </Heading>
-          <SubHeading>Now easier than ever.</SubHeading>
+          <SubHeading>Simple. Efficient. Free.</SubHeading>
         </HeadingContainer>
         <ButtonContainer>
           <CreateButton>
@@ -35,6 +37,7 @@ const Hero = () => {
           </JoinButton>
         </ButtonContainer>
       </InnerContainer>
+      <Illustration src={IllustrationSVG} />
     </HeroContainer>
   );
 };
