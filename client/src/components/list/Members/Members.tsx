@@ -11,9 +11,9 @@ const Members: React.FC<MembersProps> = ({ members }) => {
   const [showAllMembers, setShowAllMembers] = useState<boolean>(false);
 
   useEffect(() => {
-    if (members.length < 3) {
+    if (members.length <= 3) {
       const membersToDisplay = members.map((member, index) => {
-        if (index === membersDisplayed.length - 1) {
+        if (index === members.length - 1) {
           return member.name;
         }
         return `${member.name}, `;
@@ -28,7 +28,7 @@ const Members: React.FC<MembersProps> = ({ members }) => {
     } else {
       setMembersDisplayed(getPartialMembers(members));
     }
-  }, [showAllMembers]);
+  }, [showAllMembers, members]);
 
   const getPartialMembers = (members) => {
     let slicedMembers = members.slice(0, 3);
@@ -61,9 +61,10 @@ const Members: React.FC<MembersProps> = ({ members }) => {
     <MembersContainer>
       <p>
         <Heading>Members:</Heading> {membersDisplayed}{' '}
-        {showAllMembers ? (
+        {showAllMembers && members.length > 3 && (
           <Action onClick={() => setShowAllMembers(false)}>[Hide]</Action>
-        ) : (
+        )}
+        {!showAllMembers && members.length > 3 && (
           <Action onClick={() => setShowAllMembers(true)}>[Show]</Action>
         )}
       </p>

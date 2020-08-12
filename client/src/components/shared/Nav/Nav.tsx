@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import queryString from 'query-string';
 import { UserContext } from '../../../context/UserContext';
@@ -9,16 +9,16 @@ import { Label, FormInput, Button } from '../../../styles/shared-styles';
 import CreateButton from '../../home/CreateButton/CreateButton';
 
 const Container = styled.div`
-  background: var(--blue);
-  color: var(--light);
+  background: var(--light);
+  color: var(--blue);
   position: relative;
+  box-shadow: 0px 0px 5px 0px hsla(228, 26%, 30%, 0.25);
 `;
 
 const InnerContainer = styled.nav`
   max-width: 1000px;
   height: 70px;
   margin: 0 1rem;
-  color: var(--light);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -38,27 +38,34 @@ const UserContainer = styled.div`
 const Logo = styled.p`
   font-size: 1.5rem;
   a {
-    color: var(--light);
+    color: var(--blue);
     text-decoration: none;
+    font-weight: 600;
   }
 `;
 
-const Greeting = styled.p``;
+const Greeting = styled.p`
+  font-weight: 600;
+`;
 
 const IconContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  border: 2px solid var(--light);
+  border: 2px solid var(--blue);
   height: 30px;
   width: 30px;
   margin-left: 1rem;
+
+  button {
+    display: flex;
+  }
 `;
 
 const UserIcon = styled(MdPerson)`
   font-size: 1.25rem;
-  color: var(--light);
+  color: var(--blue);
 `;
 
 const Menu = styled.div<{ navOpen: boolean }>`
@@ -96,6 +103,8 @@ const Nav = () => {
   const [newUsername, setNewUsername] = useState<string>(storedUser.username);
   const [navOpen, setNavOpen] = useState<boolean>(false);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const location = useLocation();
+  const { id } = queryString.parse(location.search);
 
   const onUsernameChange = (e) => {
     setNewUsername(e.target.value);
@@ -106,8 +115,9 @@ const Nav = () => {
     setModalVisible(false);
   };
 
-  const location = useLocation();
-  const { id } = queryString.parse(location.search);
+  useEffect(() => {
+    setNavOpen(false);
+  }, [location.key]);
 
   return (
     <Container>
