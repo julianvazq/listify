@@ -37,7 +37,7 @@ export const Heading = styled.h1`
 
 export const SubHeading = styled.h2`
   font-size: 1.5rem;
-  font-weight: 500;
+  font-weight: 600;
   color: #dbdbdb;
 `;
 

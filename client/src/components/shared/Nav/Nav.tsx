@@ -86,7 +86,7 @@ const MenuAction = styled.div`
   margin-bottom: 1rem;
 
   button {
-    font-weight: 500;
+    font-weight: 600;
     font-size: 1rem;
   }
 `;

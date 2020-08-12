@@ -47,13 +47,13 @@ export const ItemName = styled.p`
   color: var(--text);
   margin-bottom: 0.5rem;
   font-size: 1.125rem;
-  font-weight: 500;
+  font-weight: 600;
   word-wrap: break-word;
 `;
 
 export const TextArea = styled.textarea<{ height: number }>`
   border: none;
-  font-family: 'Ubuntu', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   color: var(--text);
   margin-bottom: 0.5rem;
   font-size: 1.125rem;
@@ -61,6 +61,7 @@ export const TextArea = styled.textarea<{ height: number }>`
   height: ${(props) => props.height + 'px'};
   resize: none;
   outline: none;
+  overflow: hidden;
 `;
 
 export const LastEdit = styled.p<{ italic: boolean }>`

@@ -9,12 +9,12 @@ export const MembersContainer = styled.div`
 `;
 
 export const Heading = styled.span`
-  font-weight: 500;
+  font-weight: 600;
   margin-right: 0.5rem;
 `;
 
 export const Action = styled.span`
-  font-weight: 500;
+  font-weight: 600;
   margin-left: 0.5rem;
   cursor: pointer;
 `;

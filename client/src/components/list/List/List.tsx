@@ -19,7 +19,7 @@ const ListContainer = styled.div`
 const ItemCount = styled.p`
   color: var(--gray);
   margin-bottom: 2rem;
-  font-weight: 500;
+  font-weight: 600;
 `;
 
 const List: React.FC<ListProps> = ({ items, deleteItem, addItem }) => {

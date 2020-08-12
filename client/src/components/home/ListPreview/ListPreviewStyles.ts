@@ -24,7 +24,7 @@ export const ActionContainer = styled.div`
 `;
 
 export const PrimaryAction = styled.button`
-  font-weight: 500;
+  font-weight: 600;
   font-size: 0.85rem;
   padding: 0.5rem 1rem;
   border-radius: 0.3rem;
@@ -39,7 +39,7 @@ export const PrimaryAction = styled.button`
 export const SecondaryAction = styled.button`
   display: inline-block;
   border-radius: 0.3rem;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 0.85rem;
   padding: 0.5rem 1rem;
   border-radius: 0.3rem;
@@ -68,7 +68,7 @@ export const ListItem = styled.li`
   align-items: center;
   margin-bottom: 0.5rem;
   padding-bottom: 0.5rem;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 1.125rem;
 `;
 

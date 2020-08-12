@@ -8,8 +8,6 @@ module.exports = (event, socket, io) => {
   socket.on(
     event,
     async ({ listId, itemId, property, value, user }, callback) => {
-      console.log(property, value);
-
       switch (property) {
         case 'completed':
           await UPDATE_ITEM_GENERIC(property, value, itemId);

@@ -10,7 +10,7 @@ export const FormInput = styled.input`
   padding: 0.5rem;
   border: 1px solid #dadada;
   border-radius: 0.3rem;
-  font-family: 'Ubuntu', sans-serif;
+  font-family: 'Open Sans', sans-serif;
 
   &:focus {
     border: 1px solid var(--gray);
