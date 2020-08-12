@@ -70,14 +70,11 @@ const UserIcon = styled(MdPerson)`
 
 const Menu = styled.div<{ navOpen: boolean }>`
   position: absolute;
-  bottom: -0px;
+  bottom: ${(props) => (props.navOpen ? '-100px' : '100px')};
+  display: ${(props) => (props.navOpen ? 'block' : 'none')};
   width: 100%;
   height: 100px;
   background: var(--blue);
-  z-index: ${(props) => (props.navOpen ? '1' : '-1')};
-  transform: ${(props) =>
-    props.navOpen ? 'translateY(100%)' : 'translateY(0)'};
-  opacity: ${(props) => (props.navOpen ? '1' : '0')};
   transition: opacity 150ms ease-in;
   text-align: right;
   padding: 1rem 1rem 0 0;
@@ -86,10 +83,14 @@ const Menu = styled.div<{ navOpen: boolean }>`
 const InnerMenu = styled.div`
   max-width: 1000px;
   margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 `;
 
 const MenuAction = styled.div`
   margin-bottom: 1rem;
+  text-align: left;
 
   button {
     color: var(--light);
