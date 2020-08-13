@@ -37,6 +37,7 @@ const UserContainer = styled.div`
 
 const Logo = styled.p`
   font-size: 1.5rem;
+
   a {
     color: var(--blue);
     text-decoration: none;
@@ -111,7 +112,8 @@ const Nav = () => {
     setNewUsername(e.target.value);
   };
 
-  const handleChangeSubmit = () => {
+  const handleChangeSubmit = (e) => {
+    e.preventDefault();
     updateUsername(newUsername, id, location.pathname === '/');
     setModalVisible(false);
     setNavOpen(false);
@@ -155,14 +157,16 @@ const Nav = () => {
         onClose={() => setModalVisible(false)}
         height={160}
       >
-        <Label>Name</Label>
-        <FormInput
-          autoFocus
-          type='text'
-          value={newUsername}
-          onChange={onUsernameChange}
-        />
-        <Button onClick={handleChangeSubmit}>Update name</Button>
+        <form onSubmit={handleChangeSubmit}>
+          <Label>Name</Label>
+          <FormInput
+            autoFocus
+            type='text'
+            value={newUsername}
+            onChange={onUsernameChange}
+          />
+          <Button>Update name</Button>
+        </form>
       </Modal>
     </Container>
   );

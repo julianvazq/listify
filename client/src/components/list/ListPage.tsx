@@ -217,7 +217,6 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
     };
 
     /* Runs when URL changes and when new user saves their name */
-    // }, [location.search, storedUser.username]);
   }, [location.search, storedUser.username]);
 
   if (loading && !error) {
