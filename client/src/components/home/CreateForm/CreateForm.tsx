@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { UserContext } from '../../../context/UserContext';
 import { ErrorState } from '../CreateButtonWrapper/CreateButtonWrapper';
-import styled from 'styled-components';
 import {
   InputError,
   Button,
@@ -18,8 +17,6 @@ type CreateFormProps = {
   error: ErrorState;
 };
 
-const Form = styled.form``;
-
 const CreateForm: React.FC<CreateFormProps> = ({
   username,
   listName,
@@ -30,7 +27,7 @@ const CreateForm: React.FC<CreateFormProps> = ({
 }) => {
   const { storedUser } = useContext(UserContext);
   return (
-    <Form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit}>
       <Label>Your name</Label>
       <FormInput
         type='text'
@@ -48,7 +45,7 @@ const CreateForm: React.FC<CreateFormProps> = ({
       />
       <InputError>{error.listName}</InputError>
       <Button>Create new list</Button>
-    </Form>
+    </form>
   );
 };
 

@@ -3,24 +3,13 @@ import { Item } from '../ListPage';
 import ListItem from '../ListItem/ListItem';
 import styled from 'styled-components';
 import NewItemInput from '../NewItemInput/NewItemInput';
+import { ListContainer, ItemCount } from './ListStyles';
 
 type ListProps = {
   items: Item[];
   deleteItem: (itemId: string) => void;
   addItem: (itemName: string) => void;
 };
-
-const ListContainer = styled.div`
-  ul {
-    list-style: none;
-  }
-`;
-
-const ItemCount = styled.p`
-  color: var(--gray);
-  margin-bottom: 2rem;
-  font-weight: 600;
-`;
 
 const List: React.FC<ListProps> = ({ items, deleteItem, addItem }) => {
   const [newItemName, setNewItemName] = useState<string>('');

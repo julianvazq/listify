@@ -42,11 +42,7 @@ export const ContentContainer = styled.div`
 export const Message = styled.p`
   color: var(--light);
   font-size: 1.25rem;
-  margin-bottom: 1rem;
-
-  @media (min-width: 800px) {
-    margin-bottom: 0;
-  }
+  margin-bottom: 2rem;
 `;
 
 export const ActionButton = styled.button`
