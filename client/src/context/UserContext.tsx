@@ -81,11 +81,6 @@ const ContextProvider = ({ children }: Props) => {
     listId: any,
     fromHome = false
   ) => {
-    // if (fromHome) {
-    //   setStoredUser((prevUser) => ({ ...prevUser, username: newUsername }));
-    //   return;
-    // }
-
     socket.emit(
       'UPDATE_USER_NAME',
       {

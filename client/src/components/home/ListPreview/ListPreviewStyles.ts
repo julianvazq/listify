@@ -3,7 +3,6 @@ import { MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md';
 
 export const PreviewContainer = styled.article`
   width: 100%;
-  /* max-width: 350px; */
   padding: 2rem;
   background: var(--light);
   border-radius: 0.3rem;
@@ -67,10 +66,13 @@ export const List = styled.ul`
 export const ListItem = styled.li`
   display: flex;
   align-items: center;
-  margin-bottom: 0.5rem;
-  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
   font-weight: 600;
   font-size: 1.125rem;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
 `;
 
 const CheckboxStyles = css`
