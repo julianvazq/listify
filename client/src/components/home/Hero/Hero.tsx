@@ -11,8 +11,8 @@ import {
   Divider,
   Illustration,
 } from './HeroStyles';
-import CreateButton from '../CreateButton/CreateButton';
-import JoinButton from '../JoinButton/JoinButton';
+import CreateButtonWrapper from '../CreateButtonWrapper/CreateButtonWrapper';
+import JoinButtonWrapper from '../JoinButtonWrapper/JoinButtonWrapper';
 import TeamIllustration from '../../../assets/remote-team.svg';
 
 const Hero = () => {
@@ -28,13 +28,13 @@ const Hero = () => {
           <SubHeading>Simple. Efficient. Free.</SubHeading>
         </HeadingContainer>
         <ButtonContainer>
-          <CreateButton>
+          <CreateButtonWrapper>
             <PrimaryButton>Create a list</PrimaryButton>
-          </CreateButton>
+          </CreateButtonWrapper>
           <Divider>or</Divider>
-          <JoinButton>
+          <JoinButtonWrapper>
             <SecondaryButton>Join a list</SecondaryButton>
-          </JoinButton>
+          </JoinButtonWrapper>
         </ButtonContainer>
       </InnerContainer>
       <Illustration src={TeamIllustration} alt='Collaborative lists.' />

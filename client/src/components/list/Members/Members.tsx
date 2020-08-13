@@ -65,7 +65,7 @@ const Members: React.FC<MembersProps> = ({ members }) => {
           <Action onClick={() => setShowAllMembers(false)}>[Hide]</Action>
         )}
         {!showAllMembers && members.length > 3 && (
-          <Action onClick={() => setShowAllMembers(true)}>[Show]</Action>
+          <Action onClick={() => setShowAllMembers(true)}>[Show All]</Action>
         )}
       </p>
     </MembersContainer>

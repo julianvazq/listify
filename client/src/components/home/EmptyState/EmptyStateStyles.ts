@@ -43,6 +43,10 @@ export const Message = styled.p`
   color: var(--light);
   font-size: 1.25rem;
   margin-bottom: 1rem;
+
+  @media (min-width: 800px) {
+    margin-bottom: 0;
+  }
 `;
 
 export const ActionButton = styled.button`

@@ -19,6 +19,10 @@ export const Item = styled.li`
   padding-bottom: 1rem;
   border-bottom: 1px solid #dadada;
 
+  button {
+    display: flex;
+  }
+
   @media (min-width: 500px) {
     grid-template-columns: 30px auto 80px;
   }

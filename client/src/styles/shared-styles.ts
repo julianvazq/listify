@@ -11,6 +11,7 @@ export const FormInput = styled.input`
   border: 1px solid #dadada;
   border-radius: 0.3rem;
   font-family: 'Open Sans', sans-serif;
+  font-size: 1rem;
 
   &:focus {
     border: 1px solid var(--gray);
@@ -22,6 +23,7 @@ export const Label = styled.label`
   color: var(--gray);
   margin-bottom: 0.5rem;
   display: inline-block;
+  font-size: 0.9rem;
 `;
 
 export const Button = styled.button`

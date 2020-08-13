@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import queryString from 'query-string';
 import { RouteComponentProps } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
-import CreateButton from '../home/CreateButton/CreateButton';
 import Modal from '../shared/Modal/Modal';
 import UserForm from './UserForm/UserForm';
 import Members from './Members/Members';
 import List from './List/List';
 import LoadingState from './LoadingState/LoadingState';
+import ErrorState from './ErrorState/ErrorState';
 
 type LocationProps = { search: string };
 
@@ -45,6 +45,7 @@ type SuccessResponse = {
 
 const PageContainer = styled.div`
   max-width: 700px;
+  min-height: 70vh;
   margin: 4rem 1rem;
 
   @media (min-width: 700px) {
@@ -143,7 +144,9 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
 
           console.log('FINISHED GETTING LIST');
 
-          addUserList({ id, name: res.listName });
+          if (!res.error) {
+            addUserList({ id, name: res.listName });
+          }
         }
       );
     } else {
@@ -222,24 +225,8 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
   }
 
   if (!loading && error) {
-    return (
-      <>
-        <h1>{error.error}</h1>
-        <CreateButton>Create new list</CreateButton>
-      </>
-    );
+    return <ErrorState message={error.error} />;
   }
-
-  /* If list name is not set after coming 
-  back from server then it doesn't exist */
-  // if (!loading && !listName) {
-  //   return (
-  //     <>
-  //       <h1>This list does not seem to exist.</h1>
-  //       <CreateButton />
-  //     </>
-  //   );
-  // }
 
   return (
     <PageContainer>
@@ -252,6 +239,7 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
           setStoredUser({ ...storedUser, username: 'Anonymous' });
           setModalVisible(false);
         }}
+        height={160}
       >
         <UserForm setModalVisible={setModalVisible} listId={id} />
       </Modal>

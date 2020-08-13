@@ -10,7 +10,7 @@ export type ErrorState = {
   listName: string | null;
 };
 
-const CreateButton = ({ children }) => {
+const CreateButtonWrapper = ({ children }) => {
   const { storedUser, setStoredUser } = useContext(UserContext);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [username, setUsername] = useState<string>('');
@@ -90,4 +90,4 @@ const CreateButton = ({ children }) => {
   );
 };
 
-export default CreateButton;
+export default CreateButtonWrapper;

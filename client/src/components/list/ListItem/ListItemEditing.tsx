@@ -53,7 +53,7 @@ const ListItemEditing = ({
           onFocus={handleTextAreaHeight}
           value={itemName}
           onChange={handleTextArea}
-          // onBlur={rejectNameChange}
+          onBlur={rejectNameChange}
         />
         <LastEdit italic={lastEdit.italic}>{lastEdit.text}</LastEdit>
       </ContentContainer>

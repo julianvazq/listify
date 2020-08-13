@@ -10,13 +10,19 @@ import { CheckboxOutline } from '../ListItem/ListItemStyles';
 const NewItemInput = ({ newItemName, setNewItemName, handleAddItem }) => {
   const [textAreaHeight, setTextAreaHeight] = useState<number>(20.8);
 
-  const handleTextAreaHeight = (e) => {
-    setTextAreaHeight(e.target.scrollHeight);
+  const handleTextAreaHeight = (height) => {
+    setTextAreaHeight(height);
   };
 
   const handleNewItemNameChange = (e) => {
     setNewItemName(e.target.value);
-    handleTextAreaHeight(e);
+
+    /* Reset textarea height if empty */
+    if (e.target.value === '') {
+      handleTextAreaHeight(20.8);
+    } else {
+      handleTextAreaHeight(e.target.scrollHeight);
+    }
   };
 
   return (

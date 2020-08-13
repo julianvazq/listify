@@ -3,6 +3,7 @@ import { MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md';
 
 export const PreviewContainer = styled.article`
   width: 100%;
+  /* max-width: 350px; */
   padding: 2rem;
   background: var(--light);
   border-radius: 0.3rem;

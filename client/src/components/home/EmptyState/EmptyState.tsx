@@ -7,7 +7,7 @@ import {
   ActionButton,
 } from './EmptyStateStyles';
 import TodoIllustration from '../../../assets/to-do-list.svg';
-import CreateButton from '../CreateButton/CreateButton';
+import CreateButtonWrapper from '../CreateButtonWrapper/CreateButtonWrapper';
 
 const EmptyState = () => {
   return (
@@ -15,9 +15,9 @@ const EmptyState = () => {
       <Illustration src={TodoIllustration} alt='Create new list.' />
       <ContentContainer>
         <Message>No saved lists.</Message>
-        <CreateButton>
+        <CreateButtonWrapper>
           <ActionButton>Create new list</ActionButton>
-        </CreateButton>
+        </CreateButtonWrapper>
       </ContentContainer>
     </Container>
   );

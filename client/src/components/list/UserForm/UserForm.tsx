@@ -1,22 +1,16 @@
 import React, { useState, useContext } from 'react';
-import styled from 'styled-components';
 import { UserContext } from '../../../context/UserContext';
-import { InputError } from '../../../styles/shared-styles';
+import {
+  InputError,
+  Label,
+  FormInput,
+  Button,
+} from '../../../styles/shared-styles';
 
 type UserFormProps = {
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
   listId: any;
 };
-
-const Form = styled.form``;
-
-const Label = styled.label`
-  width: 100%;
-`;
-
-const Input = styled.input`
-  width: 100%;
-`;
 
 const UserForm: React.FC<UserFormProps> = ({ setModalVisible, listId }) => {
   const { socket, storedUser, setStoredUser } = useContext(UserContext);
@@ -44,16 +38,16 @@ const UserForm: React.FC<UserFormProps> = ({ setModalVisible, listId }) => {
   };
 
   return (
-    <Form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit}>
       <Label>Your name</Label>
-      <Input
+      <FormInput
         type='text'
         value={storedUser.username ? storedUser.username : username}
         onChange={handleUsernameChange}
       />
       <InputError>{error}</InputError>
-      <button>Save name</button>
-    </Form>
+      <Button>Save name</Button>
+    </form>
   );
 };
 

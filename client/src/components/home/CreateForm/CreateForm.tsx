@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { UserContext } from '../../../context/UserContext';
-import { ErrorState } from '../CreateButton/CreateButton';
+import { ErrorState } from '../CreateButtonWrapper/CreateButtonWrapper';
 import styled from 'styled-components';
 import {
   InputError,

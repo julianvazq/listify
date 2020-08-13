@@ -6,7 +6,7 @@ import { MdPerson } from 'react-icons/md';
 import Modal from '../Modal/Modal';
 import { Link, useLocation } from 'react-router-dom';
 import { Label, FormInput, Button } from '../../../styles/shared-styles';
-import CreateButton from '../../home/CreateButton/CreateButton';
+import CreateButtonWrapper from '../../home/CreateButtonWrapper/CreateButtonWrapper';
 
 const Container = styled.div`
   background: var(--light);
@@ -144,9 +144,9 @@ const Nav = () => {
             <button onClick={() => setModalVisible(true)}>Change name</button>
           </MenuAction>
           <MenuAction>
-            <CreateButton>
+            <CreateButtonWrapper>
               <button>Create new list</button>
-            </CreateButton>
+            </CreateButtonWrapper>
           </MenuAction>
         </InnerMenu>
       </Menu>
