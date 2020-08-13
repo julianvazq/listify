@@ -5,7 +5,6 @@ const http = require('http');
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
-exports.io = io;
 
 /* CORS */
 const cors = require('cors');

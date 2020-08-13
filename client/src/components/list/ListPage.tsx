@@ -235,10 +235,12 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
       <Modal
         modalVisible={modalVisible}
         onClose={() => {
-          setStoredUser({ ...storedUser, username: 'Anonymous' });
-          setModalVisible(false);
+          if (storedUser.username !== '') {
+            setModalVisible(false);
+          }
         }}
         height={160}
+        showCloseButton={false}
       >
         <UserForm setModalVisible={setModalVisible} listId={id} />
       </Modal>

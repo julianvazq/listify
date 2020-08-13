@@ -7,6 +7,7 @@ type ModalProps = {
   modalVisible: boolean;
   onClose: () => void;
   height?: number;
+  showCloseButton?: boolean;
 };
 
 const Modal: React.FC<ModalProps> = ({
@@ -14,9 +15,16 @@ const Modal: React.FC<ModalProps> = ({
   modalVisible,
   onClose,
   height = 240,
+  showCloseButton = true,
 }) => {
   return (
-    <Rodal visible={modalVisible} onClose={onClose} width={350} height={height}>
+    <Rodal
+      visible={modalVisible}
+      onClose={onClose}
+      width={350}
+      height={height}
+      showCloseButton={showCloseButton}
+    >
       {children}
     </Rodal>
   );
