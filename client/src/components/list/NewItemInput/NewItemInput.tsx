@@ -36,7 +36,7 @@ const NewItemInput = ({ newItemName, setNewItemName, handleAddItem }) => {
       />
       <ActionContainer>
         <button onClick={() => handleAddItem(newItemName)}>
-          <AddButton grayedOut={newItemName === ''} />
+          <AddButton $grayedOut={newItemName === ''} />
         </button>
       </ActionContainer>
     </FlexContainer>

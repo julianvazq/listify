@@ -37,11 +37,11 @@ const ListItemEditing = ({
       <CheckboxContainer>
         {checked ? (
           <button onClick={() => handleCheck(false)}>
-            <Checkbox grayedOut={false} />
+            <Checkbox $grayedOut={false} />
           </button>
         ) : (
           <button onClick={() => handleCheck(true)}>
-            <CheckboxOutline grayedOut={false} />
+            <CheckboxOutline $grayedOut={false} />
           </button>
         )}
       </CheckboxContainer>

@@ -8,8 +8,8 @@ import {
   MdDelete,
 } from 'react-icons/md';
 
-export type GrayedOut = {
-  grayedOut?: boolean;
+export type $grayedOut = {
+  $grayedOut?: boolean;
 };
 
 export const Item = styled.li`
@@ -80,7 +80,7 @@ const IconStyling = css`
   color: var(--blue);
 `;
 
-export const IconContainer = styled.div<GrayedOut>`
+export const IconContainer = styled.div<$grayedOut>`
   width: 28px;
   height: 28px;
   border-radius: 0.3rem;
@@ -88,16 +88,16 @@ export const IconContainer = styled.div<GrayedOut>`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  background: ${(props) => (props.grayedOut ? '#9c9c9c' : 'var(--blue)')};
+  background: ${(props) => (props.$grayedOut ? '#9c9c9c' : 'var(--blue)')};
 
   @media (min-width: 500px) {
     margin-left: 1rem;
   }
 `;
 
-export const DeleteButton = styled(MdDelete)<GrayedOut>`
+export const DeleteButton = styled(MdDelete)<$grayedOut>`
   ${IconStyling}
-  color: ${(props) => (props.grayedOut ? '#9c9c9c' : '#ae0000')};
+  color: ${(props) => (props.$grayedOut ? '#9c9c9c' : '#ae0000')};
 `;
 
 export const RevertChangesButton = styled(MdClose)`
@@ -121,12 +121,12 @@ export const SubmitButton = styled(MdCheck)`
   }
 `;
 
-export const Checkbox = styled(MdCheckBox)<GrayedOut>`
+export const Checkbox = styled(MdCheckBox)<$grayedOut>`
   ${IconStyling}
-  color: ${(props) => props.grayedOut && '#9c9c9c'};
+  color: ${(props) => (props.$grayedOut ? '#9c9c9c' : 'var(--blue)')};
 `;
 
-export const CheckboxOutline = styled(MdCheckBoxOutlineBlank)<GrayedOut>`
+export const CheckboxOutline = styled(MdCheckBoxOutlineBlank)<$grayedOut>`
   ${IconStyling}
-  color: ${(props) => props.grayedOut && '#9c9c9c'};
+  color: ${(props) => (props.$grayedOut ? '#9c9c9c' : 'var(--blue)')};
 `;

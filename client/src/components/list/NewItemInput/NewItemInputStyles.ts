@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { TextArea, GrayedOut } from '../ListItem/ListItemStyles';
+import { TextArea, $grayedOut } from '../ListItem/ListItemStyles';
 import { MdAdd } from 'react-icons/md';
 
 export const FlexContainer = styled.div`
@@ -18,8 +18,8 @@ export const Input = styled(TextArea)`
   padding-left: 1rem;
 `;
 
-export const AddButton = styled(MdAdd)<GrayedOut>`
+export const AddButton = styled(MdAdd)<$grayedOut>`
   font-size: 2rem;
   cursor: pointer;
-  color: ${(props) => props.grayedOut && '#9c9c9c'};
+  color: ${(props) => props.$grayedOut && '#9c9c9c'};
 `;

@@ -28,11 +28,11 @@ const ListItemIdle = ({
       <CheckboxContainer>
         {checked ? (
           <button onClick={() => handleCheck(false)}>
-            <Checkbox grayedOut={editing?.active} />
+            <Checkbox $grayedOut={editing?.active} />
           </button>
         ) : (
           <button onClick={() => handleCheck(true)}>
-            <CheckboxOutline grayedOut={editing?.active} />
+            <CheckboxOutline $grayedOut={editing?.active} />
           </button>
         )}
       </CheckboxContainer>
@@ -42,10 +42,10 @@ const ListItemIdle = ({
       </ContentContainer>
       <ActionsContainer>
         <button onClick={() => deleteItem(item_id)} disabled={editing?.active}>
-          <DeleteButton grayedOut={editing?.active} />
+          <DeleteButton $grayedOut={editing?.active} />
         </button>
         <button onClick={toggleEditModeOn} disabled={editing?.active}>
-          <IconContainer grayedOut={editing?.active}>
+          <IconContainer $grayedOut={editing?.active}>
             <EditButton />
           </IconContainer>
         </button>
