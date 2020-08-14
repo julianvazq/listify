@@ -4,9 +4,9 @@ const pool = require('../db/pool');
 const path = require('path');
 
 /* Deployment */
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build/index.html'));
-});
+// router.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, '/client/build/index.html'));
+// });
 
 /* Endpoint for lists' preview */
 router.get('/list/:id', async (req, res) => {

@@ -18,11 +18,11 @@ const router = require('./routes/router');
 app.use(router);
 
 /* Deployment */
-// const path = require('path');
+const path = require('path');
 app.use(express.static(`${__dirname}/client/build`));
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, '../client/build/index.html'));
-// });
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/client/build/index.html'));
+});
 
 /* Socket Event Handlers */
 const getListHandler = require('./sockets/getListHandler');
