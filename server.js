@@ -1,4 +1,4 @@
-/* Initialize socket.io */
+/* Initialize socket.io and express */
 const express = require('express');
 const socketio = require('socket.io');
 const http = require('http');
@@ -16,10 +16,12 @@ require('dotenv').config();
 /* Db */
 const pool = require('./db/pool');
 
-const path = require('path');
+/* Routes */
 const router = require('./routes/router');
 app.use(router);
 
+/* Deployment */
+const path = require('path');
 app.use(express.static(`${__dirname}/client/build`));
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/client/build/index.html'));
@@ -35,6 +37,7 @@ const deleteItemHandler = require('./sockets/deleteItemHandler');
 const addItemHandler = require('./sockets/addItemHandler');
 const updateUserNameHandler = require('./sockets/updateUserNameHandler');
 
+/* Listen for socket events */
 io.on('connection', (socket) => {
   createListHandler('CREATE_LIST', socket, io);
   getListHandler('GET_LIST', socket, io);
