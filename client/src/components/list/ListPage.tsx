@@ -127,7 +127,7 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
           user: storedUser,
         },
         (res: any) => {
-          console.log('GET_LIST CALLBACK');
+          // console.log('GET_LIST CALLBACK');
           if (res.error) {
             setError(res);
           }
@@ -141,7 +141,7 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
           setMembers(res.members || []);
           setLoading(false);
 
-          console.log('FINISHED GETTING LIST');
+          // console.log('FINISHED GETTING LIST');
 
           if (!res.error) {
             addUserList({ id, name: res.listName });
@@ -157,7 +157,7 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
           user: storedUser,
         },
         (res: any) => {
-          console.log('CREATE_LIST CALLBACK');
+          // console.log('CREATE_LIST CALLBACK');
           if (res.error) {
             setError(res);
           }
@@ -173,12 +173,12 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
     }
 
     socket.on('NEW_MEMBER', (newMembers: any) => {
-      console.log('NEW_MEMBER HANDLER');
+      // console.log('NEW_MEMBER HANDLER');
       setMembers(newMembers);
     });
 
     socket.on('UPDATE_ITEMS', (updatedItems: any) => {
-      console.log('UPDATE_ITEM HANDLER');
+      // console.log('UPDATE_ITEM HANDLER');
       /* Turn edit state off for items the client itself is currently editing */
       const itemsFinal = updatedItems.map((item) => {
         if (item.editing && item.editing.id === storedUser.id) {
@@ -195,7 +195,7 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
     });
 
     socket.on('EDITING', (editingItem: any) => {
-      console.log('EDITING HANDLER', editingItem);
+      // console.log('EDITING HANDLER');
       /* Find the item being edited and replace it with new edits */
       setItems((prevItems) =>
         prevItems.map((item) => {

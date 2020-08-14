@@ -12,6 +12,7 @@ export const Container = styled.div`
 `;
 
 export const Illustration = styled.img`
+  width: 100%;
   max-height: 600px;
   margin-bottom: 1rem;
 

@@ -24,4 +24,5 @@ export const ErrorMessage = styled.p`
 export const Illustration = styled.img`
   margin-top: 2rem;
   max-width: 600px;
+  width: 100%;
 `;

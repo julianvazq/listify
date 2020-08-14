@@ -98,6 +98,7 @@ export const Divider = styled.p`
 
 export const Illustration = styled.img`
   max-height: 600px;
+  width: 100%;
 
   @media (min-width: 800px) {
     width: 300px;
