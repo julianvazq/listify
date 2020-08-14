@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import queryString from 'query-string';
+import { Helmet } from 'react-helmet';
 import { RouteComponentProps } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
 import Modal from '../shared/Modal/Modal';
@@ -63,16 +64,14 @@ const ListTitle = styled.h1`
 `;
 
 const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
-  const { socket, storedUser, setStoredUser, addUserList } = useContext(
-    UserContext
-  );
+  const { socket, storedUser, addUserList } = useContext(UserContext);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const { name, id, new: createList } = queryString.parse(location.search);
   const [listName, setListName] = useState<string | null>(null);
   const [items, setItems] = useState<Item[]>([]);
   const [members, setMembers] = useState<Member[]>([]);
   const [error, setError] = useState<ErrorState>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const { name, id, new: createList } = queryString.parse(location.search);
 
   const deleteItem = (itemId: string) => {
     const updatedItems = items.filter((item) => item.item_id !== itemId);
@@ -217,6 +216,7 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
     };
 
     /* Runs when URL changes and when new user saves their name */
+    // eslint-disable-next-line
   }, [location.search, storedUser.username]);
 
   if (loading && !error) {
@@ -229,6 +229,11 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
 
   return (
     <PageContainer>
+      <Helmet>
+        <meta charSet='utf-8' />
+        <title>{listName}</title>
+        <link rel='canonical' href='http://mysite.com/example' />
+      </Helmet>
       <ListTitle>{listName}</ListTitle>
       <Members members={members} />
       <List items={items} deleteItem={deleteItem} addItem={addItem} />

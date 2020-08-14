@@ -10,7 +10,6 @@ import {
   CheckboxOutline,
   RevertChangesButton,
   SubmitButton,
-  IconContainer,
 } from './ListItemStyles';
 
 const ListItemEditing = ({

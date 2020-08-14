@@ -1,20 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import io from 'socket.io-client';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Home } from './components/home/Home';
 import ListPage from './components/list/ListPage';
 import ContextProvider from './context/UserContext';
 import Nav from './components/shared/Nav/Nav';
 import Footer from './components/shared/Footer/Footer';
+import NotFound from './components/shared/NotFound/NotFound';
 
 const App: React.FC = () => {
   return (
     <Router>
       <ContextProvider>
         <Nav />
-        <Route path='/' exact component={Home} />
-        <Route path='/list' exact component={ListPage} />
+        <Switch>
+          <Route path='/' exact component={Home} />
+          <Route path='/list' exact component={ListPage} />
+          <Route component={NotFound} />
+        </Switch>
         <Footer />
       </ContextProvider>
     </Router>

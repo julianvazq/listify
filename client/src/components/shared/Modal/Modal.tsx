@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Rodal from 'rodal';
 import 'rodal/lib/rodal.css';
 

@@ -19,7 +19,7 @@ import {
 } from './NavStyles';
 
 const Nav = () => {
-  const { storedUser, updateUsername, addUserList } = useContext(UserContext);
+  const { storedUser, updateUsername } = useContext(UserContext);
   const [newUsername, setNewUsername] = useState<string>(storedUser.username);
   const [navOpen, setNavOpen] = useState<boolean>(false);
   const [modalVisible, setModalVisible] = useState<boolean>(false);

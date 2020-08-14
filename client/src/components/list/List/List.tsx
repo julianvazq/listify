@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Item } from '../ListPage';
 import ListItem from '../ListItem/ListItem';
-import styled from 'styled-components';
 import NewItemInput from '../NewItemInput/NewItemInput';
 import { ListContainer, ItemCount } from './ListStyles';
 

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { TextArea, GrayedOut, Item } from '../ListItem/ListItemStyles';
+import { TextArea, GrayedOut } from '../ListItem/ListItemStyles';
 import { MdAdd } from 'react-icons/md';
 
 export const FlexContainer = styled.div`
