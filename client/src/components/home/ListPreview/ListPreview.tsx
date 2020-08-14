@@ -25,7 +25,7 @@ const ListPreview = ({ name, id }) => {
   const fetchItems = async (id) => {
     setError(false);
     setLoading(true);
-    const res = await fetch(`https://localhost:4000/list/${id}`);
+    const res = await fetch(`/list/${id}`);
     if (res.status === 200) {
       const items = await res.json();
       setItems(items);
