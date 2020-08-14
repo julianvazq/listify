@@ -33,7 +33,7 @@ type Username = {
 const LISTS_STORAGE_KEY = 'lists';
 const USERNAME_STORAGE_KEY = 'user';
 
-const socket = io('localhost:4000');
+const socket = io();
 
 export const UserContext = createContext({} as ContextValues);
 
