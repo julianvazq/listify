@@ -21,21 +21,25 @@ export const HeroContainer = styled.section`
 
 export const InnerContainer = styled.div`
   color: var(--blue);
-  padding: 0 2rem;
-  margin-bottom: 4rem;
+  margin: 0 2rem 4rem;
 
   @media (min-width: 800px) {
     margin-bottom: 0;
   }
 
   @media (min-width: 1100px) {
-    padding: 0;
+    margin: 0;
   }
 `;
 
 export const HeadingContainer = styled.div`
   margin: auto;
   margin-bottom: 4rem;
+  text-align: center;
+
+  @media (min-width: 800px) {
+    text-align: left;
+  }
 `;
 
 export const Heading = styled.h1`
@@ -56,10 +60,15 @@ export const ButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 200px;
+  margin: auto;
 
   @media (min-width: 600px) {
     flex-direction: row;
     width: auto;
+  }
+
+  @media (min-width: 800px) {
+    margin: 0;
   }
 `;
 

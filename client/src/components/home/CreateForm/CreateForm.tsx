@@ -28,14 +28,17 @@ const CreateForm: React.FC<CreateFormProps> = ({
   const { storedUser } = useContext(UserContext);
   return (
     <form onSubmit={onSubmit}>
-      <Label>Your name</Label>
-      <FormInput
-        type='text'
-        value={storedUser.username ? storedUser.username : username}
-        onChange={handleUsernameChange}
-        disabled={storedUser.username !== ''}
-      />
-      <InputError>{error.username}</InputError>
+      {storedUser.username === '' && (
+        <>
+          <Label>Your name</Label>
+          <FormInput
+            type='text'
+            value={storedUser.username ? storedUser.username : username}
+            onChange={handleUsernameChange}
+          />
+          <InputError>{error.username}</InputError>
+        </>
+      )}
       <Label>List name</Label>
       <FormInput
         type='text'

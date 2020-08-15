@@ -76,7 +76,11 @@ const CreateButtonWrapper = ({ children }) => {
   return (
     <>
       {React.cloneElement(children, { onClick: () => setModalVisible(true) })}
-      <Modal modalVisible={modalVisible} onClose={() => setModalVisible(false)}>
+      <Modal
+        modalVisible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        height={storedUser.username === '' ? 240 : 160}
+      >
         <CreateForm
           username={username}
           listName={listName}

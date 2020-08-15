@@ -18,9 +18,24 @@ const CREATE_LIST = async (listId, listName) => {
 
     return newList.rows[0];
   } catch (error) {
-    console.log(error);
+    console.log('CREATE_LIST', error);
     return { message: 'There was a problem [LIST].', error: true };
   }
 };
 
-module.exports = { CREATE_LIST };
+/* @TYPE: DELETE
+   @DESC: Delete list 
+   @RETURNS: void
+*/
+const DELETE_LIST = async (listId) => {
+  try {
+    const deleteList = await pool.query(
+      'DELETE FROM lists WHERE list_id = $1',
+      [listId]
+    );
+  } catch (error) {
+    console.log('DELETE_LIST', error);
+  }
+};
+
+module.exports = { CREATE_LIST, DELETE_LIST };
