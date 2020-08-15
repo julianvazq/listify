@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.section`
   background: var(--blue);
   padding: 4rem 0;
+  min-height: 100vh;
 `;
 
 export const InnerContainer = styled.div`

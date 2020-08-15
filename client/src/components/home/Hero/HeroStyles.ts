@@ -13,6 +13,10 @@ export const HeroContainer = styled.section`
     flex-direction: row;
     margin: auto;
   }
+
+  @media (min-width: 1500px) {
+    min-height: 80vh;
+  }
 `;
 
 export const InnerContainer = styled.div`

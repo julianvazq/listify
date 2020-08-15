@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { MdPerson } from 'react-icons/md';
+import { Link } from 'react-router-dom';
 
 export const Container = styled.div`
   background: var(--light);
@@ -21,6 +22,11 @@ export const InnerContainer = styled.nav`
   }
 `;
 
+export const LinksContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 export const UserContainer = styled.div`
   display: flex;
   align-items: center;
@@ -35,6 +41,20 @@ export const Logo = styled.p`
     color: var(--blue);
     text-decoration: none;
     font-weight: 600;
+  }
+`;
+
+export const MyLists = styled(Link)`
+  font-weight: 600;
+  text-decoration: none;
+  margin-right: 1rem;
+
+  &:visited {
+    color: var(--blue);
+  }
+
+  @media (min-width: 500px) {
+    margin-right: 3rem;
   }
 `;
 

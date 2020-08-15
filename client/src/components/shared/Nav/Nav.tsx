@@ -16,6 +16,8 @@ import {
   Menu,
   InnerMenu,
   MenuAction,
+  MyLists,
+  LinksContainer,
 } from './NavStyles';
 
 const Nav = () => {
@@ -47,16 +49,20 @@ const Nav = () => {
         <Logo>
           <Link to='/'>Listify</Link>
         </Logo>
-        <UserContainer onClick={() => setNavOpen(!navOpen)}>
-          <Greeting>
-            Hi, {storedUser.username === '' ? 'stranger' : storedUser.username}
-          </Greeting>
-          <IconContainer>
-            <button>
-              <UserIcon />
-            </button>
-          </IconContainer>
-        </UserContainer>
+        <LinksContainer>
+          <MyLists to='/my-lists'>My Lists</MyLists>
+          <UserContainer onClick={() => setNavOpen(!navOpen)}>
+            <Greeting>
+              Hi,{' '}
+              {storedUser.username === '' ? 'stranger' : storedUser.username}
+            </Greeting>
+            <IconContainer>
+              <button>
+                <UserIcon />
+              </button>
+            </IconContainer>
+          </UserContainer>
+        </LinksContainer>
       </InnerContainer>
       <Menu navOpen={navOpen}>
         <InnerMenu>

@@ -1,20 +1,20 @@
 import React, { useContext } from 'react';
 import { UserContext } from '../../../context/UserContext';
-import ListPreview from '../ListPreview/ListPreview';
-import EmptyState from '../EmptyState/EmptyState';
 import {
   Container,
   InnerContainer,
   SectionHeading,
   Grid,
-} from './SavedListsSectionStyles';
+} from './MyListsSectionStyles';
+import ListPreview from '../ListPreview/ListPreview';
+import EmptyState from '../EmptyState/EmptyState';
 
-const SavedListsSection = () => {
+const MyListsSection = () => {
   const { userLists } = useContext(UserContext);
   return (
     <Container>
       <InnerContainer>
-        <SectionHeading>Saved Lists</SectionHeading>
+        <SectionHeading>My Lists</SectionHeading>
         {userLists.length ? (
           <Grid>
             {userLists.map((list) => (
@@ -29,4 +29,4 @@ const SavedListsSection = () => {
   );
 };
 
-export default SavedListsSection;
+export default MyListsSection;

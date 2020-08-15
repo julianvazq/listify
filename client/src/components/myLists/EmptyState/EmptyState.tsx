@@ -7,7 +7,7 @@ import {
   ActionButton,
 } from './EmptyStateStyles';
 import TodoIllustration from '../../../assets/to-do-list.svg';
-import CreateButtonWrapper from '../CreateButtonWrapper/CreateButtonWrapper';
+import CreateButtonWrapper from '../../home/CreateButtonWrapper/CreateButtonWrapper';
 
 const EmptyState = () => {
   return (
