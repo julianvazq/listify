@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md';
+import { MdCheckBox, MdCheckBoxOutlineBlank, MdDone } from 'react-icons/md';
 
 export const PreviewContainer = styled.article`
   width: 100%;
@@ -73,6 +73,15 @@ export const ListItem = styled.li`
   &:last-of-type {
     margin-bottom: 0;
   }
+`;
+
+export const SuccessIcon = styled(MdDone)`
+  margin-right: 0.5rem;
+`;
+
+export const CopiedContainer = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 const CheckboxStyles = css`
