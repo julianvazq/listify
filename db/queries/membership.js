@@ -41,6 +41,22 @@ const CREATE_MEMBERSHIP = async (listId, userId) => {
   }
 };
 
+/* @TYPE: DELETE 
+   @DESC: Delete membership 
+   @RETURNS: void
+*/
+const DELETE_MEMBERSHIP = async (listId, userId) => {
+  try {
+    const deleteMembership = await pool.query(
+      'DELETE FROM memberships WHERE list_id = $1 AND user_id = $2',
+      [listId, userId]
+    );
+    console.log(`Membership deleted: listId: ${listId} AND userId: ${userId}`);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const GET_MEMBERS = async (listId) => {
   // SELECT u.name FROM users u INNER JOIN memberships m ON u.user_id = m.user_id INNER JOIN lists l ON l.list_id = m.list_id WHERE l.list_id = 'face5486-cca4-44e3-af46-79bfeaa28ff6'
   try {
@@ -56,4 +72,9 @@ const GET_MEMBERS = async (listId) => {
   }
 };
 
-module.exports = { CHECK_MEMBERSHIP, CREATE_MEMBERSHIP, GET_MEMBERS };
+module.exports = {
+  CHECK_MEMBERSHIP,
+  CREATE_MEMBERSHIP,
+  DELETE_MEMBERSHIP,
+  GET_MEMBERS,
+};

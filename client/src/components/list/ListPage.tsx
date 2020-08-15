@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import queryString from 'query-string';
 import { Helmet } from 'react-helmet';
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, useHistory } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
 import Modal from '../shared/Modal/Modal';
 import UserForm from './UserForm/UserForm';
@@ -65,8 +65,28 @@ const ListTitle = styled.h1`
   position: relative;
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+`;
+
+const LeaveButton = styled.button`
+  font-size: 0.85rem;
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  border-radius: 0.3rem;
+  font-weight: 600;
+  color: var(--blue);
+  border: 1.5px solid;
+  margin-left: 0.5rem;
+`;
+
 const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
-  const { socket, storedUser, addUserList } = useContext(UserContext);
+  const { socket, storedUser, addUserList, deleteUserList } = useContext(
+    UserContext
+  );
+  const history = useHistory();
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const { name, id, new: createList } = queryString.parse(location.search);
   const [listName, setListName] = useState<string | null>(null);
@@ -92,6 +112,20 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
       user: storedUser,
       items,
     });
+  };
+
+  const leaveList = (id) => {
+    history.push('/my-lists');
+    socket.emit(
+      'LEAVE_LIST',
+      {
+        listId: id,
+        user: storedUser,
+      },
+      () => {
+        deleteUserList(id);
+      }
+    );
   };
 
   const updateURL = () => {
@@ -142,8 +176,6 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
           setItems(res.items || []);
           setMembers(res.members || []);
           setLoading(false);
-
-          // console.log('FINISHED GETTING LIST');
 
           if (!res.error) {
             addUserList({ id, name: res.listName });
@@ -237,15 +269,14 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
         <link rel='canonical' href='http://mysite.com/example' />
       </Helmet>
       <ListTitle>{listName}</ListTitle>
-      {listName && id && (
-        <CopyButton
-          name={listName}
-          id={id}
-          listPage={true}
-          width='120px'
-          margin='0 0 2rem'
-        />
-      )}
+      <ButtonContainer>
+        {listName && id && (
+          <CopyButton name={listName} id={id} listPage={true} />
+        )}
+        {id && (
+          <LeaveButton onClick={() => leaveList(id)}>Leave list</LeaveButton>
+        )}
+      </ButtonContainer>
       <Members members={members} />
       <List items={items} deleteItem={deleteItem} addItem={addItem} />
       <Modal

@@ -16,7 +16,7 @@ import {
 import CopyButton from '../../shared/CopyButton/CopyButton';
 
 const ListPreview = ({ name, id }) => {
-  const { deleteUserList } = useContext(UserContext);
+  const { socket, storedUser, deleteUserList } = useContext(UserContext);
   const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
@@ -40,12 +40,25 @@ const ListPreview = ({ name, id }) => {
     history.push(`/list?name=${name}&id=${id}`);
   };
 
-  const getCheckbox = (completed) => {
+  const getCheckbox = (completed: boolean) => {
     if (completed) {
       return <Checkbox />;
     }
 
     return <CheckboxOutline />;
+  };
+
+  const leaveList = (id) => {
+    socket.emit(
+      'LEAVE_LIST',
+      {
+        listId: id,
+        user: storedUser,
+      },
+      () => {
+        deleteUserList(id);
+      }
+    );
   };
 
   useEffect(() => {
@@ -70,9 +83,7 @@ const ListPreview = ({ name, id }) => {
               </ListItem>
             ))}
       </List>
-      <DeleteAction onClick={() => deleteUserList(id)}>
-        Forget list
-      </DeleteAction>
+      <DeleteAction onClick={() => leaveList(id)}>Leave list</DeleteAction>
     </PreviewContainer>
   );
 };

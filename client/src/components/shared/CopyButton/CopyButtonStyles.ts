@@ -26,7 +26,6 @@ export const Button = styled.button<ButtonStyles>`
   color: ${(props) => (props.listPage ? 'var(--light)' : 'hsl(228, 50%, 30%)')};
   text-transform: uppercase;
   letter-spacing: 1px;
-  margin-bottom: ${(props) => props.listPage && '2rem'};
   width: ${(props) => (props.listPage ? '120px' : '48%')};
 
   &:focus {

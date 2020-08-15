@@ -43,6 +43,10 @@ const Nav = () => {
     setNavOpen(false);
   }, [location.key]);
 
+  const buttonStyles = {
+    color: location.pathname === '/my-lists' && 'var(--blue)',
+  } as React.CSSProperties;
+
   return (
     <Container>
       <InnerContainer>
@@ -64,14 +68,14 @@ const Nav = () => {
           </UserContainer>
         </LinksContainer>
       </InnerContainer>
-      <Menu navOpen={navOpen}>
+      <Menu navOpen={navOpen} switchColors={location.pathname === '/my-lists'}>
         <InnerMenu>
-          <MenuAction>
+          <MenuAction switchColors={location.pathname === '/my-lists'}>
             <button onClick={() => setModalVisible(true)}>Change name</button>
           </MenuAction>
           <MenuAction>
             <CreateButtonWrapper>
-              <button>Create new list</button>
+              <button style={buttonStyles}>Create new list</button>
             </CreateButtonWrapper>
           </MenuAction>
         </InnerMenu>

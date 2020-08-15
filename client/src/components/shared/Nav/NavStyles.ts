@@ -82,13 +82,18 @@ export const UserIcon = styled(MdPerson)`
   color: var(--blue);
 `;
 
-export const Menu = styled.div<{ navOpen: boolean }>`
+type MenuProps = {
+  navOpen: boolean;
+  switchColors: boolean;
+};
+
+export const Menu = styled.div<MenuProps>`
   position: absolute;
   bottom: ${(props) => (props.navOpen ? '-100px' : '100px')};
   display: ${(props) => (props.navOpen ? 'block' : 'none')};
   width: 100%;
   height: 100px;
-  background: var(--blue);
+  background: ${(props) => (props.switchColors ? '#fbfbfb' : 'var(--blue)')};
   transition: opacity 150ms ease-in;
   text-align: right;
   padding: 1rem 1rem 0 0;
@@ -102,12 +107,16 @@ export const InnerMenu = styled.div`
   align-items: flex-end;
 `;
 
-export const MenuAction = styled.div`
+type MenuActionProps = {
+  switchColors?: boolean;
+};
+
+export const MenuAction = styled.div<MenuActionProps>`
   margin-bottom: 1rem;
   text-align: left;
 
   button {
-    color: var(--light);
+    color: ${(props) => (props.switchColors ? 'var(--blue)' : 'var(--light)')};
     font-weight: 600;
     font-size: 1rem;
   }
