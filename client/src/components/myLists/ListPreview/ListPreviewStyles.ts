@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { MdCheckBox, MdCheckBoxOutlineBlank, MdDone } from 'react-icons/md';
+import { MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md';
 
 export const PreviewContainer = styled.article`
   width: 100%;
@@ -36,22 +36,15 @@ export const PrimaryAction = styled.button`
   width: 48%;
 `;
 
-export const SecondaryAction = styled.button`
+export const DeleteAction = styled.button`
   display: inline-block;
   border-radius: 0.3rem;
   font-weight: 600;
   font-size: 0.85rem;
-  padding: 0.5rem 1rem;
-  border-radius: 0.3rem;
-  background: hsl(228, 50%, 85%);
-  color: hsl(228, 50%, 30%);
   text-transform: uppercase;
   letter-spacing: 1px;
-  width: 48%;
-`;
-
-export const DeleteAction = styled(SecondaryAction)`
-  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.3rem;
   background: hsl(228, 30%, 90%);
   color: hsl(0, 0%, 35%);
   width: 100%;
@@ -73,15 +66,6 @@ export const ListItem = styled.li`
   &:last-of-type {
     margin-bottom: 0;
   }
-`;
-
-export const SuccessIcon = styled(MdDone)`
-  margin-right: 0.5rem;
-`;
-
-export const CopiedContainer = styled.div`
-  display: flex;
-  align-items: center;
 `;
 
 const CheckboxStyles = css`

@@ -10,6 +10,7 @@ import Members from './Members/Members';
 import List from './List/List';
 import LoadingState from './LoadingState/LoadingState';
 import ErrorState from './ErrorState/ErrorState';
+import CopyButton from '../shared/CopyButton/CopyButton';
 
 type LocationProps = { search: string };
 
@@ -60,7 +61,8 @@ const ListTitle = styled.h1`
   display: inline-block;
   border-bottom: 3px solid var(--blue);
   padding-bottom: 0.5rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
+  position: relative;
 `;
 
 const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
@@ -235,6 +237,15 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
         <link rel='canonical' href='http://mysite.com/example' />
       </Helmet>
       <ListTitle>{listName}</ListTitle>
+      {listName && id && (
+        <CopyButton
+          name={listName}
+          id={id}
+          listPage={true}
+          width='120px'
+          margin='0 0 2rem'
+        />
+      )}
       <Members members={members} />
       <List items={items} deleteItem={deleteItem} addItem={addItem} />
       <Modal

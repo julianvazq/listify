@@ -7,23 +7,19 @@ import {
   ListName,
   ActionContainer,
   PrimaryAction,
-  SecondaryAction,
   List,
   ListItem,
   DeleteAction,
   Checkbox,
   CheckboxOutline,
-  SuccessIcon,
-  CopiedContainer,
 } from './ListPreviewStyles';
-import { copyToClipboard } from '../../../utils/utils';
+import CopyButton from '../../shared/CopyButton/CopyButton';
 
 const ListPreview = ({ name, id }) => {
   const { deleteUserList } = useContext(UserContext);
   const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
-  const [copied, setCopied] = useState<boolean>(false);
   const history = useHistory();
 
   const fetchItems = async (id) => {
@@ -52,39 +48,16 @@ const ListPreview = ({ name, id }) => {
     return <CheckboxOutline />;
   };
 
-  const copyLink = async () => {
-    // https://listify.julianvazquez.me/list?name=Some%20list&id=27bb81ae-992b-436c-9c2c-a316f236447b
-    const url = `https://listify.julianvazquez.me/list?name=${name}&id=${id}`;
-    const copySuccess = await copyToClipboard(url);
-    setCopied(copySuccess);
-  };
-
   useEffect(() => {
     fetchItems(id);
   }, []);
-
-  useEffect(() => {
-    let timer;
-    if (copied) {
-      timer = setTimeout(() => setCopied(false), 3000);
-    }
-    return () => clearTimeout(timer);
-  }, [copied]);
 
   return (
     <PreviewContainer>
       <ListName>{name}</ListName>
       <ActionContainer>
         <PrimaryAction onClick={navigateToList}>Go to list</PrimaryAction>
-        <SecondaryAction onClick={copyLink}>
-          {copied ? (
-            <CopiedContainer>
-              <SuccessIcon /> Copied
-            </CopiedContainer>
-          ) : (
-            'Copy link'
-          )}
-        </SecondaryAction>
+        <CopyButton name={name} id={id} />
       </ActionContainer>
       <List>
         {loading && <ListItem>Loading...</ListItem>}
