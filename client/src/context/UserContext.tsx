@@ -34,7 +34,7 @@ const LISTS_STORAGE_KEY = 'lists';
 const USERNAME_STORAGE_KEY = 'user';
 
 /* Deployment */
-const socket = io('http://localhost:4000');
+const socket = io('listify.julianvazquez.me');
 /* Development */
 // const socket = io();
 
