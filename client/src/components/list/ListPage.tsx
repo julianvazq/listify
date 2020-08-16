@@ -267,8 +267,8 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
     <PageContainer>
       <Helmet>
         <meta charSet='utf-8' />
-        <title>{`${listName} | Listify`}</title>
-        <link rel='canonical' href='http://mysite.com/example' />
+        <title>{`${listName ? listName : 'List'} | Listify`}</title>
+        <link rel='canonical' href='http://listify.julianvazquez.me' />
       </Helmet>
       <ListTitle>{listName}</ListTitle>
       <ButtonContainer>
