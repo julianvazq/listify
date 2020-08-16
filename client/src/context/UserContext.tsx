@@ -34,9 +34,9 @@ const LISTS_STORAGE_KEY = 'lists';
 const USERNAME_STORAGE_KEY = 'user';
 
 /* Deployment */
-const socket = io('https://localhost:4000');
+// const socket = io('https://localhost:4000');
 /* Development */
-// const socket = io();
+const socket = io();
 
 export const UserContext = createContext({} as ContextValues);
 
