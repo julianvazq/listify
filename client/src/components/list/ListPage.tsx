@@ -166,18 +166,19 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
           // console.log('GET_LIST CALLBACK');
           if (res.error) {
             setError(res);
+            setLoading(false);
           }
 
           if (!storedUser.username) {
             setModalVisible(true);
           }
 
-          setListName(res.listName);
-          setItems(res.items || []);
-          setMembers(res.members || []);
-          setLoading(false);
-
           if (!res.error) {
+            setListName(res.listName);
+            setItems(res.items || []);
+            setMembers(res.members || []);
+            setLoading(false);
+
             addUserList({ id, name: res.listName });
           }
         }
@@ -194,14 +195,15 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
           // console.log('CREATE_LIST CALLBACK');
           if (res.error) {
             setError(res);
+            setLoading(false);
+          } else {
+            setListName(res.listName);
+            setItems(res.items);
+            setMembers(res.members);
+            setLoading(false);
+
+            addUserList({ id, name: res.listName });
           }
-
-          setListName(res.listName);
-          setItems(res.items);
-          setMembers(res.members);
-          setLoading(false);
-
-          addUserList({ id, name: res.listName });
         }
       );
     }
@@ -265,7 +267,7 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
     <PageContainer>
       <Helmet>
         <meta charSet='utf-8' />
-        <title>{listName} | Listify</title>
+        <title>{`${listName} | Listify`}</title>
         <link rel='canonical' href='http://mysite.com/example' />
       </Helmet>
       <ListTitle>{listName}</ListTitle>

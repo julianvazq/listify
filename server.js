@@ -5,15 +5,15 @@ const socketio = require('socket.io');
 const http = require('http');
 const app = express();
 const server = http.createServer(
-  {
-    key: fs.readFileSync(
-      '/etc/letsencrypt/live/listify.julianvazquez.me/privkey.pem'
-    ),
-    cert: fs.readFileSync(
-      '/etc/letsencrypt/live/listify.julianvazquez.me/fullchain.pem'
-    ),
-    rejectUnauthorized: false,
-  },
+  // {
+  //   key: fs.readFileSync(
+  //     '/etc/letsencrypt/live/listify.julianvazquez.me/privkey.pem'
+  //   ),
+  //   cert: fs.readFileSync(
+  //     '/etc/letsencrypt/live/listify.julianvazquez.me/fullchain.pem'
+  //   ),
+  //   rejectUnauthorized: false,
+  // },
   app
 );
 const io = socketio(server);
