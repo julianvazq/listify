@@ -2,7 +2,7 @@ const { GET_ITEMS } = require('../db/queries/item');
 const { io } = require('../server');
 const { UPDATE_USER_NAME } = require('../db/queries/user');
 
-module.exports = (event, socket) => {
+module.exports = (event, socket, io) => {
   socket.on(event, async ({ listId, user, fromHome }, callback) => {
     const updatedUser = await UPDATE_USER_NAME(user);
 

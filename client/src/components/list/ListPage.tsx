@@ -167,19 +167,16 @@ const ListPage = ({ location }: RouteComponentProps<LocationProps>) => {
           if (res.error) {
             setError(res);
             setLoading(false);
-          }
-
-          if (!storedUser.username) {
-            setModalVisible(true);
-          }
-
-          if (!res.error) {
+          } else {
             setListName(res.listName);
             setItems(res.items || []);
             setMembers(res.members || []);
             setLoading(false);
-
             addUserList({ id, name: res.listName });
+          }
+
+          if (!storedUser.username) {
+            setModalVisible(true);
           }
         }
       );
