@@ -17,7 +17,6 @@ export const InstructioContainer = styled.div`
 
 export const InstructionCircle = styled.div`
   border: 5px solid #cce9ff;
-  border-radius: 50%;
   background: var(--light);
   color: var(--blue);
   display: flex;
