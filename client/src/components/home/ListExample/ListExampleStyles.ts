@@ -9,7 +9,7 @@ export const Container = styled.section`
 export const Image = styled.img`
   display: block;
   width: 100%;
-  max-width: 700px;
+  max-width: 800px;
   margin: auto;
   padding: 0 1rem;
 `;

@@ -6,7 +6,7 @@ export const Container = styled.section`
 `;
 
 export const InnerContainer = styled.div`
-  padding: 4rem 0;
+  padding: 4rem 2rem;
   max-width: 1000px;
   margin: auto;
 `;
@@ -14,8 +14,7 @@ export const InnerContainer = styled.div`
 export const InstructionsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  padding: 0 2rem;
+  justify-content: space-between;
 
   @media (min-width: 800px) {
     flex-direction: row;

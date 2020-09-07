@@ -1,16 +1,17 @@
 import React from 'react';
 import {
   InstructioContainer,
-  InstructionCircle,
+  InstructionNumber,
   InstructionText,
 } from './InstructionStyles';
 
 const Instruction = ({ number, instruction }) => {
   return (
     <InstructioContainer>
-      <InstructionCircle>
-        <span>{number}</span>
-      </InstructionCircle>
+      <InstructionNumber numberOne={number === 1}>
+        {number}
+        <span>.</span>
+      </InstructionNumber>
       <InstructionText>{instruction}</InstructionText>
     </InstructioContainer>
   );
