@@ -1,12 +1,14 @@
 import React from 'react';
 import Hero from './Hero/Hero';
-import SavedListsSection from '../myLists/MyListsSection/MyListsSection';
+import InstructionsSection from './InstructionsSection/InstructionsSection';
+import ListExample from './ListExample/ListExample';
 
 export const Home = () => {
   return (
     <>
       <Hero />
-      {/* <SavedListsSection /> */}
+      <InstructionsSection />
+      <ListExample />
     </>
   );
 };
