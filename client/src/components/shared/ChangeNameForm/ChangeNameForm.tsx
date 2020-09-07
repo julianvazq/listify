@@ -12,7 +12,6 @@ const ChangeNameForm = ({ closeNavAndModal }) => {
 
   const onUsernameChange = (e) => {
     setNewUsername(e.target.value);
-    console.log(e.target.value);
   };
 
   const onSubmit = (e) => {
