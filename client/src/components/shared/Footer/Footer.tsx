@@ -4,7 +4,7 @@ import { Container, FooterText } from './FooterStyles';
 const Footer = () => {
   return (
     <Container>
-      <FooterText>@Listify 2020</FooterText>
+      <FooterText>@Listify {new Date().getFullYear()}</FooterText>
     </Container>
   );
 };
